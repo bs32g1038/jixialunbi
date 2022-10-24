@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import styles from './index.module.scss';
-import { Form, message, Select } from 'antd';
+import { Form, message, Select, Upload } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import JEditor from '../JEditor';
 import TagGroup from '../TagGroup';
@@ -14,6 +14,7 @@ import {
   useLazyFetchPostByIdQuery,
   useUpdatePostMutation,
 } from '@/apis';
+import { PlusOutlined } from '@ant-design/icons';
 
 const Core = (props: { visible: boolean; postId?: number }) => {
   const { visible, postId } = props;
@@ -29,11 +30,37 @@ const Core = (props: { visible: boolean; postId?: number }) => {
   const [createPost] = useCreatePostMutation();
   const [updatePost] = useUpdatePostMutation();
   const ref = useRef(null);
+  const handleUpload = (info) => {
+    if (Array.isArray(info)) {
+      return info;
+    }
+    if (info.file.status === 'done') {
+      const fileList =
+        info &&
+        info.fileList.map((file) => {
+          if (file.response) {
+            file.url = file.response?.data?.url;
+          }
+          return file;
+        });
+      return fileList;
+    }
+
+    return info && info.fileList;
+  };
   const onFinish = (values: any) => {
     form.validateFields().then(() => {
       if (ref.current.getLength() > 300) {
         return message.error('不能大于300字');
       }
+      Object.assign(values, {
+        pics:
+          values.pics
+            ?.map((item) => {
+              return item.url;
+            })
+            .join(',') || '',
+      });
       if (postId) {
         return updatePost({ ...values, id: postId }).then(() => {
           message.success('更新成功！');
@@ -47,11 +74,15 @@ const Core = (props: { visible: boolean; postId?: number }) => {
     });
   };
   useEffect(() => {
-    console.log(postData?.tags)
     if (visible && data) {
       form.setFieldsValue({
-        categoryId: data?.[0]?.id,
         ...(postId ? postData : {}),
+        categoryId: data?.[0]?.id,
+        pics: (postData?.pics?.split(',') ?? []).map((item, index) => ({
+          uid: index,
+          status: 'done',
+          url: item,
+        })),
       });
     }
   }, [data, form, postData, postId, visible]);
@@ -89,6 +120,14 @@ const Core = (props: { visible: boolean; postId?: number }) => {
             <TagGroup></TagGroup>
           </Form.Item>
         </div>
+        <Form.Item name="pics" valuePropName="fileList" getValueFromEvent={handleUpload}>
+          <Upload name="file" action="/api/files/upload" listType="picture-card" maxCount={4}>
+            <div>
+              <PlusOutlined />
+              <div style={{ marginTop: 8 }}>上传图片</div>
+            </div>
+          </Upload>
+        </Form.Item>
       </Form>
     </Modal>
   );

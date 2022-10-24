@@ -273,3 +273,13 @@ ol.stories li:first-child div.story_liner {
   font-size: 12px;
   margin-bottom: 0;
 }
+
+.pics {
+  display: flex;
+  gap: 5px;
+  .pic {
+    border: 1px dashed #e1e1e1;
+    padding: 2px;
+    display: inline-block;
+  }
+}

@@ -16,6 +16,7 @@ export const PostSchema = {
   title: Joi.string().max(2000),
   categoryId: Joi.number(),
   tags: Joi.string(),
+  pics: Joi.string(),
 };
 
 

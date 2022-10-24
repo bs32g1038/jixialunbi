@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { parseTime } from '../../../../libs/time';
 import styles from './index.module.scss';
-import { Avatar, Button, Space, Tag, Popover } from 'antd';
+import { Avatar, Button, Space, Tag, Popover, Image } from 'antd';
 import { CommentOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 import LikeButton from '../../../LikeButton';
@@ -64,6 +64,17 @@ export default function TopicItem(props: { item: any }) {
                 }}
               ></div>
             </div>
+            {item?.pics && (
+              <div className={styles.pics}>
+                {item?.pics?.split(',').map((pic) => {
+                  return (
+                    <div key={pic} className={styles.pic}>
+                      <Image width={120} height={80} src={pic} alt="" />
+                    </div>
+                  );
+                })}
+              </div>
+            )}
             <div className={styles.footer}>
               <Space>
                 <div>
@@ -93,9 +104,16 @@ export default function TopicItem(props: { item: any }) {
                 >
                   {participants?.map((item: any) => {
                     return (
-                      <Link key={item.id} href={"/profile/" + item?.author?.id}>
-                        <Popover placement="bottom" title={item?.author?.username} content={<span style={{ fontSize: 12 }}>{item?.author?.about ?? '这家伙很懒，什么都没留下'}</span>} trigger="hover">
-                          <Avatar size="small" src={item?.author?.image} style={{ cursor: "pointer" }} alt="" />
+                      <Link key={item.id} href={'/profile/' + item?.author?.id}>
+                        <Popover
+                          placement="bottom"
+                          title={item?.author?.username}
+                          content={
+                            <span style={{ fontSize: 12 }}>{item?.author?.about ?? '这家伙很懒，什么都没留下'}</span>
+                          }
+                          trigger="hover"
+                        >
+                          <Avatar size="small" src={item?.author?.image} style={{ cursor: 'pointer' }} alt="" />
                         </Popover>
                       </Link>
                     );

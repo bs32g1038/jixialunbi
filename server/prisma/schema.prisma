@@ -54,6 +54,7 @@ model Post {
   likes        Like[]
   collections  Collection[]
   deleted      DateTime?
+  pics         String?
 }
 
 model Category {
