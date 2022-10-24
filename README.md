@@ -10,6 +10,8 @@
     积下论笔社区: <a href="http://www.jixialunbi.com" target="_blank" rel="noopener noreferrer">www.jixialunbi.com</a>
 </p>
 
+![社区首页](https://github.com/bs32g1038/jixialunbi/blob/main/screenshots/home.png?raw=true)
+
 > 注意: 当前处于开发中 - 请勿用于生产环境，预期 2022 年 12 月份，将发布正式版本。
 
 ## server
