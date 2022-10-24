@@ -1,0 +1,29 @@
+.default {
+    :global {
+        .ant-modal-header {
+            padding: 7px 24px;
+            color: rgba(0, 0, 0, 0.85);
+            background: #fff;
+            border-bottom: 1px solid #f0f0f0;
+            border-radius: 2px 2px 0 0;
+        }
+
+        .ant-modal-close-x {
+            width: 32px;
+            height: 32px;
+            line-height: 40px;
+        }
+
+        .ant-modal-body {
+            padding: 15px 24px;
+        }
+
+        .ant-modal-footer {
+            .ant-btn {
+                height: 24px;
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+        }
+    }
+}

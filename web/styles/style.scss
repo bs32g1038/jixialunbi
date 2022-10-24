@@ -1,0 +1,16 @@
+.custom-text-expanded-handler {
+  margin-left: 6px;
+  color: #545fd6;
+  &:hover {
+    color: #1890ff;
+    cursor: pointer;
+  }
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

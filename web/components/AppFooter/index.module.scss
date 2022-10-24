@@ -1,0 +1,81 @@
+.FooterMainInfo {
+    flex: 1 0 auto;
+    .baseInfo {
+        display: flex;
+        align-items: center;
+    }
+    .siteInfo {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .siteLogo {
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+    }
+    a {
+        color: #666;
+        display: block;
+        font-size: 0.8rem;
+        margin-bottom: 5px;
+        transition: color 0.2s ease 0s;
+    }
+    .contactTitle {
+        color: #666;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+    .socialList {
+        display: flex;
+    }
+    svg {
+        width: 16px;
+        height: 16px;
+        fill: #666;
+        display: block;
+        margin-right: 8px;
+    }
+    ._title {
+        color: #666;
+        margin-bottom: 12px;
+        font-size: 0.9rem;
+    }
+    ._body {
+        display: flex;
+        flex-direction: column;
+        color: #666;
+        a {
+            color: #666;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+            margin-top: 0px;
+            transition: color 0.2s ease 0s;
+            :hover {
+                color: rgb(92, 134, 139);
+                cursor: pointer;
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.friendshipCommunity {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    li {
+        margin-top: 10px;
+        margin-right: 10px;
+    }
+    img {
+        width: auto;
+        height: 32px;
+    }
+}
+
+.friendshipCommunityTitle {
+    font-size: 14px;
+    font-weight: 600;
+}

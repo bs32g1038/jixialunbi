@@ -1,0 +1,51 @@
+.tabs {
+  :global {
+    .ant-tabs-tab-active {
+      a {
+        color: rgba(0, 0, 0, 0.65);
+      }
+    }
+    .ant-tabs-ink-bar {
+      background-color: rgba(0, 0, 0, 0.65);
+    }
+  }
+}
+
+.a {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.switch {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 3px;
+  flex-wrap: wrap;
+  gap: 5px;
+  border-radius: 2px;
+  .switchItem {
+    &.active {
+      background: #85a5ff;
+      color: #fff;
+    }
+    &:hover {
+      border: 1px solid #85a5ff;
+    }
+  }
+  svg {
+    display: block;
+  }
+}
+
+.wrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.description {
+  color: rgba(0, 0, 0, 0.45);
+  margin: 0;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  text-align: center;
+}

@@ -1,0 +1,102 @@
+import React, { useEffect, useRef } from 'react';
+import styles from './index.module.scss';
+import { Form, message, Select } from 'antd';
+import { useForm } from 'antd/lib/form/Form';
+import JEditor from '../JEditor';
+import TagGroup from '../TagGroup';
+import Modal from '../Modal';
+import { useAppSelector } from '@/hooks';
+import { useDispatch } from 'react-redux';
+import { setWriteModalState } from '@/store/app';
+import {
+  useCreatePostMutation,
+  useFetchCategoriesQuery,
+  useLazyFetchPostByIdQuery,
+  useUpdatePostMutation,
+} from '@/apis';
+
+const Core = (props: { visible: boolean; postId?: number }) => {
+  const { visible, postId } = props;
+  const dispatch = useDispatch();
+  const [form] = useForm();
+  const { data = [] } = useFetchCategoriesQuery();
+  const [fetchPost, { data: postData }] = useLazyFetchPostByIdQuery();
+  useEffect(() => {
+    if (postId) {
+      fetchPost({ postId });
+    }
+  }, [fetchPost, postId]);
+  const [createPost] = useCreatePostMutation();
+  const [updatePost] = useUpdatePostMutation();
+  const ref = useRef(null);
+  const onFinish = (values: any) => {
+    form.validateFields().then(() => {
+      if (ref.current.getLength() > 300) {
+        return message.error('不能大于300字');
+      }
+      if (postId) {
+        return updatePost({ ...values, id: postId }).then(() => {
+          message.success('更新成功！');
+        });
+      }
+      createPost(values)
+        .unwrap()
+        .then(() => {
+          message.success('发布成功！');
+        });
+    });
+  };
+  useEffect(() => {
+    console.log(postData?.tags)
+    if (visible && data) {
+      form.setFieldsValue({
+        categoryId: data?.[0]?.id,
+        ...(postId ? postData : {}),
+      });
+    }
+  }, [data, form, postData, postId, visible]);
+  return (
+    <Modal
+      title={postId ? '编辑' : '写作'}
+      footer={null}
+      open={visible}
+      onCancel={() => {
+        dispatch(
+          setWriteModalState({
+            visible: false,
+            postId: '',
+          })
+        );
+      }}
+    >
+      <Form form={form} onFinish={onFinish}>
+        <Form.Item name="title" rules={[{ required: true, message: '内容不能为空！' }]}>
+          <JEditor ref={ref}></JEditor>
+        </Form.Item>
+        <div className={styles.footer}>
+          <Form.Item name="categoryId" label="分类" style={{ marginBottom: 0 }}>
+            <Select bordered={false} style={{ width: 120 }}>
+              {data.map((item: { id: any; name: string }) => {
+                return (
+                  <Select.Option key={item.id} value={item.id}>
+                    {item.name}
+                  </Select.Option>
+                );
+              })}
+            </Select>
+          </Form.Item>
+          <Form.Item name="tags" label="" style={{ marginBottom: 0 }}>
+            <TagGroup></TagGroup>
+          </Form.Item>
+        </div>
+      </Form>
+    </Modal>
+  );
+};
+
+function Write() {
+  const { visible, postId } = useAppSelector((state) => state.app.writeModalState);
+  return visible ? <Core visible={visible} postId={postId}></Core> : <div />;
+}
+
+export default Write;

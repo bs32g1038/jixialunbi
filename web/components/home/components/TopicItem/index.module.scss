@@ -1,0 +1,275 @@
+.item {
+  // border-bottom: 1px dashed #f1f1f1;
+  padding-top: 5px;
+}
+
+.liner {
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  display: flex;
+}
+
+.avatarWrap {
+  border-radius: 50%;
+  // height: 24px;
+  margin-bottom: 2px;
+  margin-right: 5px;
+  // width: 24px;
+  // background-color: #ccc;
+
+  .avatar {
+    border-radius: 50%;
+    height: 32px;
+    // margin-bottom: 2px;
+    // margin-right: 2px;
+    width: 32px;
+    vertical-align: baseline;
+  }
+}
+
+.replyUserList {
+  // margin-top: 10px;
+  img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #ccc;
+    display: block;
+  }
+
+  .comment {
+    margin-left: 1px;
+  }
+}
+
+.voters {
+  margin-top: 0px;
+  width: 40px;
+  margin-right: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+  padding: 2px 0;
+}
+
+.downvoter,
+.upvoter {
+  border-color: transparent transparent #bbb transparent;
+  border-style: solid;
+  border-width: 6px;
+  text-decoration: none;
+  width: 0px;
+  height: 0;
+  margin-bottom: 0px;
+  margin-left: 13px;
+  padding: 0;
+  display: block;
+}
+
+.upvoter {
+  border-bottom-width: 11px;
+}
+
+.score {
+  color: #aaa;
+  font-size: 9pt;
+  margin-top: 1px;
+  margin-bottom: -3px;
+  text-align: center;
+  font-size: 9.5pt;
+  margin-top: 2px;
+}
+
+.details {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px dashed #f0f0f0;
+  svg {
+    fill: rgba(0, 0, 0, 0.45);
+    margin-right: 4px;
+    margin-left: 4px;
+  }
+}
+
+.core {
+  width: 100%;
+}
+
+.text {
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 14px;
+}
+
+.topicHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.link {
+  vertical-align: middle;
+}
+
+.link a {
+  color: rgba(0, 0, 0, 0.85);
+  text-decoration: none;
+  font-size: 15px;
+}
+
+ol.stories li:first-child div.story_liner {
+  padding-top: 0.5em;
+}
+
+.byline {
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  a {
+    color: rgba(0, 0, 0, 0.65);
+    text-decoration: none;
+  }
+}
+
+.topicItemFooterRight {
+  display: flex;
+  flex: 1 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+
+  :global(.comment) {
+    width: 16px;
+    height: 16px;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    margin-right: 4px;
+  }
+}
+
+.tag {
+  font-size: 13px !important;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.domain {
+  color: #888;
+  font-style: italic;
+  font-size: 9pt;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.summary {
+  position: relative;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  line-height: 1.65;
+  letter-spacing: 0.5px;
+  color: #333;
+  font-size: 13px;
+}
+
+.mata {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #ccc;
+    display: block;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer {
+  padding: 0 0 5px 0;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.65);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.username {
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 14px;
+}
+
+.commentClick {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65);
+  padding: 0;
+
+  &.active {
+    color: #eb7350;
+
+    svg {
+      fill: #eb7350;
+    }
+  }
+}
+
+.commentArea {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: -10px;
+  padding: 10px 0;
+  font-size: 12px;
+
+  .name {
+    color: #eb7350;
+  }
+
+  .meta {
+    color: rgba(0, 0, 0, 0.45);
+  }
+}
+
+.commentAreaItem {
+  border-bottom: 1px dashed #f0f0f0;
+}
+
+.write {
+  border: 1px solid #f5f5f5;
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  justify-content: space-between;
+  border-radius: 5px;
+  background-color: #f5f5f5;
+  .inputWrap {
+    width: 100%;
+  }
+  .input {
+    width: 100%;
+    border: none;
+    height: 100%;
+    background-color: #f5f5f5;
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+}
+
+.about {
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 12px;
+  margin-bottom: 0;
+}
