@@ -1,21 +1,23 @@
 .main {
-    position: relative;
+  position: relative;
 }
 
 .wrap {
-    width: 580px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  width: 625px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 20px;
+  background-color: #fff;
 }
 
 .tuiguang {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 
-    img {
-        border: 1px solid rgba(0, 0, 0, 0.15);
-        padding: 2px;
-    }
+  img {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    padding: 2px;
+  }
 }

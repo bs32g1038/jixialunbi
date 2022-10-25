@@ -79,13 +79,15 @@ export default function AppHeader() {
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.app.user);
-  const { data } = useFetchNotificationsQuery({ receiverId: user?.id });
   return (
     <header className={styles.header}>
       <div className={styles.headerleft}>
         <span className={styles.headerlinks}>
           <Link href="/" passHref={true}>
-            <a className={styles.title}><img className={styles.logo} src={logo.src} alt="" /></a>
+            <a className={styles.title}>
+              <img className={styles.logo} src={logo.src} alt="" />
+              <h1 title="积下论笔社区">积下论笔社区</h1>
+            </a>
           </Link>
         </span>
       </div>
