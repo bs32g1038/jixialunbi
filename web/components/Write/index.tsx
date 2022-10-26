@@ -54,12 +54,11 @@ const Core = (props: { visible: boolean; postId?: number }) => {
         return message.error('不能大于300字');
       }
       Object.assign(values, {
-        pics:
-          values.pics
-            ?.map((item) => {
-              return item.url;
-            })
-            .join(',') || '',
+        pics: values.pics
+          ?.map((item) => {
+            return item.url;
+          })
+          .join(','),
       });
       if (postId) {
         return updatePost({ ...values, id: postId }).then(() => {
