@@ -1,4 +1,4 @@
-import { useCreateLikeMutation, useDeleteLikeMutation } from '@/apis';
+import { useCreateLikeMutation, useDeleteLikeMutation } from './service';
 import { LikeOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';

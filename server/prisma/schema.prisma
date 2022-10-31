@@ -34,7 +34,7 @@ model User {
 
 model Post {
   id           Int               @id @default(autoincrement())
-  title        String
+  title        String            @db.VarChar(400)
   categoryId   Int
   authorId     Int?
   tags         String?           @default("")
@@ -54,7 +54,19 @@ model Post {
   likes        Like[]
   collections  Collection[]
   deleted      DateTime?
-  pics         String?           @default("")
+  pics         String?           @default("") @db.VarChar(300)
+  timeLines    PostTimeLine[]
+}
+
+model PostTimeLine {
+  id        Int       @id @default(autoincrement())
+  title     String    @db.VarChar(300)
+  deleted   DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  postId    Int
+  authorId  Int
+  Post      Post?     @relation(fields: [postId], references: [id])
 }
 
 model Category {

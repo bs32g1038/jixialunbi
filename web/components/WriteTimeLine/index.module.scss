@@ -1,0 +1,89 @@
+.wrap {
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.headerFilter {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+.pagination {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.write {
+  border-top: 1px solid #f1f1f1;
+  border-bottom: 1px solid #f1f1f1;
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  justify-content: space-between;
+
+  // .radius {
+  //     border: 1px solid green;
+  //     width: 20px;
+  //     height: 20px;
+  //     border-radius: 50%;
+  // }
+
+  .inputWrap {
+    width: 100%;
+  }
+
+  .input {
+    width: 100%;
+    border: none;
+    height: 100%;
+    color: #888;
+    padding-left: 20px;
+    font-size: 12px;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  :global {
+    .ant-progress-circle .ant-progress-inner {
+      // background-color: #fff;
+    }
+  }
+}
+
+.tabs {
+  :global {
+    .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+      color: rgba(0, 0, 0, 0.85);
+      text-shadow: 0 0 0.25px currentcolor;
+    }
+
+    .ant-tabs-tab-btn {
+      color: rgba(0, 0, 0, 0.65);
+    }
+
+    .ant-tabs-ink-bar {
+      background-color: rgba(0, 0, 0, 0.85);
+    }
+  }
+}
+
+.inputTextArea {
+  border-color: #f1f1f1;
+  &:focus {
+    box-shadow: none;
+    border-color: #f1f1f1;
+  }
+}
+
+.footer {
+  border-top: 1px solid #f1f1f1;
+  border-bottom: 1px solid #f1f1f1;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}

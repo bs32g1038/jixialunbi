@@ -92,6 +92,7 @@ interface Props {
   ref?: any;
   value?: string;
   onChange?: () => void;
+  placeholder?: string;
 }
 
 StarterKit.options.heading = {
@@ -99,13 +100,13 @@ StarterKit.options.heading = {
 };
 
 export default React.forwardRef(function JEditor(props: Props, ref) {
-  const { value, onChange = noop } = props;
+  const { value, onChange = noop, placeholder } = props;
   const editor = useEditor({
     extensions: [
       StarterKit,
       Placeholder.configure({
         showOnlyWhenEditable: false,
-        placeholder: '来了，就说点什么吧！',
+        placeholder: placeholder || '来了，就说点什么吧！',
       }),
     ],
     content: value,

@@ -83,11 +83,9 @@ export default function AppHeader() {
     <header className={styles.header}>
       <div className={styles.headerleft}>
         <span className={styles.headerlinks}>
-          <Link href="/" passHref={true}>
-            <a className={styles.title}>
-              <img className={styles.logo} src={logo.src} alt="" />
-              <h1 title="积下论笔社区">积下论笔社区</h1>
-            </a>
+          <Link href="/" passHref={true} className={styles.title}>
+            <img className={styles.logo} src={logo.src} alt="" />
+            <h1 title="积下论笔社区">积下论笔社区</h1>
           </Link>
         </span>
       </div>
@@ -121,11 +119,7 @@ export default function AppHeader() {
                   <Menu
                     items={[
                       {
-                        label: (
-                          <Link href={'/profile/' + user.id}>
-                            <a>个人信息</a>
-                          </Link>
-                        ),
+                        label: <Link href={'/profile/' + user.id}>个人信息</Link>,
                         key: '0',
                       },
                     ]}

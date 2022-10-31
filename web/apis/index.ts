@@ -17,10 +17,10 @@ const axiosBaseQuery =
     unknown,
     unknown
   > =>
-    async ({ url, method, data, params, notification }: any) => {
-      const result = await axios({ url: baseUrl + url, method, data, params, notification } as any);
-      return { data: result.data.data };
-    };
+  async ({ url, method, data, params, notification }: any) => {
+    const result = await axios({ url: baseUrl + url, method, data, params, notification } as any);
+    return { data: result.data.data };
+  };
 
 let baseUrl = '';
 if (typeof window !== 'undefined') {
@@ -131,22 +131,6 @@ export const commonSplitApi = createApi({
         method: 'get',
       }),
     }),
-    createLike: build.mutation<any, { postId: number }>({
-      query: (data) => ({
-        name: '创建喜欢',
-        url: '/api/likes/create',
-        method: 'post',
-        data,
-      }),
-    }),
-    deleteLike: build.mutation<any, { postId: number }>({
-      query: (data) => ({
-        name: '删除喜欢',
-        url: '/api/likes/delete',
-        method: 'post',
-        data,
-      }),
-    }),
     createCollection: build.mutation<any, { postId: number }>({
       query: (data) => ({
         name: '创建文章收藏',
@@ -204,6 +188,7 @@ export const commonSplitApi = createApi({
         notification: true,
       }),
     }),
+
     fetchComments: build.query<any, { postId: number }>({
       query: (data) => ({
         name: '获取评论列表',
@@ -237,16 +222,19 @@ export const commonSplitApi = createApi({
         data,
       }),
     }),
-    fetchNotifications: build.query<{
-      id: number;
-      senderId: number;
-      receiverId: number;
-      targetId: number;
-      type: number;
-      title: string;
-      content: string;
-      read: string;
-    }[], { receiverId: number }>({
+    fetchNotifications: build.query<
+      {
+        id: number;
+        senderId: number;
+        receiverId: number;
+        targetId: number;
+        type: number;
+        title: string;
+        content: string;
+        read: string;
+      }[],
+      { receiverId: number }
+    >({
       query: (data) => ({
         name: '获取通知列表',
         url: '/api/notifications',
@@ -278,8 +266,6 @@ export const {
   useLazyFetchUserByIdQuery,
   useCreateCollectionMutation,
   useDeleteCollectionMutation,
-  useCreateLikeMutation,
-  useDeleteLikeMutation,
   useCreateCategoryMutation,
   useUpdateCategoryMutation,
   useGetLoginUserQuery,
@@ -293,7 +279,7 @@ export const {
   useSendEmailMutation,
   useActiveEmailMutation,
   useFetchNotificationsQuery,
-  useUpdateNotificationsMutation
+  useUpdateNotificationsMutation,
 } = commonSplitApi;
 
 export const { fetchPosts, fetchCategories } = commonSplitApi.endpoints;

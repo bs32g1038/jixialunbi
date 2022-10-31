@@ -69,6 +69,7 @@ export class PostsService {
             authorId,
           },
         },
+        timeLines: true,
       },
       orderBy: {
         ...((isHot

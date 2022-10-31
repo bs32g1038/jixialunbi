@@ -10,6 +10,7 @@ import CollectButton from '../../../CollectButton';
 import CommentList from '../CommentList';
 import EllipsisDropdown from './components/EllipsisDropdown';
 import { unionBy } from 'lodash';
+import TimeLine from './components/TimeLine';
 
 export default function TopicItem(props: { item: any }) {
   const [open, setOpen] = useState(false);
@@ -27,14 +28,14 @@ export default function TopicItem(props: { item: any }) {
               <div style={{ flex: '1 0 auto' }}>
                 <div className={styles.byline}>
                   <div>
-                    <Link href={`/profile/${item.author && item.author.id}`}>
-                      <a className={styles.username}>{item?.author?.username}</a>
+                    <Link href={`/profile/${item.author && item.author.id}`} className={styles.username}>
+                      {item?.author?.username}
                     </Link>
                   </div>
                   <Space size={4} style={{ fontSize: '13px' }}>
                     <span title={parseTime(item.createdAt)}>{parseTime(item.createdAt)}</span>
                     <span>·</span>
-                    <EllipsisDropdown authorId={item?.author?.id} postId={item.id}></EllipsisDropdown>
+                    <EllipsisDropdown authorId={item?.author?.id} postId={item.id} id={0}></EllipsisDropdown>
                   </Space>
                 </div>
                 <p className={styles.about}>{item?.author?.about}</p>
@@ -75,6 +76,7 @@ export default function TopicItem(props: { item: any }) {
                 })}
               </div>
             )}
+            {item?.timeLines?.length > 0 && <TimeLine data={item?.timeLines}></TimeLine>}
             <div className={styles.footer}>
               <Space>
                 <div>

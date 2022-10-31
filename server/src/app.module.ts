@@ -7,6 +7,7 @@ import { FileModule } from './modules/file/file.module';
 import { LikeModule } from './modules/like/like.module';
 import { NotificationModule } from './modules/notification/notification.module';
 import { PostCollectionModule } from './modules/post-collection/post.collection.module';
+import { PostTimeLineModule } from './modules/post-time-line/post.time.line.module';
 import { PostsModule } from './modules/posts/posts.module';
 import { UsersModule } from './modules/users/users.module';
 import { PrismaModule } from './prisma/prisma.module';
@@ -22,7 +23,8 @@ import { PrismaModule } from './prisma/prisma.module';
     LikeModule,
     PostCollectionModule,
     FileModule,
-    NotificationModule
+    NotificationModule,
+    PostTimeLineModule,
   ],
 })
 export class AppModule {
