@@ -282,6 +282,8 @@ ol.stories li:first-child div.story_liner {
     border: 1px dashed #e1e1e1;
     padding: 2px;
     display: inline-block;
+    img {
+      object-fit: cover;
+    }
   }
 }
-
