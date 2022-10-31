@@ -6,6 +6,7 @@ import { parseTime } from '@/libs/time';
 import WriteTimeLine from '@/components/WriteTimeLine';
 import { useState } from 'react';
 import { useDeleteTimeLineMutation } from '@/components/WriteTimeLine/service';
+import { useAppSelector } from '@/hooks';
 
 interface Props {
   data: any;
@@ -17,6 +18,7 @@ export default function TimeLine(props: Props) {
     visible: false,
     id: 0,
   });
+  const user = useAppSelector((state) => state.app.user);
   const [deleteTimeLine] = useDeleteTimeLineMutation();
   return (
     <div className={styles.timeline}>
@@ -35,35 +37,37 @@ export default function TimeLine(props: Props) {
                   __html: item.title,
                 }}
               ></div>
-              <div>
-                <Button
-                  type="text"
-                  onClick={() => {
-                    setTimeLine({
-                      visible: true,
-                      id: item.id,
-                    });
-                  }}
-                >
-                  <EditOutlined></EditOutlined>编辑
-                </Button>
-                <Button
-                  type="text"
-                  danger
-                  className={styles.delete}
-                  onClick={() => {
-                    deleteTimeLine({
-                      id: item.id,
-                    })
-                      .unwrap()
-                      .then(() => {
-                        message.success('删除成功！');
+              {user?.id === item.authorId && (
+                <div>
+                  <Button
+                    type="text"
+                    onClick={() => {
+                      setTimeLine({
+                        visible: true,
+                        id: item.id,
                       });
-                  }}
-                >
-                  <DeleteOutlined></DeleteOutlined>删除
-                </Button>
-              </div>
+                    }}
+                  >
+                    <EditOutlined></EditOutlined>编辑
+                  </Button>
+                  <Button
+                    type="text"
+                    danger
+                    className={styles.delete}
+                    onClick={() => {
+                      deleteTimeLine({
+                        id: item.id,
+                      })
+                        .unwrap()
+                        .then(() => {
+                          message.success('删除成功！');
+                        });
+                    }}
+                  >
+                    <DeleteOutlined></DeleteOutlined>删除
+                  </Button>
+                </div>
+              )}
             </Timeline.Item>
           );
         })}
