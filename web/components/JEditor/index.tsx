@@ -14,6 +14,7 @@ import QuoteSvg from './components/quote';
 import { SendOutlined } from '@ant-design/icons';
 import ClearSvg from './components/clear';
 import HSvg from './components/h';
+import Link from '@tiptap/extension-link';
 
 const MenuBar = ({ editor, len }: any) => {
   if (!editor) {
@@ -107,6 +108,9 @@ export default React.forwardRef(function JEditor(props: Props, ref) {
       Placeholder.configure({
         showOnlyWhenEditable: false,
         placeholder: placeholder || '来了，就说点什么吧！',
+      }),
+      Link.configure({
+        openOnClick: true,
       }),
     ],
     content: value,
