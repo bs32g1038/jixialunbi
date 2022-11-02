@@ -19,12 +19,16 @@ export class PostController {
       authorId: Joi.number(),
       categoryId: Joi.number(),
       isHot: Joi.boolean(),
+      page: Joi.number().default(1),
+      pageSize: Joi.number().default(20),
     })
     query: {
       id: number;
       categoryId: number;
       authorId: number;
       isHot: boolean;
+      page: number;
+      pageSize: number;
     }
   ) {
     return this.postService.findAllByCategoryId({
@@ -32,6 +36,8 @@ export class PostController {
       authorId: query.authorId,
       isHot: query.isHot,
       ids: [query.id],
+      page: query.page,
+      pageSize: query.pageSize,
     });
   }
 
@@ -77,6 +83,8 @@ export class PostController {
         authorId: 0,
         isHot: false,
         ids,
+        page: req.query.page ?? 1,
+        pageSize: req.query.pageSize ?? 20,
       });
       return {
         items,

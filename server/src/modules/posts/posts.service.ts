@@ -20,6 +20,8 @@ export class PostsService {
     authorId: number;
     categoryId: number;
     isHot?: boolean;
+    page: number;
+    pageSize: number;
   }): Promise<{ items: Post[]; count: number }> {
     const { categoryId, authorId, isHot, ids } = filters;
     const where = {
@@ -35,6 +37,8 @@ export class PostsService {
       Object.assign(where, { authorId });
     }
     const items = await this.prisma.post.findMany({
+      skip: (filters.page - 1) * filters.pageSize,
+      take: filters.pageSize,
       where: { ...where },
       include: {
         author: {
@@ -79,7 +83,9 @@ export class PostsService {
           : { createdAt: 'desc' }) as any),
       },
     });
-    const count = await this.prisma.post.count();
+    const count = await this.prisma.post.count({
+      where: { ...where },
+    });
     return { items, count };
   }
 

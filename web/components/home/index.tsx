@@ -22,6 +22,7 @@ const Home = () => {
       id: postId,
       type,
       query: q,
+      page,
     },
     isUndefined
   );
@@ -38,11 +39,12 @@ const Home = () => {
           {items.map((item: any) => (
             <TopicItem item={item} key={item.id}></TopicItem>
           ))}
-          {count > 10 && (
+          {count > 20 && (
             <Pagination
               className={styles.pagination}
               size="small"
               current={page}
+              pageSize={20}
               total={count}
               showSizeChanger={false}
               onChange={(p) => {
@@ -58,7 +60,7 @@ const Home = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (data) => {
   const { query } = data;
-  const { type, categoryId, postId, q, sort } = query as any;
+  const { type, categoryId, postId, q, sort, page } = query as any;
   const reqParams = omitBy(
     {
       categoryId,
@@ -66,6 +68,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (d
       id: postId,
       type,
       query: q,
+      page: page ?? 1,
     },
     isUndefined
   );
