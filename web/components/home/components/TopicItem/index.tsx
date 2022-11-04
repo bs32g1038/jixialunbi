@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { parseTime } from '../../../../libs/time';
+import { parseTime, timeAgo } from '../../../../libs/time';
 import styles from './index.module.scss';
 import { Avatar, Button, Space, Tag, Popover, Image } from 'antd';
 import { CommentOutlined } from '@ant-design/icons';
@@ -77,6 +77,9 @@ export default function TopicItem(props: { item: any }) {
               </div>
             )}
             {item?.timeLines?.length > 0 && <TimeLine data={item?.timeLines}></TimeLine>}
+            {item.createdAt !== item.updatedAt && (
+              <p className={styles.lastEditTime}>最后编辑于 {parseTime(item.updatedAt)}</p>
+            )}
             <div className={styles.footer}>
               <Space>
                 <div>

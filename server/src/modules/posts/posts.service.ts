@@ -184,6 +184,7 @@ export class PostsService {
       },
       data: {
         ...params_without_id,
+        updatedAt: new Date(),
       },
     });
     const post = await this.get(id);

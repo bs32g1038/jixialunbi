@@ -1,5 +1,5 @@
 .timeline {
-  margin-bottom: -40px;
+  margin-bottom: -20px;
   .timelineTitle {
     display: inline-flex;
     align-items: center;
@@ -22,6 +22,15 @@
     background: #f6f7f9;
     padding: 1px 10px;
     border-radius: 8px;
+  }
+  .lastEditTime {
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 12px;
+    padding: 8px 5px;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: flex-end;
+    flex: 1 0 auto;
   }
 }
 

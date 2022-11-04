@@ -35,6 +35,7 @@ export class PostTimeLineService {
       },
       data: {
         title,
+        updatedAt: new Date(),
       },
     });
   }
