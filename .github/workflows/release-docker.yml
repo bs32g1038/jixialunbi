@@ -1,0 +1,32 @@
+name: Release Docker CI
+
+on:
+  push:
+    branches:
+    - release
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish jixialunbi-server to Registry
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: bs32g1038/jixialunbi-server:v1
+        username: ${{ github.actor }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+        registry: ghcr.io
+        workdir: server
+      env:
+        CI: true
+    - name: Publish jixialunbi-web to Registry
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: bs32g1038/jixialunbi-web:v1
+        username: ${{ github.actor }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+        registry: ghcr.io
+        workdir: web
+      env:
+        CI: true
