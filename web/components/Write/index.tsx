@@ -50,8 +50,8 @@ const Core = (props: { visible: boolean; postId?: number }) => {
   };
   const onFinish = (values: any) => {
     form.validateFields().then(() => {
-      if (ref.current.getLength() > 300) {
-        return message.error('不能大于300字');
+      if (ref.current.getLength() > 400) {
+        return message.error('不能大于400字');
       }
       Object.assign(values, {
         pics: values.pics

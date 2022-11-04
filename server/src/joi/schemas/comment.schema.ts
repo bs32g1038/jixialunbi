@@ -5,7 +5,12 @@ import Joi from '..';
 
 export const CommentSchema = {
   id: Joi.number(),
-  content: Joi.string().max(400),
+  content: Joi.string().custom((value, helpers) => {
+    if (value.replace(/<[^<>]+>/g, '').length > 400) {
+      return helpers.error('content length cannot be greater than 400 !');
+    }
+    return value;
+  }),
   postId: Joi.number(),
   parentId: Joi.number().allow(null),
   replyId: Joi.number().allow(null),
@@ -13,7 +18,12 @@ export const CommentSchema = {
 };
 
 export const PostSchema = {
-  title: Joi.string().max(400),
+  title: Joi.string().custom((value, helpers) => {
+    if (value.replace(/<[^<>]+>/g, '').length > 400) {
+      return helpers.error('title length cannot be greater than 400 !');
+    }
+    return value;
+  }),
   categoryId: Joi.number(),
   tags: Joi.string().allow(''),
   pics: Joi.string().allow(''),
