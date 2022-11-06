@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { parseTime, timeAgo } from '../../../../libs/time';
+import { parseTime } from '../../../../libs/time';
 import styles from './index.module.scss';
-import { Avatar, Button, Space, Tag, Popover, Image } from 'antd';
+import { Avatar, Button, Space, Tag, Popover } from 'antd';
 import { CommentOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 import LikeButton from '../../../LikeButton';
@@ -11,6 +11,10 @@ import CommentList from '../CommentList';
 import EllipsisDropdown from './components/EllipsisDropdown';
 import { unionBy } from 'lodash';
 import TimeLine from './components/TimeLine';
+import dynamic from 'next/dynamic';
+const CImage: any = dynamic(() => import('./components/CImage') as any, {
+  ssr: false,
+});
 
 export default function TopicItem(props: { item: any }) {
   const [open, setOpen] = useState(false);
@@ -70,7 +74,7 @@ export default function TopicItem(props: { item: any }) {
                 {item?.pics?.split(',').map((pic) => {
                   return (
                     <div key={pic} className={styles.pic}>
-                      <Image width={120} height={80} src={pic} alt="" />
+                      <CImage src={pic}></CImage>
                     </div>
                   );
                 })}

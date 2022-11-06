@@ -28,6 +28,7 @@
 }
 
 .replyUserList {
+
   // margin-top: 10px;
   img {
     width: 20px;
@@ -84,6 +85,7 @@
   display: flex;
   gap: 8px;
   border-bottom: 1px dashed #f0f0f0;
+
   svg {
     fill: rgba(0, 0, 0, 0.45);
     margin-right: 4px;
@@ -127,6 +129,7 @@ ol.stories li:first-child div.story_liner {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+
   a {
     color: rgba(0, 0, 0, 0.65);
     text-decoration: none;
@@ -179,6 +182,7 @@ ol.stories li:first-child div.story_liner {
   display: flex;
   align-items: center;
   gap: 8px;
+
   img {
     width: 20px;
     height: 20px;
@@ -259,9 +263,11 @@ ol.stories li:first-child div.story_liner {
   justify-content: space-between;
   border-radius: 5px;
   background-color: #f5f5f5;
+
   .inputWrap {
     width: 100%;
   }
+
   .input {
     width: 100%;
     border: none;
@@ -285,12 +291,26 @@ ol.stories li:first-child div.story_liner {
   display: flex;
   gap: 5px;
   flex-wrap: wrap;
+
   .pic {
     border: 1px dashed #e1e1e1;
     padding: 2px;
     display: inline-block;
+    width: 120px;
+    height: 80px;
+    overflow: hidden;
+
+    :global {
+      .ant-image {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
     img {
       object-fit: cover;
+      width: 100%;
+      height: 100%;
     }
   }
 }
