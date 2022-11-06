@@ -1,7 +1,8 @@
 version: '3'
 services:
   server:
-    image: ghcr.io/bs32g1038/jixialunbi-server:v1
+    build:
+      context: ./server
     restart: always
     command: npm run start:prod
     depends_on:
@@ -17,7 +18,8 @@ services:
     networks:
       - jixialunbi-network
   web:
-    image: ghcr.io/bs32g1038/jixialunbi-web:v1
+    build:
+      context: ./web
     restart: always
     command: npm run start
     depends_on:
