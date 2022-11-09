@@ -1,0 +1,28 @@
+.top {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  .topItem {
+    display: flex;
+    align-items: center;
+  }
+  .topLabel {
+    color: #85a5ff;
+    font-size: 12px;
+    border: 1px solid #85a5ff;
+    padding: 0 3px;
+    flex: 0 0 auto;
+    margin-right: 5px;
+    line-height: 16px;
+    box-sizing: border-box;
+    border-radius: 1px;
+  }
+  .topContent {
+    width: 90%;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: inherit;
+  }
+}

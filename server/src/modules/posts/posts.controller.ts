@@ -1,6 +1,8 @@
-import { Controller, Get, Post, Request } from '@nestjs/common';
+import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import * as Joi from 'joi';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import HTTP_EXCEPTION from 'src/common/http.exception';
+import ROLES from 'src/common/roles.enum';
 import { UseJwtAuthGuard } from 'src/decorators/guard.decorator.ts';
 import { JoiBody, JoiParam, JoiQuery } from 'src/decorators/joi.decorator';
 import { RequestUser } from 'src/decorators/request.decorator';
@@ -19,6 +21,8 @@ export class PostController {
       authorId: Joi.number(),
       categoryId: Joi.number(),
       isHot: Joi.boolean(),
+      pinned: Joi.boolean(),
+      good: Joi.boolean(),
       page: Joi.number().default(1),
       pageSize: Joi.number().default(20),
     })
@@ -31,13 +35,9 @@ export class PostController {
       pageSize: number;
     }
   ) {
-    return this.postService.findAllByCategoryId({
-      categoryId: query.categoryId,
-      authorId: query.authorId,
-      isHot: query.isHot,
+    return this.postService.findPostList({
+      ...query,
       ids: [query.id],
-      page: query.page,
-      pageSize: query.pageSize,
     });
   }
 
@@ -78,7 +78,7 @@ export class PostController {
     const res = await postsMeiliSearchIndex.search(req.query.query);
     const ids = res.hits.map((item) => item.id);
     if (ids.length > 0) {
-      const { items } = await this.postService.findAllByCategoryId({
+      const { items } = await this.postService.findPostList({
         categoryId: 0,
         authorId: 0,
         isHot: false,
@@ -95,5 +95,14 @@ export class PostController {
       items: [],
       count: 0,
     };
+  }
+
+  @Post('/api/posts/pin')
+  @UseGuards(JwtAuthGuard({ role: ROLES.superAdmin }))
+  async pinPost(@Request() req, @JoiBody({ id: Joi.number(), pinned: Joi.boolean() }) body) {
+    return await this.postService.update(req.user.id, {
+      id: body.id,
+      pinned: body.pinned,
+    });
   }
 }

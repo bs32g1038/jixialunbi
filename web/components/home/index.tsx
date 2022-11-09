@@ -10,6 +10,7 @@ import { fetchCategories, fetchPosts, useFetchPostsQuery } from '../../apis';
 import Search from './components/Search';
 import { wrapper } from '@/store';
 import { useRouter } from 'next/router';
+import PinnedList from './components/PinnedList';
 
 const Home = () => {
   const [page, setPage] = useState(1);
@@ -31,6 +32,7 @@ const Home = () => {
     <Layout>
       <TopTip></TopTip>
       <Search></Search>
+      <PinnedList></PinnedList>
       {type !== 'search' && <CategoryList></CategoryList>}
       {isEmpty(items) ? (
         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
@@ -74,6 +76,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (d
   );
   await store.dispatch(fetchCategories.initiate());
   await store.dispatch(fetchPosts.initiate(reqParams));
+  await store.dispatch(fetchPosts.initiate({ pinned: true }));
   return {
     props: {},
   };

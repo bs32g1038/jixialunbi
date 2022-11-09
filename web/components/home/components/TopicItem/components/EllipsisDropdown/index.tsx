@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
-import { DeleteOutlined, EditOutlined, EllipsisOutlined, EyeFilled, PlusCircleOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EllipsisOutlined,
+  EyeFilled,
+  PlusCircleOutlined,
+  PushpinOutlined,
+} from '@ant-design/icons';
 import { Button, Dropdown, Menu, message, Space } from 'antd';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { setWriteModalState, showLoginModal } from '@/store/app';
-import { useDeletePostMutation } from '@/apis';
+import { useDeletePostMutation, usePinPostMutation } from '@/apis';
 import WriteTimeLine from '@/components/WriteTimeLine';
 
 interface Props {
   authorId: number;
+  pinned: boolean;
   postId: number;
   id: number;
 }
@@ -20,6 +28,7 @@ export default function EllipsisDropdown(props: Props) {
     id: props.id ?? 0,
   });
   const [deletePost] = useDeletePostMutation();
+  const [pinPost] = usePinPostMutation();
   return (
     <React.Fragment>
       <Dropdown
@@ -51,6 +60,13 @@ export default function EllipsisDropdown(props: Props) {
                     message.success('删除成功!');
                   });
               }
+              if (key === '置顶') {
+                pinPost({ id: props.postId, pinned: !props.pinned })
+                  .unwrap()
+                  .then(() => {
+                    message.success(props.pinned ? '已取消置顶!' : '置顶成功！');
+                  });
+              }
             }}
             items={[
               ...(user?.id !== props.authorId
@@ -62,6 +78,19 @@ export default function EllipsisDropdown(props: Props) {
                         </Space>
                       ),
                       key: '举报',
+                    },
+                  ]
+                : []),
+              ...(user && user.role === 'SuperAdmin'
+                ? [
+                    {
+                      label: (
+                        <Space>
+                          <PushpinOutlined />
+                          {props.pinned ? '取消置顶' : '置顶'}
+                        </Space>
+                      ),
+                      key: '置顶',
                     },
                   ]
                 : []),

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Post } from '@prisma/client';
+import { isEmpty, isNull, isUndefined, pick, pickBy } from 'lodash';
 import { postsMeiliSearchIndex } from 'src/utils/meilisearch.util';
 import { PrismaService } from '../../prisma/prisma.service';
 
@@ -15,27 +16,26 @@ export class PostsService {
     });
   }
 
-  async findAllByCategoryId(filters: {
+  async findPostList(filters: {
     ids: number[];
     authorId: number;
     categoryId: number;
     isHot?: boolean;
+    pinned?: boolean;
+    good?: boolean;
     page: number;
     pageSize: number;
   }): Promise<{ items: Post[]; count: number }> {
-    const { categoryId, authorId, isHot, ids } = filters;
+    const { isHot, ids, authorId } = filters;
     const where = {
       deleted: null,
     };
     if (ids.filter((_) => _).length > 0) {
       Object.assign(where, { id: { in: ids } });
     }
-    if (categoryId) {
-      Object.assign(where, { categoryId });
-    }
-    if (authorId) {
-      Object.assign(where, { authorId });
-    }
+    const res = pick(filters, ['categoryId', 'authorId', 'good', 'pinned']);
+    const obj = pickBy(res, (_) => !(isNull(_) || isUndefined(_)));
+    Object.assign(where, obj);
     const items = await this.prisma.post.findMany({
       skip: (filters.page - 1) * filters.pageSize,
       take: filters.pageSize,
@@ -175,7 +175,7 @@ export class PostsService {
     });
   }
 
-  async update(authorId: number, params: Post) {
+  async update(authorId: number, params) {
     const { id, ...params_without_id } = params;
     await this.prisma.post.updateMany({
       where: {

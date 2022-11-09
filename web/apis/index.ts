@@ -49,6 +49,8 @@ export const commonSplitApi = createApi({
         id?: number;
         type?: string;
         query?: string;
+        pinned?: boolean;
+        good?: boolean;
       }
     >({
       query: (d) => {
@@ -97,6 +99,14 @@ export const commonSplitApi = createApi({
       query: (data) => ({
         name: '删除文章',
         url: '/api/posts/delete',
+        method: 'post',
+        data,
+      }),
+    }),
+    pinPost: build.mutation<any, { id: number; pinned: boolean }>({
+      query: (data) => ({
+        name: '置顶文章',
+        url: '/api/posts/pin',
         method: 'post',
         data,
       }),
@@ -258,6 +268,7 @@ export const {
   useLazyFetchPostsQuery,
   useFetchCategoriesQuery,
   useFetchPostByIdQuery,
+  usePinPostMutation,
   useLazyFetchPostByIdQuery,
   useCreatePostMutation,
   useDeletePostMutation,

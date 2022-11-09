@@ -39,7 +39,12 @@ export default function TopicItem(props: { item: any }) {
                   <Space size={4} style={{ fontSize: '13px' }}>
                     <span title={parseTime(item.createdAt)}>{parseTime(item.createdAt)}</span>
                     <span>·</span>
-                    <EllipsisDropdown authorId={item?.author?.id} postId={item.id} id={0}></EllipsisDropdown>
+                    <EllipsisDropdown
+                      pinned={item.pinned}
+                      authorId={item?.author?.id}
+                      postId={item.id}
+                      id={0}
+                    ></EllipsisDropdown>
                   </Space>
                 </div>
                 <p className={styles.about}>{item?.author?.about}</p>
