@@ -26,7 +26,7 @@ const NotificationIcon = () => {
           refetch();
         }
       }}
-      overlay={
+      dropdownRender={() => (
         <List
           className={styles.noticeList}
           style={{
@@ -64,7 +64,7 @@ const NotificationIcon = () => {
             </List.Item>
           )}
         />
-      }
+      )}
     >
       <Button type="text" size="small">
         <Badge count={data?.length ?? 0} size="small">
@@ -115,16 +115,14 @@ export default function AppHeader() {
             <React.Fragment>
               <NotificationIcon></NotificationIcon>
               <Dropdown
-                overlay={
-                  <Menu
-                    items={[
-                      {
-                        label: <Link href={'/profile/' + user.id}>个人信息</Link>,
-                        key: '0',
-                      },
-                    ]}
-                  />
-                }
+                menu={{
+                  items: [
+                    {
+                      label: <Link href={'/profile/' + user.id}>个人信息</Link>,
+                      key: '0',
+                    },
+                  ],
+                }}
                 trigger={['click']}
               >
                 <Button size="small" type="text" style={{ lineHeight: 1 }}>
