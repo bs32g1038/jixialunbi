@@ -76,12 +76,14 @@ const Core = (props: { visible: boolean; postId?: number }) => {
     if (visible && data) {
       form.setFieldsValue({
         ...(postId ? postData : {}),
-        categoryId: data?.[0]?.id,
-        pics: (postData?.pics?.split(',') ?? []).map((item, index) => ({
-          uid: index,
-          status: 'done',
-          url: item,
-        })),
+        categoryId: postData?.categoryId ?? data?.[0]?.id,
+        pics: !postData?.pics
+          ? []
+          : postData?.pics?.split(',').map((item, index) => ({
+              uid: index,
+              status: 'done',
+              url: item,
+            })),
       });
     }
   }, [data, form, postData, postId, visible]);
