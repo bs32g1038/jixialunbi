@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './index.module.scss';
 import { Form, message, Select, Upload } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
@@ -15,9 +15,11 @@ import {
   useUpdatePostMutation,
 } from '@/apis';
 import { PlusOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/router';
 
 const Core = (props: { visible: boolean; postId?: number }) => {
   const { visible, postId } = props;
+  const router = useRouter();
   const dispatch = useDispatch();
   const [form] = useForm();
   const { data = [] } = useFetchCategoriesQuery();
@@ -27,8 +29,8 @@ const Core = (props: { visible: boolean; postId?: number }) => {
       fetchPost({ postId });
     }
   }, [fetchPost, postId]);
-  const [createPost] = useCreatePostMutation();
-  const [updatePost] = useUpdatePostMutation();
+  const [createPost, { isLoading: createLoading }] = useCreatePostMutation();
+  const [updatePost, { isLoading: updateLoading }] = useUpdatePostMutation();
   const ref = useRef(null);
   const handleUpload = (info) => {
     if (Array.isArray(info)) {
@@ -61,14 +63,34 @@ const Core = (props: { visible: boolean; postId?: number }) => {
           .join(','),
       });
       if (postId) {
-        return updatePost({ ...values, id: postId }).then(() => {
-          message.success('更新成功！');
-        });
+        return updatePost({ ...values, id: postId })
+          .unwrap()
+          .then((res) => {
+            message.success('更新成功！');
+            router.push(`/category/${res.categoryId}?postId=${res.id}`);
+          })
+          .then(() => {
+            dispatch(
+              setWriteModalState({
+                visible: false,
+                postId: '',
+              })
+            );
+          });
       }
       createPost(values)
         .unwrap()
-        .then(() => {
+        .then((res) => {
           message.success('发布成功！');
+          router.push(`/category/${res.categoryId}?postId=${res.id}`);
+        })
+        .then(() => {
+          dispatch(
+            setWriteModalState({
+              visible: false,
+              postId: '',
+            })
+          );
         });
     });
   };
@@ -103,7 +125,7 @@ const Core = (props: { visible: boolean; postId?: number }) => {
     >
       <Form form={form} onFinish={onFinish}>
         <Form.Item name="title" rules={[{ required: true, message: '内容不能为空！' }]}>
-          <JEditor ref={ref}></JEditor>
+          <JEditor loading={createLoading || updateLoading} ref={ref}></JEditor>
         </Form.Item>
         <div className={styles.footer}>
           <Form.Item name="categoryId" label="分类" style={{ marginBottom: 0 }}>

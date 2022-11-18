@@ -16,7 +16,7 @@ import ClearSvg from './components/clear';
 import HSvg from './components/h';
 import Link from '@tiptap/extension-link';
 
-const MenuBar = ({ editor, len }: any) => {
+const MenuBar = ({ editor, len, loading }: any) => {
   if (!editor) {
     return null;
   }
@@ -80,6 +80,7 @@ const MenuBar = ({ editor, len }: any) => {
         size="small"
         style={{ fontSize: '14px' }}
         type="text"
+        loading={loading}
         icon={<SendOutlined style={{ display: 'inline-block', marginRight: 0 }} />}
         htmlType="submit"
       >
@@ -94,6 +95,7 @@ interface Props {
   value?: string;
   onChange?: () => void;
   placeholder?: string;
+  loading?: boolean;
 }
 
 StarterKit.options.heading = {
@@ -101,7 +103,7 @@ StarterKit.options.heading = {
 };
 
 export default React.forwardRef(function JEditor(props: Props, ref) {
-  const { value, onChange = noop, placeholder } = props;
+  const { value, onChange = noop, placeholder, loading } = props;
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -130,7 +132,7 @@ export default React.forwardRef(function JEditor(props: Props, ref) {
   }, [editor, editor?.commands, value]);
   return (
     <div className={style.wrap}>
-      <MenuBar editor={editor} len={editor?.getText()?.length ?? 0} />
+      <MenuBar loading={loading} editor={editor} len={editor?.getText()?.length ?? 0} />
       <EditorContent className="toastui-editor-contents" editor={editor} />
     </div>
   );
