@@ -9,9 +9,11 @@ import { EditOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { useAppSelector } from '@/hooks';
 import { useFetchCategoriesQuery } from '@/apis';
+import useSWR from 'swr';
 import EditModal from './components/EditModal';
 import { omit } from 'lodash';
 import queryString from 'query-string';
+import axios from '@/libs/axios';
 const CreateCategory = dynamic(
   () => import('@/components/home/components/CategoryList/components/CreateCategory') as any,
   {
@@ -64,13 +66,19 @@ const CategoryItem = (props: { item: any; isActive: boolean; isAdmin?: boolean; 
   );
 };
 
+const fetcher = (url) => axios.get(url).then((res) => res.data);
+
 export default function CategoryList() {
-  const { data = [], refetch, isLoading } = useFetchCategoriesQuery();
+  const {
+    data = { data: [{ title: '机型天下' }, { title: '官方公告' }] },
+    isLoading,
+    mutate,
+  } = useSWR('/api/v1/categories', fetcher);
+  console.log(data, isLoading);
   const router = useRouter();
   const [select, setSelect] = useState(router.query.sort ?? 'default');
-  const description = data?.find((item) => item.id === Number(router.query.id))?.description;
-  const user = useAppSelector((state) => state.app.user);
-  const isAdmin = user?.role === 'SuperAdmin';
+  // const user = useAppSelector((state) => state.app.user);
+  // const isAdmin = user?.role === 'SuperAdmin';
   return (
     <Spin spinning={isLoading}>
       <div className={styles.wrap}>
@@ -86,18 +94,24 @@ export default function CategoryList() {
               <Space>全站</Space>
             </Button>
           </Link>
-          {data.map((item: { name: string; id: number }) => {
+          {[
+            { name: '机行天下' },
+            { name: '小学文学' },
+            { name: '分享发现' },
+            { name: '灌水专区' },
+            { name: '官方公告' },
+          ].map((item: { name: string; id: number }) => {
             return (
               <CategoryItem
                 key={item.id}
                 item={item}
                 isActive={parseInt(router.query.categoryId as string) === item.id}
-                isAdmin={isAdmin}
-                refetch={refetch}
+                isAdmin={false}
+                refetch={mutate}
               ></CategoryItem>
             );
           })}
-          <CreateCategory></CreateCategory>
+          {/* <CreateCategory></CreateCategory> */}
         </div>
         <div>
           <Select

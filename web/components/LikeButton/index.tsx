@@ -14,12 +14,12 @@ interface Props {
 export default function LikeButton(props: Props) {
   const [isActive, setIsActive] = useState(props.isActive);
   const [count, setCount] = useState(props.likeCount);
-  const [createApi] = useCreateLikeMutation();
-  const [deleteApi] = useDeleteLikeMutation();
-  useEffect(() => {
-    setIsActive(props.isActive);
-    setCount(props.likeCount);
-  }, [props.isActive, props.likeCount]);
+  // const [createApi] = useCreateLikeMutation();
+  // const [deleteApi] = useDeleteLikeMutation();
+  // useEffect(() => {
+  //   setIsActive(props.isActive);
+  //   setCount(props.likeCount);
+  // }, [props.isActive, props.likeCount]);
   return (
     <AuthButton
       type="text"
@@ -28,11 +28,11 @@ export default function LikeButton(props: Props) {
       })}
       onClick={async () => {
         if (isActive) {
-          await deleteApi({ postId: props.postId });
+          // await deleteApi({ postId: props.postId });
           setCount(count - 1);
           setIsActive(false);
         } else {
-          await createApi({ postId: props.postId });
+          // await createApi({ postId: props.postId });
           setCount(count + 1);
           setIsActive(true);
         }

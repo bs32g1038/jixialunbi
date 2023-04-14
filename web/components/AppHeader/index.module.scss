@@ -1,10 +1,11 @@
 .header {
-  padding-top: 20px;
-  padding-bottom: 10px;
-  line-height: 18px;
   display: flex;
   justify-content: space-between;
   font-size: 15px;
+  background-color: #fff;
+  border-radius: 2px;
+  padding: 20px;
+  flex: 0;
 }
 
 .headerleft {
@@ -19,6 +20,7 @@
   display: flex;
   align-items: center;
   gap: 2px;
+  text-decoration: none !important;
   img {
     display: block;
   }

@@ -19,6 +19,7 @@ const axiosBaseQuery =
   > =>
   async ({ url, method, data, params, notification }: any) => {
     const result = await axios({ url: baseUrl + url, method, data, params, notification } as any);
+    console.log(result);
     return { data: result.data.data };
   };
 
@@ -65,7 +66,7 @@ export const commonSplitApi = createApi({
         }
         return {
           name: '获取帖子列表',
-          url: '/api/posts',
+          url: '/api/v1/posts',
           method: 'get',
           params: data,
         };
@@ -111,10 +112,10 @@ export const commonSplitApi = createApi({
         data,
       }),
     }),
-    fetchCategories: build.query<any[], void>({
+    fetchCategories: build.query<{ items: any[]; count: number }, void>({
       query: () => ({
         name: '获取分类列表',
-        url: '/api/categories',
+        url: '/api/v1/categories',
         method: 'get',
       }),
     }),

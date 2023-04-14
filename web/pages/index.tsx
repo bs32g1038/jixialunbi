@@ -1,5 +1,3 @@
-import home, { getServerSideProps } from '../components/home';
+import home from '../components/home';
 
 export default home;
-
-export { getServerSideProps };

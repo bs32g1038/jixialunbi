@@ -15,15 +15,15 @@ interface Props {
 
 export default function CollectButton(props: Props) {
   const [isActive, setIsActive] = useState(props.isActive);
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const [count, setCount] = useState(props.collectCount);
-  const [createApi] = useCreateCollectionMutation();
-  const [deleteApi] = useDeleteCollectionMutation();
-  const user = useAppSelector((state) => state.app.user);
-  useEffect(() => {
-    setIsActive(props.isActive);
-    setCount(props.collectCount);
-  }, [props.isActive, props.collectCount]);
+  // const [createApi] = useCreateCollectionMutation();
+  // const [deleteApi] = useDeleteCollectionMutation();
+  // const user = useAppSelector((state) => state.app.user);
+  // useEffect(() => {
+  //   setIsActive(props.isActive);
+  //   setCount(props.collectCount);
+  // }, [props.isActive, props.collectCount]);
   return (
     <AuthButton
       type="text"
@@ -31,14 +31,14 @@ export default function CollectButton(props: Props) {
         [styles.active]: isActive,
       })}
       onClick={async () => {
-        if (!user) {
-          dispatch(showLoginModal(true));
-        }
+        // if (!user) {
+        //   dispatch(showLoginModal(true));
+        // }
         if (isActive) {
-          await deleteApi({ postId: props.postId });
+          // await deleteApi({ postId: props.postId });
           setCount(count - 1);
         } else {
-          await createApi({ postId: props.postId });
+          // await createApi({ postId: props.postId });
           setCount(count + 1);
         }
         setIsActive(!isActive);

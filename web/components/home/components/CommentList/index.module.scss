@@ -22,6 +22,7 @@
     height: 32px;
     // margin-bottom: 2px;
     // margin-right: 2px;
+    min-width: 32px;
     width: 32px;
     vertical-align: baseline;
   }
@@ -287,6 +288,7 @@ ol.stories li:first-child div.story_liner {
 
   .right {
     flex: 1 0 auto;
+    width: 100%;
   }
 
   .reply {

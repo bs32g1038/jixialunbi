@@ -17,7 +17,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  background: rgb(245, 245, 245);
+  /* background: rgb(245, 245, 245); */
 }
 
 /*!

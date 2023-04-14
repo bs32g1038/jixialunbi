@@ -92,3 +92,25 @@
     gap: 4px;
   }
 }
+
+.content {
+  // display: flex;
+  // gap: 10px;
+  // flex: 1;
+}
+
+.category {
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  width: 140px;
+  padding: 5px;
+  min-height: 300px;
+  .categoryItem {
+    padding: 5px 10px;
+    &.active {
+      background-color: #f1f1f1;
+    }
+  }
+}

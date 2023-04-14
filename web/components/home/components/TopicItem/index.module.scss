@@ -1,6 +1,8 @@
 .item {
-  // border-bottom: 1px dashed #f1f1f1;
-  padding-top: 5px;
+  background-color: #fff;
+  padding: 10px;
+  // border-bottom: 1px dashed #d6d2d2;
+  width: 100%;
 }
 
 .liner {
@@ -24,11 +26,11 @@
     // margin-right: 2px;
     width: 32px;
     vertical-align: baseline;
+    background-color: #eee;
   }
 }
 
 .replyUserList {
-
   // margin-top: 10px;
   img {
     width: 20px;
@@ -84,8 +86,7 @@
   width: 100%;
   display: flex;
   gap: 8px;
-  border-bottom: 1px dashed #f0f0f0;
-
+  padding: 0 10px;
   svg {
     fill: rgba(0, 0, 0, 0.45);
     margin-right: 4px;
@@ -95,6 +96,7 @@
 
 .core {
   width: 100%;
+  position: relative;
 }
 
 .text {
@@ -154,7 +156,20 @@ ol.stories li:first-child div.story_liner {
 .tag {
   font-size: 13px !important;
   text-decoration: none;
-  margin-top: 10px;
+  // position: absolute;
+  // left: -144px;
+  // display: flex;
+  // flex-direction: column;
+  gap: 5px;
+  :global {
+    .ant-tag {
+      border: none;
+      // border-radius: 3px;
+      // background-color: #eee;
+      // border: 1px solid #eee;
+      // color: #111;
+    }
+  }
 }
 
 .domain {
@@ -175,7 +190,7 @@ ol.stories li:first-child div.story_liner {
   line-height: 1.65;
   letter-spacing: 0.5px;
   color: #333;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .mata {
@@ -201,17 +216,21 @@ ol.stories li:first-child div.story_liner {
 .lastEditTime {
   color: rgba(0, 0, 0, 0.45);
   font-size: 12px;
-  padding: 8px 5px;
+  padding: 0 5px;
   margin-bottom: 0;
 }
 
 .footer {
-  padding: 0 0 5px 0;
   font-size: 12px;
   color: rgba(0, 0, 0, 0.65);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  :global {
+    button {
+      padding: 0 !important;
+    }
+  }
 }
 
 .username {
@@ -313,4 +332,23 @@ ol.stories li:first-child div.story_liner {
       height: 100%;
     }
   }
+}
+
+.title {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  a {
+    color: rgba(0, 0, 0, 0.85);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    display: block;
+  }
+}
+
+.summary {
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.65);
+  margin-bottom: 8px;
+  line-height: 22px;
 }

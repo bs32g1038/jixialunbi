@@ -77,8 +77,8 @@ const NotificationIcon = () => {
 
 export default function AppHeader() {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.app.user);
+  // const dispatch = useDispatch();
+  // const user = useAppSelector((state) => state.app.user);
   return (
     <header className={styles.header}>
       <div className={styles.headerleft}>
@@ -98,19 +98,20 @@ export default function AppHeader() {
         <AuthButton
           size="small"
           type="text"
-          onClick={() =>
-            dispatch(
-              setWriteModalState({
-                visible: true,
-              })
-            )
+          onClick={
+            () => {}
+            // dispatch(
+            //   setWriteModalState({
+            //     visible: true,
+            //   })
+            // )
           }
         >
           <Space>
             <WriteSvg></WriteSvg>写作
           </Space>
         </AuthButton>
-        <span className={styles.headerlinks}>
+        {/* <span className={styles.headerlinks}>
           {user ? (
             <React.Fragment>
               <NotificationIcon></NotificationIcon>
@@ -162,7 +163,17 @@ export default function AppHeader() {
               注册/登录
             </Button>
           )}
-        </span>
+        </span> */}
+        <Button
+          onClick={() => {
+            // dispatch(showLoginModal(true));
+          }}
+          type="text"
+          size="small"
+        >
+          <LoginOutlined />
+          注册/登录
+        </Button>
       </div>
     </header>
   );

@@ -24,24 +24,29 @@ const style: React.CSSProperties = {
 
 export default function Layout(props: any) {
   const children = props.children;
-  const { data: user } = useGetLoginUserQuery();
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(setUser(user));
-  }, [dispatch, user]);
+  // const { data: user } = useGetLoginUserQuery();
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(setUser(user));
+  // }, [dispatch, user]);
   return (
+    // <div className={styles.d}>
+    //   <div className={styles.left}>
+    //     <div>test</div>
+    //   </div>
     <div className={styles.wrap}>
       <AppHeader></AppHeader>
-      <ActiveAlert></ActiveAlert>
+      {/* <ActiveAlert></ActiveAlert> */}
       {children}
       <AppFooter></AppFooter>
-      <LoginModal></LoginModal>
-      <Write></Write>
+      {/* <LoginModal></LoginModal> */}
+      {/* <Write></Write> */}
       <BackTop>
         <div style={style}>
           <ArrowUpOutlined />
         </div>
       </BackTop>
+      {/* </div> */}
     </div>
   );
 }

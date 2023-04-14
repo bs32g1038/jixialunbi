@@ -7,8 +7,8 @@ const nextConfig = {
   async rewrites() {
     return [
       //接口请求 前缀带上/api-text/
-      { source: '/api/:path*', destination: `http://${proxy_host}:4000/api/:path*` },
-      { source: '/static/:path*', destination: `http://${proxy_host}:4000/static/:path*` },
+      { source: '/api/:path*', destination: `http://${proxy_host}:8080/api/:path*` },
+      { source: '/static/:path*', destination: `http://${proxy_host}:8080/static/:path*` },
     ]
   },
   webpack: config => {

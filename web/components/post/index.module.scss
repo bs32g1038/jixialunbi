@@ -1,0 +1,33 @@
+.wrap {
+}
+
+.inner {
+  background-color: #fff;
+  padding: 0 20px;
+}
+
+.title {
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 600;
+}
+
+.author {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.authorDes {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.footer {
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  button {
+    font-size: 14px;
+  }
+}
