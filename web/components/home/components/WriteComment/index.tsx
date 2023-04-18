@@ -1,8 +1,9 @@
 import React from 'react';
 import styles from './index.module.scss';
-import { Button, Form, Input, message } from 'antd';
+import { Avatar, Button, Form, Input, message } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
-import { useCreateCommentMutation } from '@/apis';
+import { useSWRMutation } from '@/hooks';
+import { useAppStore } from '@/store';
 
 interface Props {
   postId: number;
@@ -12,32 +13,40 @@ interface Props {
 
 export default function WriteComment(props: Props) {
   const [form] = useForm();
-  const [create] = useCreateCommentMutation();
+  const { user } = useAppStore();
+  const { trigger } = useSWRMutation({ url: '/api/v1/comments' });
   const onFinish = (values: any) => {
     form.validateFields().then(() => {
-      create({ ...values, postId: props.postId, parentId: props.parentId, replyId: props.replyId })
-        .unwrap()
-        .then(() => {
-          message.success('提交成功！');
-          form.resetFields();
-        });
-    })
+      trigger({ ...values, postId: props.postId, parentId: props.parentId, replyId: props.replyId }).then(() => {
+        message.success('提交成功！');
+        form.resetFields();
+      });
+    });
   };
   return (
-    <Form form={form} className={styles.write} onFinish={onFinish}>
-      <Form.Item name="content" className={styles.inputWrap} rules={[{ required: true, message: '最多1-200字', min: 1, max: 200 }]}>
-        <Input.TextArea
-          className={styles.input}
-          size="small"
-          placeholder="发布你的评论！"
-          autoSize={{ minRows: 1, maxRows: 5 }}
-        ></Input.TextArea>
-      </Form.Item>
-      <div className={styles.footer}>
-        <Button size="small" type="primary" onClick={() => form.submit()}>
-          评论
-        </Button>
-      </div>
-    </Form>
+    <div className={styles.write}>
+      <Form form={form} layout="inline" onFinish={onFinish}>
+        <Form.Item>
+          <Avatar src={user?.image}></Avatar>
+        </Form.Item>
+        <Form.Item
+          name="content"
+          className={styles.inputWrap}
+          rules={[{ required: true, message: '最多1-200字', min: 1, max: 200 }]}
+        >
+          <Input.TextArea
+            className={styles.input}
+            size="small"
+            placeholder="发布你的评论！"
+            autoSize={{ minRows: 1, maxRows: 5 }}
+          ></Input.TextArea>
+        </Form.Item>
+        <div className={styles.footer}>
+          <Button className={styles.footerBtn} onClick={() => form.submit()}>
+            发布
+          </Button>
+        </div>
+      </Form>
+    </div>
   );
 }

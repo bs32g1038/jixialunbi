@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { parseTime } from '../../../../libs/time';
 import styles from './index.module.scss';
 import { Avatar, Button, Space, Tag, Popover, Tooltip } from 'antd';
-import { AntDesignOutlined, CommentOutlined, UserOutlined } from '@ant-design/icons';
+import { AntDesignOutlined, CommentOutlined, LikeOutlined, StarOutlined, UserOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 import LikeButton from '../../../LikeButton';
 import CollectButton from '../../../CollectButton';
@@ -19,20 +19,20 @@ const CImage: any = dynamic(() => import('./components/CImage') as any, {
 export default function TopicItem(props: { item: any }) {
   const [open, setOpen] = useState(false);
   const item = props.item;
-  const participants = unionBy(item?.participants, 'author.id');
+  const participants = item?.participants;
   return (
     <div key={item.title} className={styles.item}>
       <div className={styles.liner}>
         <div className={styles.details}>
           <div className={styles.avatarWrap}>
-            <img className={styles.avatar} src={'http://www.jixialunbi.com/' + item?.author.image} alt="" />
+            <img className={styles.avatar} src={item?.author?.image} alt="" />
           </div>
           <div className={styles.core}>
             <div className={styles.header}>
               <div style={{ flex: '1 0 auto' }}>
                 <div className={styles.byline}>
                   <div>
-                    <Link href={`/profile/${item.author && item.author.id}`} className={styles.about}>
+                    <Link href={`/profile/${item?.author?.id}`} className={styles.about}>
                       {item?.author?.username}
                     </Link>
                   </div>
@@ -58,7 +58,7 @@ export default function TopicItem(props: { item: any }) {
             <h2 className={styles.title}>
               <a href={`/posts/${item.id}`}>{item.title}</a>
             </h2>
-            {item.summary && <p className={styles.summary}>{item.summary}</p>}
+            {item.content && <p className={styles.summary}>{item.content}</p>}
             {item?.pics && (
               <div className={styles.pics}>
                 {item?.pics?.split(',').map((pic) => {
@@ -73,61 +73,56 @@ export default function TopicItem(props: { item: any }) {
             <Space style={{ display: 'flex', justifyContent: 'space-between' }}>
               <Space>
                 <div className={styles.footer}>
-                  <Space size={4}>
-                    <div>
-                      <LikeButton
-                        isActive={item?.likes?.length}
-                        postId={item.id}
-                        likeCount={item?.likeCount}
-                      ></LikeButton>
-                    </div>
+                  <Space size={8}>
+                    <Button type="text" size="small">
+                      <span>
+                        <LikeOutlined />
+                        <span>赞同0</span>
+                      </span>
+                    </Button>
                     <Button
                       type="text"
                       size="small"
-                      style={{ fontSize: 12 }}
                       className={classNames(styles.commentClick, { [styles.active]: open })}
                       onClick={() => setOpen(!open)}
                     >
                       <span>
                         <CommentOutlined />
-                        <span>{open ? '收起评论' : item.commentCount + '条评论'}</span>
+                        <span>{item.commentCount + '条评论'}</span>
                       </span>
                     </Button>
-                    <CollectButton
-                      isActive={item?.collections?.length}
-                      postId={item.id}
-                      collectCount={item?.collectCount}
-                    ></CollectButton>
+                    <Button type="text" size="small">
+                      <span>
+                        <StarOutlined />
+                        <span>收藏0</span>
+                      </span>
+                    </Button>
                   </Space>
-                  {participants?.length > 0 && (
-                    <Avatar.Group
-                      maxCount={3}
-                      size="small"
-                      maxStyle={{ color: 'rgba(0, 0, 0, 0.45)', backgroundColor: 'rgb(246, 246, 246)' }}
-                    >
-                      {participants?.map((item: any) => {
-                        return (
-                          <Link key={item.id} href={'/profile/' + item?.author?.id}>
-                            <Popover
-                              placement="bottom"
-                              title={item?.author?.username}
-                              content={
-                                <span style={{ fontSize: 12 }}>
-                                  {item?.author?.about ?? '这家伙很懒，什么都没留下'}
-                                </span>
-                              }
-                              trigger="hover"
-                            >
-                              <Avatar size="small" src={item?.author?.image} style={{ cursor: 'pointer' }} alt="" />
-                            </Popover>
-                          </Link>
-                        );
-                      })}
-                    </Avatar.Group>
-                  )}
                 </div>
               </Space>
-              <Avatar.Group maxCount={3} size="small">
+              {participants?.length > 0 && (
+                <Avatar.Group
+                  maxCount={3}
+                  size="small"
+                  maxStyle={{ color: 'rgba(0, 0, 0, 0.45)', backgroundColor: 'rgb(246, 246, 246)' }}
+                >
+                  {participants?.map((item: any) => {
+                    return (
+                      <Link key={item.id} href={'/profile/' + item?.id}>
+                        <Popover
+                          placement="bottom"
+                          title={item?.username}
+                          content={<span style={{ fontSize: 12 }}>{item?.about ?? '这家伙很懒，什么都没留下'}</span>}
+                          trigger="hover"
+                        >
+                          <Avatar size="small" src={item?.image} style={{ cursor: 'pointer' }} alt="" />
+                        </Popover>
+                      </Link>
+                    );
+                  })}
+                </Avatar.Group>
+              )}
+              {/* <Avatar.Group maxCount={3} size="small">
                 <Avatar size="small" src="https://joesch.moe/api/v1/random?key=1" />
                 <a href="https://ant.design">
                   <Avatar size="small">K</Avatar>
@@ -136,7 +131,7 @@ export default function TopicItem(props: { item: any }) {
                   <Avatar size="small" icon={<UserOutlined />} />
                 </Tooltip>
                 <Avatar size="small" icon={<AntDesignOutlined />} />
-              </Avatar.Group>
+              </Avatar.Group> */}
             </Space>
             {open && <CommentList postId={item.id}></CommentList>}
           </div>

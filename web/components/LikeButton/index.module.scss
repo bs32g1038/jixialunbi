@@ -1,7 +1,17 @@
+.wrap {
+  text-align: center;
+}
+
 .btn {
-  font-size: 14px;
   color: rgba(0, 0, 0, 0.65);
+  position: relative;
+  border-radius: 24px;
+  width: 48px;
+  height: 48px;
+  background: #f8f8f8;
   padding: 0;
+  text-align: center;
+  line-height: 48px;
   &:hover {
     color: #85a5ff !important;
   }

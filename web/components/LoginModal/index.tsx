@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import { showLoginModal } from '../../store/app';
 import Modal from '../Modal';
-import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Form, Input, Button, message, Space, Image, Checkbox } from 'antd';
 import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useForm } from 'antd/lib/form/Form';
-import { setUser } from '../../store/app';
 import Cookies from 'js-cookie';
 import styles from './index.module.scss';
-import { useLoginMutation, useRegisterMutation } from '@/apis';
 import CaptchaSvg from './components/CaptchaSvg';
 import { omit } from 'lodash';
+import useSWRMutation from 'swr/mutation';
+import { useAppStore } from '@/store';
 
 export const LOGIN_TYPE = {
   login: 'login',
@@ -26,48 +24,50 @@ export interface SimpleDialogProps {
   key: string;
 }
 
+async function sendRequest(url, { arg }) {
+  return axios.post(url, arg);
+}
+
 export default function LoginModal() {
-  const dispatch = useAppDispatch();
-  const isShowLoginModal = useAppSelector((state) => state.app.isShowLoginModal);
+  const { isShowLoginModal, setUser, showLoginModal } = useAppStore();
   const [form] = useForm();
   const [tab, setTab] = useState(LOGIN_TYPE.login);
   const router = useRouter();
-  const [login] = useLoginMutation();
-  const [register] = useRegisterMutation();
+  const { trigger: login } = useSWRMutation('/api/v1/auth/login', sendRequest);
+  const { trigger: register } = useSWRMutation('/api/v1/auth/signup', sendRequest);
   const onFinish = (values: any) => {
     form.validateFields().then(() => {
       if (tab === LOGIN_TYPE.login) {
-        return login(values)
-          .unwrap()
-          .then((res) => {
-            message.success('登录成功！');
-            Cookies.set('token', res.token);
-            axios.defaults.headers.common = { Authorization: `bearer ${res.token}` };
-            dispatch(setUser(res.user));
-            router.reload();
-          });
+        login(values).then((res) => {
+          const token = res.data?.data?.token;
+          console.log(res);
+          message.success('登录成功！');
+          Cookies.set('token', token);
+          setUser(res.data?.data);
+          // router.reload();
+        });
+        return;
       }
       if (values.repeatPassword !== values.password) {
         return message.error('两次输入的密码不一致！');
       }
-      register(omit(values, 'repeatPassword'))
-        .unwrap()
-        .then((res) => {
-          message.success('注册成功！');
-          Cookies.set('token', res.token);
-          axios.defaults.headers.common = { Authorization: `bearer ${res.token}` };
-          dispatch(setUser(res.user));
-          router.reload();
-        });
+      register(omit(values, 'repeatPassword')).then((res) => {
+        message.success('注册成功！');
+        Cookies.set('token', res.token);
+        axios.defaults.headers.common = { Authorization: `bearer ${res.token}` };
+        setUser(res.user);
+        router.reload();
+      });
     });
   };
   return isShowLoginModal ? (
     <Modal
+      style={{ top: 40 }}
       footer={null}
-      width={300}
-      visible={isShowLoginModal}
+      width={330}
+      open={isShowLoginModal}
       onCancel={() => {
-        dispatch(showLoginModal(false));
+        showLoginModal(false);
       }}
     >
       <div className={styles.wrap}>
@@ -107,12 +107,12 @@ export default function LoginModal() {
             <Space>
               <Input prefix={<CaptchaSvg />} placeholder="请输入验证码" />
               <Image
-                src="/api/files/captcha"
+                src="/api/v1/auth/captcha"
                 alt=""
                 preview={false}
                 onClick={(e: any) => {
                   if (e.target?.nodeName?.toLocaleLowerCase() === 'img') {
-                    e.target?.setAttribute('src', '/api/files/captcha?' + new Date().getTime());
+                    e.target?.setAttribute('src', '/api/v1/auth/captcha?' + new Date().getTime());
                   }
                 }}
               ></Image>

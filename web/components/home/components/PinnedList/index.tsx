@@ -1,6 +1,9 @@
 import { useFetchPostsQuery } from '@/apis';
 import Link from 'next/link';
 import styles from './index.module.scss';
+import useSWR from 'swr';
+import { fetcher } from '../../services';
+import { Spin } from 'antd';
 
 const data = {
   data: {
@@ -66,7 +69,7 @@ const data = {
           createdAt: '2022-09-24T11:42:43.832Z',
           updatedAt: '2022-09-24T11:42:43.832Z',
         },
-      }
+      },
     ],
     count: 1,
   },
@@ -75,10 +78,10 @@ const data = {
 };
 
 export default function PinnedList() {
-  // const { data } = useFetchPostsQuery({ pinned: true });
+  const { data } = useSWR('/api/v1/pinned-posts', fetcher);
   return (
     <div className={styles.top}>
-      {data?.data.items?.map((item) => {
+      {data?.data?.map((item) => {
         return (
           <div className={styles.topItem} key={item.id}>
             <div className={styles.topLabel}>置顶</div>

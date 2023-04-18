@@ -14,6 +14,7 @@ import EditModal from './components/EditModal';
 import { omit } from 'lodash';
 import queryString from 'query-string';
 import axios from '@/libs/axios';
+import { fetcher } from '../../services';
 const CreateCategory = dynamic(
   () => import('@/components/home/components/CategoryList/components/CreateCategory') as any,
   {
@@ -66,14 +67,8 @@ const CategoryItem = (props: { item: any; isActive: boolean; isAdmin?: boolean; 
   );
 };
 
-const fetcher = (url) => axios.get(url).then((res) => res.data);
-
 export default function CategoryList() {
-  const {
-    data = { data: [{ title: '机型天下' }, { title: '官方公告' }] },
-    isLoading,
-    mutate,
-  } = useSWR('/api/v1/categories', fetcher);
+  const { data, isLoading, mutate } = useSWR('/api/v1/categories', fetcher);
   console.log(data, isLoading);
   const router = useRouter();
   const [select, setSelect] = useState(router.query.sort ?? 'default');
@@ -94,13 +89,7 @@ export default function CategoryList() {
               <Space>全站</Space>
             </Button>
           </Link>
-          {[
-            { name: '机行天下' },
-            { name: '小学文学' },
-            { name: '分享发现' },
-            { name: '灌水专区' },
-            { name: '官方公告' },
-          ].map((item: { name: string; id: number }) => {
+          {data?.data?.map((item: { name: string; id: number }) => {
             return (
               <CategoryItem
                 key={item.id}

@@ -12,24 +12,22 @@ interface Props {
 export default function CommentList(props: Props) {
   const { postId, items = [] } = props;
   return (
-    <div>
-      <div className={styles.commentArea}>
-        {/* <WriteComment postId={postId}></WriteComment> */}
-        {items.map(
-          (item: {
-            createdAt: string;
-            id: number;
-            author: {
-              about: string;
-              image: string;
-              username: string;
-            };
-            content: string;
-          }) => {
-            return <CommentItem key={item.id} postId={postId} item={item}></CommentItem>;
-          }
-        )}
-      </div>
+    <div className={styles.commentArea}>
+      {/* <WriteComment postId={postId}></WriteComment> */}
+      {items.map(
+        (item: {
+          createdAt: string;
+          id: number;
+          author: {
+            about: string;
+            image: string;
+            username: string;
+          };
+          content: string;
+        }) => {
+          return <CommentItem key={item.id} postId={postId} item={item}></CommentItem>;
+        }
+      )}
     </div>
   );
 }

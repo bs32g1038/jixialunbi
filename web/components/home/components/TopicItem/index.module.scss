@@ -222,13 +222,13 @@ ol.stories li:first-child div.story_liner {
 
 .footer {
   font-size: 12px;
-  color: rgba(0, 0, 0, 0.65);
   display: flex;
   justify-content: space-between;
   align-items: center;
   :global {
     button {
       padding: 0 !important;
+      color: rgba(0, 0, 0, 0.65) !important;
     }
   }
 }

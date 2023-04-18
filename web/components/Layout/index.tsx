@@ -10,6 +10,9 @@ import AppHeader from '../AppHeader';
 import LoginModal from '../LoginModal';
 import Write from '../Write';
 import styles from './index.module.scss';
+import useSWR from 'swr';
+import { fetcher } from '../home/services';
+import { useAppStore } from '@/store';
 
 const style: React.CSSProperties = {
   height: 40,
@@ -24,23 +27,21 @@ const style: React.CSSProperties = {
 
 export default function Layout(props: any) {
   const children = props.children;
-  // const { data: user } = useGetLoginUserQuery();
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(setUser(user));
-  // }, [dispatch, user]);
+  const { data } = useSWR('/api/v1/login-user-info', fetcher);
+  const { setUser } = useAppStore();
+  useEffect(() => {
+    if (data?.data) {
+      setUser(data.data);
+    }
+  }, [data, setUser]);
   return (
-    // <div className={styles.d}>
-    //   <div className={styles.left}>
-    //     <div>test</div>
-    //   </div>
     <div className={styles.wrap}>
       <AppHeader></AppHeader>
       {/* <ActiveAlert></ActiveAlert> */}
       {children}
       <AppFooter></AppFooter>
-      {/* <LoginModal></LoginModal> */}
-      {/* <Write></Write> */}
+      <LoginModal></LoginModal>
+      <Write></Write>
       <BackTop>
         <div style={style}>
           <ArrowUpOutlined />

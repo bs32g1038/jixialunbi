@@ -7,14 +7,15 @@
 }
 
 .title {
-  font-size: 18px;
+  font-size: 20px;
   color: rgba(0, 0, 0, 0.85);
   font-weight: 600;
 }
 
 .author {
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1f2129;
 }
 
 .authorDes {
@@ -23,11 +24,36 @@
 }
 
 .footer {
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
   padding-top: 5px;
   padding-bottom: 5px;
+  position: fixed;
+  top: 164px;
+  width: 48px;
+  display: flex;
+  justify-content: center;
+  z-index: 199;
+  transform: translateX(-100px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   button {
     font-size: 14px;
+  }
+}
+
+.commentClick {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.commentBase {
+  .commentSign {
+    font-size: 20px;
+    margin-right: 5px;
+  }
+  .commentNumber {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.45);
   }
 }

@@ -27,9 +27,6 @@ export default function CollectButton(props: Props) {
   return (
     <AuthButton
       type="text"
-      className={classNames(styles.btn, {
-        [styles.active]: isActive,
-      })}
       onClick={async () => {
         // if (!user) {
         //   dispatch(showLoginModal(true));
@@ -45,8 +42,14 @@ export default function CollectButton(props: Props) {
       }}
     >
       <span>
-        <StarOutlined />
-        <span>收藏{count}</span>
+        <div
+          className={classNames(styles.btn, {
+            [styles.active]: isActive,
+          })}
+        >
+          <StarOutlined />
+        </div>
+        <span>收藏</span>
       </span>
     </AuthButton>
   );

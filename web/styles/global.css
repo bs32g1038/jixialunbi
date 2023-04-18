@@ -9,6 +9,9 @@ html {
   font-size: 14px;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   line-height: 1.5;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji;
+  color: #1a1a1a;
 }
 
 body {
@@ -18,6 +21,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   /* background: rgb(245, 245, 245); */
+  /* background: #f7f8fc; */
 }
 
 /*!

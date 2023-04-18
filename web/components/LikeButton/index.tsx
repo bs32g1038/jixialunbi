@@ -21,11 +21,8 @@ export default function LikeButton(props: Props) {
   //   setCount(props.likeCount);
   // }, [props.isActive, props.likeCount]);
   return (
-    <AuthButton
-      type="text"
-      className={classNames(styles.btn, {
-        [styles.active]: isActive,
-      })}
+    <div
+      className={styles.wrap}
       onClick={async () => {
         if (isActive) {
           // await deleteApi({ postId: props.postId });
@@ -38,10 +35,14 @@ export default function LikeButton(props: Props) {
         }
       }}
     >
-      <span>
-        <LikeOutlined />
-        <span>赞同{count}</span>
-      </span>
-    </AuthButton>
+      <div
+        className={classNames(styles.btn, {
+          [styles.active]: isActive,
+        })}
+      >
+        <LikeOutlined style={{ fontSize: 24 }} />
+      </div>
+      <div>{count}</div>
+    </div>
   );
 }

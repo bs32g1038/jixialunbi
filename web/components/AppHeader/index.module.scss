@@ -1,11 +1,16 @@
 .header {
   display: flex;
   justify-content: space-between;
-  font-size: 15px;
+  font-size: 16px;
   background-color: #fff;
   border-radius: 2px;
   padding: 20px;
   flex: 0;
+  // :global {
+  //   .ant-btn {
+  //     font-size: 16px !important;
+  //   }
+  // }
 }
 
 .headerleft {

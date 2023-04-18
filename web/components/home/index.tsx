@@ -1,17 +1,14 @@
 import { useState } from 'react';
 import Layout from '../../components/Layout';
 import TopTip from './components/TopTip';
-import { Button, Empty, Pagination } from 'antd';
+import { Pagination } from 'antd';
 import styles from './index.module.scss';
 import TopicItem from './components/TopicItem';
 import CategoryList from './components/CategoryList';
-import { isEmpty, isUndefined, omitBy } from 'lodash';
-import { fetchCategories, fetchPosts, useFetchPostsQuery } from '../../apis';
+import { isUndefined, omitBy } from 'lodash';
 import Search from './components/Search';
-import { wrapper } from '@/store';
 import { useRouter } from 'next/router';
 import PinnedList from './components/PinnedList';
-import classNames from 'classnames';
 import useSWR from 'swr';
 import { fetcher } from './services';
 
@@ -30,12 +27,12 @@ const Home = () => {
     },
     isUndefined
   );
-  const { data, isLoading, mutate } = useSWR('/api/v1/posts', fetcher);
+  const { data } = useSWR('/api/v1/posts', fetcher);
   const { items = [], count = 0 } = data?.data ?? {};
   return (
     <Layout>
       <TopTip></TopTip>
-      <Search></Search>
+      {/* <Search></Search> */}
       <PinnedList></PinnedList>
       {type !== 'search' && <CategoryList></CategoryList>}
       <div className={styles.content}>
