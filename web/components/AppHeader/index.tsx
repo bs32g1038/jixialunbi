@@ -11,66 +11,63 @@ import WriteSvg from './WriteSvg';
 import AuthButton from '../AuthButton';
 import { useAppStore } from '@/store';
 
-// const NotificationIcon = () => {
-//   const user = useAppSelector((state) => state.app.user);
-//   const { data, refetch } = useFetchNotificationsQuery({ receiverId: user?.id ?? 0 }, { skip: !user?.id });
-//   const [update] = useUpdateNotificationsMutation();
-//   return (
-//     <Dropdown
-//       trigger={['click']}
-//       onOpenChange={(val) => {
-//         if (val) {
-//           refetch();
-//         }
-//       }}
-//       dropdownRender={() => (
-//         <List
-//           className={styles.noticeList}
-//           style={{
-//             width: 300,
-//             backgroundColor: '#fff',
-//             boxShadow:
-//               '0 6px 16px -8px rgb(0 0 0 / 8%), 0 9px 28px 0 rgb(0 0 0 / 5%), 0 12px 48px 16px rgb(0 0 0 / 3%)',
-//           }}
-//           itemLayout="horizontal"
-//           dataSource={data}
-//           renderItem={(item) => (
-//             <List.Item>
-//               <List.Item.Meta
-//                 title={
-//                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-//                     <div>{item.title}</div>
-//                     <Button
-//                       size="small"
-//                       type="ghost"
-//                       onClick={() => {
-//                         update({ id: item.id })
-//                           .unwrap()
-//                           .then(() => {
-//                             message.success('已经标记为已读！');
-//                             refetch();
-//                           });
-//                       }}
-//                     >
-//                       标记为已读
-//                     </Button>
-//                   </div>
-//                 }
-//                 description={<p>{item.content}</p>}
-//               />
-//             </List.Item>
-//           )}
-//         />
-//       )}
-//     >
-//       <Button type="text" size="small">
-//         <Badge count={data?.length ?? 0} size="small">
-//           <BellOutlined style={{ fontSize: '18px' }} />
-//         </Badge>
-//       </Button>
-//     </Dropdown>
-//   );
-// };
+const NotificationIcon = () => {
+  const data = [];
+  return (
+    <Dropdown
+      trigger={['click']}
+      onOpenChange={(val) => {
+        if (val) {
+        }
+      }}
+      dropdownRender={() => (
+        <List
+          className={styles.noticeList}
+          style={{
+            width: 300,
+            backgroundColor: '#fff',
+            boxShadow:
+              '0 6px 16px -8px rgb(0 0 0 / 8%), 0 9px 28px 0 rgb(0 0 0 / 5%), 0 12px 48px 16px rgb(0 0 0 / 3%)',
+          }}
+          itemLayout="horizontal"
+          dataSource={data}
+          renderItem={(item) => (
+            <List.Item>
+              <List.Item.Meta
+                title={
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <div>{item.title}</div>
+                    <Button
+                      size="small"
+                      type="ghost"
+                      onClick={() => {
+                        // update({ id: item.id })
+                        //   .unwrap()
+                        //   .then(() => {
+                        //     message.success('已经标记为已读！');
+                        //     refetch();
+                        //   });
+                      }}
+                    >
+                      标记为已读
+                    </Button>
+                  </div>
+                }
+                description={<p>{item.content}</p>}
+              />
+            </List.Item>
+          )}
+        />
+      )}
+    >
+      <Button type="text" size="small">
+        <Badge count={data?.length ?? 0} size="small">
+          <BellOutlined style={{ fontSize: '18px' }} />
+        </Badge>
+      </Button>
+    </Dropdown>
+  );
+};
 
 export default function AppHeader() {
   const router = useRouter();
@@ -94,16 +91,9 @@ export default function AppHeader() {
         <AuthButton
           size="small"
           type="text"
-          onClick={
-            () => {
-              showWriteModal(null, true);
-            }
-            // dispatch(
-            //   setWriteModalState({
-            //     visible: true,
-            //   })
-            // )
-          }
+          onClick={() => {
+            showWriteModal(null, true);
+          }}
         >
           <Space>
             <WriteSvg></WriteSvg>写作
@@ -112,12 +102,12 @@ export default function AppHeader() {
         <span className={styles.headerlinks}>
           {user ? (
             <React.Fragment>
-              {/* <NotificationIcon></NotificationIcon> */}
+              <NotificationIcon></NotificationIcon>
               <Dropdown
                 menu={{
                   items: [
                     {
-                      label: <Link href={'/profile/' + user.id}>个人信息</Link>,
+                      label: <Link href={'/profile/' + user.account}>个人信息</Link>,
                       key: '0',
                     },
                   ],

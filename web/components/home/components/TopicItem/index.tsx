@@ -7,11 +7,12 @@ import { AntDesignOutlined, CommentOutlined, LikeOutlined, StarOutlined, UserOut
 import classNames from 'classnames';
 import LikeButton from '../../../LikeButton';
 import CollectButton from '../../../CollectButton';
-import CommentList from '../CommentList';
+import CommentList from '../../../post/components/CommentList';
 import EllipsisDropdown from './components/EllipsisDropdown';
 import { unionBy } from 'lodash';
 import TimeLine from './components/TimeLine';
 import dynamic from 'next/dynamic';
+import AuthButton from '@/components/AuthButton';
 const CImage: any = dynamic(() => import('./components/CImage') as any, {
   ssr: false,
 });
@@ -32,7 +33,7 @@ export default function TopicItem(props: { item: any }) {
               <div style={{ flex: '1 0 auto' }}>
                 <div className={styles.byline}>
                   <div>
-                    <Link href={`/profile/${item?.author?.id}`} className={styles.about}>
+                    <Link href={`/profile/${item?.author?.account}`} className={styles.about}>
                       {item?.author?.username}
                     </Link>
                   </div>
@@ -74,12 +75,7 @@ export default function TopicItem(props: { item: any }) {
               <Space>
                 <div className={styles.footer}>
                   <Space size={8}>
-                    <Button type="text" size="small">
-                      <span>
-                        <LikeOutlined />
-                        <span>赞同0</span>
-                      </span>
-                    </Button>
+                    <LikeButton likeCount={item.likeCount} isActive={false} postId={item.id} />
                     <Button
                       type="text"
                       size="small"
@@ -94,7 +90,7 @@ export default function TopicItem(props: { item: any }) {
                     <Button type="text" size="small">
                       <span>
                         <StarOutlined />
-                        <span>收藏0</span>
+                        <span>收藏{item.collectCount}</span>
                       </span>
                     </Button>
                   </Space>
@@ -133,7 +129,7 @@ export default function TopicItem(props: { item: any }) {
                 <Avatar size="small" icon={<AntDesignOutlined />} />
               </Avatar.Group> */}
             </Space>
-            {open && <CommentList postId={item.id}></CommentList>}
+            {/* {open && <CommentList postId={item.id}></CommentList>} */}
           </div>
         </div>
       </div>

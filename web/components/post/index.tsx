@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
 import styles from './index.module.scss';
 import Layout from '../Layout';
-import { Avatar, Button, Divider, Space } from 'antd';
-import LikeButton from '../LikeButton';
-import classNames from 'classnames';
-import { CommentOutlined } from '@ant-design/icons';
-import CollectButton from '../CollectButton';
-import CommentList from '../home/components/CommentList';
-import { fetcher } from '../home/services';
+import { Avatar, Button, Space } from 'antd';
+import CommentList from './components/CommentList';
 import { useRouter } from 'next/router';
-import WriteComment from '../home/components/WriteComment';
+import WriteComment from './components/WriteComment';
 import { useSWR } from '@/hooks';
 
 export default function Post() {

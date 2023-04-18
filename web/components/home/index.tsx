@@ -9,8 +9,7 @@ import { isUndefined, omitBy } from 'lodash';
 import Search from './components/Search';
 import { useRouter } from 'next/router';
 import PinnedList from './components/PinnedList';
-import useSWR from 'swr';
-import { fetcher } from './services';
+import { useSWR } from '@/hooks';
 
 const Home = () => {
   const [page, setPage] = useState(1);
@@ -23,16 +22,16 @@ const Home = () => {
       id: postId,
       type,
       query: q,
-      page,
+      page: page - 1,
     },
     isUndefined
   );
-  const { data } = useSWR('/api/v1/posts', fetcher);
+  const { data } = useSWR({ url: '/api/v1/posts', params: reqParams });
   const { items = [], count = 0 } = data?.data ?? {};
   return (
     <Layout>
       <TopTip></TopTip>
-      {/* <Search></Search> */}
+      <Search></Search>
       <PinnedList></PinnedList>
       {type !== 'search' && <CategoryList></CategoryList>}
       <div className={styles.content}>

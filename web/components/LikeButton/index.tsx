@@ -1,9 +1,7 @@
-import { useCreateLikeMutation, useDeleteLikeMutation } from './service';
 import { LikeOutlined } from '@ant-design/icons';
-import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import AuthButton from '../AuthButton';
-import styles from './index.module.scss';
+import { useSWRMutation } from '@/hooks';
 
 interface Props {
   isActive: boolean;
@@ -12,37 +10,19 @@ interface Props {
 }
 
 export default function LikeButton(props: Props) {
-  const [isActive, setIsActive] = useState(props.isActive);
-  const [count, setCount] = useState(props.likeCount);
-  // const [createApi] = useCreateLikeMutation();
-  // const [deleteApi] = useDeleteLikeMutation();
-  // useEffect(() => {
-  //   setIsActive(props.isActive);
-  //   setCount(props.likeCount);
-  // }, [props.isActive, props.likeCount]);
+  const { trigger } = useSWRMutation({ url: '/api/v1/like-post/' + props.postId });
   return (
-    <div
-      className={styles.wrap}
-      onClick={async () => {
-        if (isActive) {
-          // await deleteApi({ postId: props.postId });
-          setCount(count - 1);
-          setIsActive(false);
-        } else {
-          // await createApi({ postId: props.postId });
-          setCount(count + 1);
-          setIsActive(true);
-        }
+    <AuthButton
+      type="text"
+      size="small"
+      onClick={() => {
+        trigger();
       }}
     >
-      <div
-        className={classNames(styles.btn, {
-          [styles.active]: isActive,
-        })}
-      >
-        <LikeOutlined style={{ fontSize: 24 }} />
-      </div>
-      <div>{count}</div>
-    </div>
+      <span>
+        <LikeOutlined />
+        <span>赞同{props.likeCount}</span>
+      </span>
+    </AuthButton>
   );
 }

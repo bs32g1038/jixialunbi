@@ -38,16 +38,15 @@ export default function UploadButton(props: Props) {
     // 2. Read from response and show file link
     newFileList = newFileList.map((file) => {
       if (file.response) {
-        // Component will show file.url as link
-        file.url = file.response?.data?.url;
-        onChange(file.response?.data?.url);
+        file.url = file.response?.data;
+        onChange(file.response?.data);
       }
       return file;
     });
     setFileList(newFileList);
   };
   const updateLoadProps = {
-    action: '/api/files/upload',
+    action: '/api/v1/files/upload',
     onChange: handleChange,
     multiple: true,
   };

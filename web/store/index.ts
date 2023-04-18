@@ -30,6 +30,7 @@ interface State {
     updatedAt: string;
     __v: 0;
     username: string;
+    account: string;
     image: string;
     isActived: boolean;
   };

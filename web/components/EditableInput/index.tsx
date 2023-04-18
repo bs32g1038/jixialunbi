@@ -6,8 +6,8 @@ import { Rule } from 'antd/lib/form';
 import style from './style.module.scss';
 import UploadButton from '../UploadButton';
 import { useActiveEmailMutation, useSendEmailMutation } from '@/apis';
-import { useAppSelector } from '@/hooks';
 import { useRouter } from 'next/router';
+import { useAppStore } from '@/store';
 
 interface Props {
   label: string;
@@ -75,7 +75,7 @@ export default function Index(props: Props) {
   const { name, placeholder, value, label, loading, type = 'input', autoSize, rules, extra } = props;
   const [form] = Form.useForm();
   const [disabled, setDisabled] = useState(true);
-  const user = useAppSelector((state) => state.app.user);
+  const user = useAppStore((state) => state.user);
 
   const onFinish = (values: any) => {
     if (props.onFinish) {

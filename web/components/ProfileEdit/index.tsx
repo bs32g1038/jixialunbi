@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Layout from '../Layout';
-import { message } from 'antd';
 import { useRouter } from 'next/router';
-import { useForm } from 'antd/lib/form/Form';
-import { useLazyGetUserByIdQuery, useUpdateUserMutation } from '@/apis';
 import dynamic from 'next/dynamic';
-import { useAppSelector } from '@/hooks';
+import { useAppStore } from '@/store';
+import { useSWR, useSWRMutation } from '@/hooks';
 
 const EditableInput: any = dynamic(() => import('../EditableInput') as any, {
   ssr: false,
@@ -13,31 +11,16 @@ const EditableInput: any = dynamic(() => import('../EditableInput') as any, {
 
 export default function ProfileEdit() {
   const router = useRouter();
-  const [form] = useForm();
-  const id = router.query.id;
-  const user = useAppSelector((state) => state.app.user);
-  const [fetchUser, { data = {} }] = useLazyGetUserByIdQuery();
-  useEffect(() => {
-    if (id) {
-      fetchUser({ id });
-    }
-  }, [fetchUser, id]);
-  const [update, { isLoading }] = useUpdateUserMutation();
-  useEffect(() => {
-    form.setFieldsValue({
-      username: data?.username,
-      about: data?.about,
-      image: data?.image,
-      email: data?.email,
-    });
-  }, [data, form]);
-  const onFinish = (values: any) => {
-    form.validateFields().then(() => {
-      update({ ...values, id: Number(id) })
-    });
+  const account = router.query.account;
+  const user = useAppStore((state) => state.user);
+  const { data: _data, isLoading } = useSWR({ url: '/api/v1/user-info/' + account });
+  const data = _data?.data ?? {};
+  const { trigger } = useSWRMutation({ url: '/api/v1/user/update' });
+  const onFinish = (values) => {
+    trigger(values);
   };
   return (
-    <Layout>
+    <Layout key={router.isReady}>
       <div>
         <EditableInput
           type="upload"
