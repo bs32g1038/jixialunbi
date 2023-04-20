@@ -1,8 +1,6 @@
-import { useGetLoginUserQuery } from '@/apis';
 import { ArrowUpOutlined } from '@ant-design/icons';
-import { BackTop } from 'antd';
+import { FloatButton } from 'antd';
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { setUser } from '../../store/app';
 import ActiveAlert from '../ActiveAlert';
 import AppFooter from '../AppFooter';
@@ -42,11 +40,11 @@ export default function Layout(props: any) {
       <AppFooter></AppFooter>
       <LoginModal></LoginModal>
       <Write></Write>
-      <BackTop>
+      <FloatButton.BackTop>
         <div style={style}>
           <ArrowUpOutlined />
         </div>
-      </BackTop>
+      </FloatButton.BackTop>
       {/* </div> */}
     </div>
   );

@@ -1,18 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from '../Layout';
 import { Avatar, Button, Tabs } from 'antd';
 import styles from './index.module.scss';
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { useSWR } from '@/hooks';
+import { useSWR, useSWRMutation } from '@/hooks';
 import Posts from './components/Posts';
+import CollectionPosts from './components/CollectionPosts';
+
+const TABS = {
+  post: '帖子',
+  collection: '收藏',
+  // attendtion: '关注',
+};
 
 export default function Profile() {
   const router = useRouter();
+  const [tab, setTab] = useState(TABS.post);
   const account = router.query?.account;
-  const { data: _data } = useSWR({ url: '/api/v1/user-info/' + account });
+  const { data: _data, mutate } = useSWR({ url: '/api/v1/user-info/' + account });
   const user = _data?.data ?? {};
   const data = _data?.data ?? {};
+  const { trigger, isMutating } = useSWRMutation({ url: '/api/v1/follow-user/' + account });
   return (
     <Layout>
       <div className={styles.profit}>
@@ -24,8 +33,26 @@ export default function Profile() {
               <p className={styles.desc}>{data.about ?? '这家伙很懒，什么都没留下'}</p>
             </div>
             <div className={styles.control}>
-              <Button size="small" type="primary" icon={<PlusOutlined></PlusOutlined>}>
-                关注
+              <Button
+                size="small"
+                type="primary"
+                icon={<PlusOutlined></PlusOutlined>}
+                loading={isMutating}
+                style={
+                  user.followed
+                    ? {
+                        backgroundColor: '#f2f3f5',
+                        color: '#8a919f',
+                      }
+                    : {}
+                }
+                onClick={() => {
+                  trigger().then(() => {
+                    mutate();
+                  });
+                }}
+              >
+                {user.followed ? '已关注' : '关注'}
               </Button>
               <div className={styles.func}>
                 {user?.account === account && (
@@ -64,22 +91,17 @@ export default function Profile() {
         className={styles.tabs}
         defaultActiveKey="1"
         size="small"
-        items={[
-          {
-            label: '帖子',
-            key: '1',
-          },
-          {
-            label: '收藏',
-            key: '2',
-          },
-          {
-            label: '关注',
-            key: '3',
-          },
-        ]}
+        activeKey={tab}
+        onChange={setTab}
+        items={Object.values(TABS).map((v) => {
+          return {
+            key: v,
+            label: v,
+          };
+        })}
       ></Tabs>
-      <Posts></Posts>
+      {tab == TABS.post && <Posts></Posts>}
+      {tab == TABS.collection && <CollectionPosts></CollectionPosts>}
     </Layout>
   );
 }

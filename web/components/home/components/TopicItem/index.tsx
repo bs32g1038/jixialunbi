@@ -79,14 +79,14 @@ export default function TopicItem(props: { item: any }) {
                     <Button type="text" size="small" href={`/posts/${item.id}`}>
                       {item.visitCount} 浏览
                     </Button>
-                    <LikeButton isActive={item.like} postId={item.id} count={item.likeCount}></LikeButton>
+                    <LikeButton isActive={item.liked} postId={item.id} count={item.likeCount}></LikeButton>
                     <Button type="text" size="small" href={`/posts/${item.id}#comment`}>
                       <Space size={4}>
                         <CommentOutlined />
                         <span>{item.commentCount + '条评论'}</span>
                       </Space>
                     </Button>
-                    <CollectButton isActive={false} postId={0} count={0}></CollectButton>
+                    <CollectButton isActive={item.collected} postId={item.id} count={item.collectionCount} />
                   </Space>
                 </div>
               </Space>

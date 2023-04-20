@@ -44,7 +44,7 @@ export default function LoginModal() {
           message.success('登录成功！');
           Cookies.set('token', token);
           setUser(res.data?.data);
-          // router.reload();
+          router.reload();
         });
         return;
       }
@@ -164,7 +164,7 @@ export default function LoginModal() {
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" className={styles.loginButton}>
-              登录
+              {tab === LOGIN_TYPE.register ? '注册' : '登录'}
             </Button>
           </Form.Item>
         </Form>

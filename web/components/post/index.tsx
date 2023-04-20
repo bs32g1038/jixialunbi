@@ -54,7 +54,7 @@ export default function Post() {
             <div className={styles.cont}>
               <Space size={8}>
                 <div>{data.visitCount}人阅读</div>
-                <LikeButton count={data.likeCount} isActive={data.like} postId={data.id} />
+                <LikeButton isActive={data.liked} postId={data.id} count={data.likeCount} />
                 <Button
                   type="text"
                   size="small"
@@ -66,7 +66,7 @@ export default function Post() {
                     <span>{data.commentCount + '条评论'}</span>
                   </Space>
                 </Button>
-                <CollectButton isActive={false} postId={0} count={0}></CollectButton>
+                <CollectButton isActive={data.collected} postId={data.id} count={data.collectionCount} />
               </Space>
             </div>
             <h2 className={styles.commentBase} id="comment">

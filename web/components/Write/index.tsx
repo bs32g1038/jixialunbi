@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import styles from './index.module.scss';
 import { Form, Input, Select, Upload, message } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
@@ -14,16 +14,9 @@ const Core = (props: { visible: boolean; postId?: number }) => {
   const { showWriteModal } = useAppStore();
   const { visible, postId } = props;
   const [form] = useForm();
+  const router = useRouter();
   const { data, isLoading, mutate } = useSWR({ url: '/api/v1/categories', params: { a: 1 } });
   const { trigger: createPost } = useSWRMutation({ url: '/api/v1/posts' });
-  // const [fetchPost, { data: postData }] = useLazyFetchPostByIdQuery();
-  // useEffect(() => {
-  //   if (postId) {
-  //     fetchPost({ postId });
-  //   }
-  // }, [fetchPost, postId]);
-  // const [createPost, { isLoading: createLoading }] = useCreatePostMutation();
-  // const [updatePost, { isLoading: updateLoading }] = useUpdatePostMutation();
   const ref = useRef(null);
   const handleUpload = (info) => {
     if (Array.isArray(info)) {
@@ -48,51 +41,12 @@ const Core = (props: { visible: boolean; postId?: number }) => {
       if (ref.current.getLength() > 2000) {
         return message.error('不能大于2000字');
       }
-      // Object.assign(values, {
-      //   pics: values.pics
-      //     ?.map((item) => {
-      //       return item.url;
-      //     })
-      //     .join(','),
-      // });
-      // if (postId) {
-      //   return updatePost({ ...values, id: postId })
-      //     .unwrap()
-      //     .then((res) => {
-      //       message.success('更新成功！');
-      //       router.push(`/category/${res.categoryId}?postId=${res.id}`);
-      //     })
-      //     .then(() => {
-      //       dispatch(
-      //         setWriteModalState({
-      //           visible: false,
-      //           postId: '',
-      //         })
-      //       );
-      //     });
-      // }
-      createPost(values)
-        .then((res) => {
-          message.success('发布成功！');
-        })
-        .then(() => {});
+      createPost(values).then((res) => {
+        message.success('发布成功！');
+        router.reload();
+      });
     });
   };
-  // useEffect(() => {
-  //   if (visible && data) {
-  //     form.setFieldsValue({
-  //       ...(postId ? postData : {}),
-  //       categoryId: postData?.categoryId ?? data?.[0]?.id,
-  //       pics: !postData?.pics
-  //         ? []
-  //         : postData?.pics?.split(',').map((item, index) => ({
-  //             uid: index,
-  //             status: 'done',
-  //             url: item,
-  //           })),
-  //     });
-  //   }
-  // }, [data, form, postData, postId, visible]);
   return (
     <Modal
       title={postId ? '编辑' : '写作'}

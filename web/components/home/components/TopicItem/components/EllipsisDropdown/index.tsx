@@ -92,22 +92,22 @@ export default function EllipsisDropdown(props: Props) {
               : []),
             ...(user?.id === props.authorId
               ? [
-                  {
-                    label: (
-                      <Space>
-                        <EditOutlined></EditOutlined>编辑
-                      </Space>
-                    ),
-                    key: '编辑',
-                  },
-                  {
-                    label: (
-                      <Space>
-                        <PlusCircleOutlined></PlusCircleOutlined>时间线
-                      </Space>
-                    ),
-                    key: '时间线',
-                  },
+                  // {
+                  //   label: (
+                  //     <Space>
+                  //       <EditOutlined></EditOutlined>编辑
+                  //     </Space>
+                  //   ),
+                  //   key: '编辑',
+                  // },
+                  // {
+                  //   label: (
+                  //     <Space>
+                  //       <PlusCircleOutlined></PlusCircleOutlined>时间线
+                  //     </Space>
+                  //   ),
+                  //   key: '时间线',
+                  // },
                   {
                     label: (
                       <Space style={{ color: '#ff7875' }}>
