@@ -7,7 +7,7 @@ WORKDIR /app
 COPY pom.xml ./
 COPY src ./src
 
-RUN mvn clean install -Dmaven.test.skip=true
+RUN mvn clean install -Dmaven.test.skip=true & mvn package
 
 
 # stage-2 : minimal runtime environment
