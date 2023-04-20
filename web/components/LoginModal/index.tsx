@@ -51,7 +51,7 @@ export default function LoginModal() {
       if (values.repeatPassword !== values.password) {
         return message.error('两次输入的密码不一致！');
       }
-      register(omit(values, 'repeatPassword')).then((res) => {
+      register(omit(values, 'repeatPassword')).then((res: any) => {
         message.success('注册成功！');
         Cookies.set('token', res.token);
         axios.defaults.headers.common = { Authorization: `bearer ${res.token}` };

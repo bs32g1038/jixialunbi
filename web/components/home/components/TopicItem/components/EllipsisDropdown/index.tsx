@@ -1,17 +1,7 @@
-import React, { useState } from 'react';
-import {
-  DeleteOutlined,
-  EditOutlined,
-  EllipsisOutlined,
-  EyeFilled,
-  PlusCircleOutlined,
-  PushpinOutlined,
-} from '@ant-design/icons';
+import React from 'react';
+import { DeleteOutlined, EllipsisOutlined, EyeFilled, PushpinOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Menu, message, Space } from 'antd';
-import { useAppDispatch, useAppSelector, useSWRMutation } from '@/hooks';
-import { setWriteModalState, showLoginModal } from '@/store/app';
-import { useDeletePostMutation, usePinPostMutation } from '@/apis';
-import WriteTimeLine from '@/components/WriteTimeLine';
+import { useSWRMutation } from '@/hooks';
 import { useAppStore } from '@/store';
 
 interface Props {
@@ -52,7 +42,7 @@ export default function EllipsisDropdown(props: Props) {
             //     });
             //   }
             if (key === '删除') {
-              deletePost({ id: props.postId }).then(() => {
+              deletePost({ id: props.postId } as any).then(() => {
                 message.success('删除成功!');
               });
             }

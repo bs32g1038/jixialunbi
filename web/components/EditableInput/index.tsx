@@ -116,7 +116,7 @@ export default function Index(props: Props) {
               >
                 <EditOutlined></EditOutlined>编辑
               </Button>
-              {!user?.isActived && value && type === 'email' && <EmailActive></EmailActive>}
+              {!user?.actived && value && type === 'email' && <EmailActive></EmailActive>}
             </Space>
           )}
         </label>

@@ -2,25 +2,16 @@ import React, { useState } from 'react';
 import styles from './index.module.scss';
 import { Button, Select, Space, Spin } from 'antd';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 import HotSvg from '../../../AppHeader/Hot';
 import classNames from 'classnames';
 import { EditOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { useAppSelector } from '@/hooks';
-import { useFetchCategoriesQuery } from '@/apis';
 import useSWR from 'swr';
 import EditModal from './components/EditModal';
 import { omit } from 'lodash';
 import queryString from 'query-string';
-import axios from '@/libs/axios';
 import { fetcher } from '../../services';
-const CreateCategory = dynamic(
-  () => import('@/components/home/components/CategoryList/components/CreateCategory') as any,
-  {
-    ssr: false,
-  }
-);
+
 const { Option } = Select;
 
 const CategoryItem = (props: { item: any; isActive: boolean; isAdmin?: boolean; refetch: () => void }) => {
@@ -100,7 +91,6 @@ export default function CategoryList() {
               ></CategoryItem>
             );
           })}
-          {/* <CreateCategory></CreateCategory> */}
         </div>
         <div>
           <Select
@@ -129,11 +119,6 @@ export default function CategoryList() {
           </Select>
         </div>
       </div>
-      {/* <p className={styles.description}>
-        <span>{'"'}</span>
-        {description || '一览众山小'}
-        <span>{'"'}</span>
-      </p> */}
     </Spin>
   );
 }

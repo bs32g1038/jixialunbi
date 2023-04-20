@@ -1,12 +1,12 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import React, { useState } from 'react';
-import { useAppSelector } from '../../../../../../hooks';
 import EditModal from '../EditModal';
+import { useAppStore } from '@/store';
 
 export default function CreateCategory() {
   const [open, setOpen] = useState(false);
-  const user = useAppSelector((state) => state.app.user);
+  const user = useAppStore((state) => state.user);
   return (
     user?.role === 'SuperAdmin' && (
       <React.Fragment>

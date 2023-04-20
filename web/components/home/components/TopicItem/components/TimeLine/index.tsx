@@ -6,7 +6,7 @@ import { parseTime } from '@/libs/time';
 import WriteTimeLine from '@/components/WriteTimeLine';
 import { useState } from 'react';
 import { useDeleteTimeLineMutation } from '@/components/WriteTimeLine/service';
-import { useAppSelector } from '@/hooks';
+import { useAppStore } from '@/store';
 
 interface Props {
   data: any;
@@ -18,7 +18,7 @@ export default function TimeLine(props: Props) {
     visible: false,
     id: 0,
   });
-  const user = useAppSelector((state) => state.app.user);
+  const user = useAppStore((state) => state.user);
   const [deleteTimeLine] = useDeleteTimeLineMutation();
   return (
     <div className={styles.timeline}>
