@@ -3,17 +3,14 @@ services:
   server:
     image: ghcr.io/bs32g1038/jixialunbi-server:v1
     restart: always
-    command: npm run start:prod
     depends_on:
       - db
     ports:
-      - 4000:4000
+      - 4000:8080
     volumes:
       - ./data/public/static/upload:/code/public/static/upload
     environment:
        DATABASE_URL: mysql://lzc:bs32g1038@db:3306/jixialunbi
-       MEILI_SEARCH_CLIENT_HOST: http://meilisearch:7700
-       MEILI_SEARCH_CLIENT_API_KEY: jixialunbi
     networks:
       - jixialunbi-network
   web:
@@ -39,17 +36,6 @@ services:
       - ./data/mysql/data:/var/lib/mysql
     ports:
       - 3306:3306
-    networks:
-      - jixialunbi-network
-  meilisearch:
-    image: getmeili/meilisearch:v0.28
-    restart: always
-    environment:
-      MEILI_MASTER_KEY: jixialunbi
-    volumes:
-      - ../data/meili_data:/meili_data
-    ports:
-      - 7700:7700
     networks:
       - jixialunbi-network
 networks:

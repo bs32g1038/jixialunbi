@@ -47,3 +47,17 @@ dist
 
 server/logs/*
 !server/logs/.gitkeep
+
+### Maven
+target/
+logs/
+!.mvn/wrapper/maven-wrapper.jar
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+log/
+
+logs

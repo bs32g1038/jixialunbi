@@ -1,0 +1,91 @@
+spring:
+  application:
+    name: pet-clinic
+  main:
+    banner-mode: console
+  banner:
+    location: classpath:/banner.txt
+  output:
+    ansi:
+      enabled: always
+  jackson:
+    date-format: 'dd.MM.yyyy'
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/${DB_NAME}?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+      open-in-view: false
+      generate-ddl: true
+  flyway:
+    enabled: false
+    placeholderReplacement: false
+    baseline-on-migrate: true
+  mvc:
+    #    pathmatch:
+    #      matching-strategy: ant_path_matcher
+    throw-exception-if-no-handler-found: true
+    static-path-pattern: "/static/**"
+  servlet:
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 10MB
+logging:
+  file:
+    name: './logs/application.log'
+    logback:
+      rollingpolicy:
+        max-file-size: 1MB
+        total-size-cap: 10MB
+        max-history: 30
+        clean-history-on-start: true
+  pattern:
+    console: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){blue} %clr(%-5p) %clr(${PID}){faint} %clr(---){faint} %clr([%8.15t]){faint} %clr(%-40.40logger{0}){cyan} %clr(:){faint} %clr(%m){faint}%n'
+    file: '%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n'
+  level:
+    com.github.yildizmy: debug
+    org.springframework: warn
+    org.hibernate: error
+    org.springframework.security: error
+
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_param
+    include-exception: false
+
+exception:
+  trace: true
+
+app:
+  security:
+    jwtSecret: ${JWT_SECRET}
+    jwtExpirationMs: 18000000
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.jixialunbi
+
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
