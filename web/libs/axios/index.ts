@@ -1,6 +1,8 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+axios.defaults.headers.withCredentials = true;
+
 axios.interceptors.request.use(
   function (c: any) {
     c.headers.Authorization = `Bearer ${Cookies.get('token')}`;

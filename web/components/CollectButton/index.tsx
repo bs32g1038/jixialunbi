@@ -1,56 +1,34 @@
-import { useCreateCollectionMutation, useDeleteCollectionMutation } from '@/apis';
 import { StarOutlined } from '@ant-design/icons';
-import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { showLoginModal } from '../../store/app';
+import React from 'react';
 import AuthButton from '../AuthButton';
+import { useSWRMutation } from '@/hooks';
+import classNames from 'classnames';
 import styles from './index.module.scss';
+import { Space } from 'antd';
 
 interface Props {
   isActive: boolean;
   postId: number;
-  collectCount: number;
+  count: number;
 }
 
 export default function CollectButton(props: Props) {
-  const [isActive, setIsActive] = useState(props.isActive);
-  // const dispatch = useAppDispatch();
-  const [count, setCount] = useState(props.collectCount);
-  // const [createApi] = useCreateCollectionMutation();
-  // const [deleteApi] = useDeleteCollectionMutation();
-  // const user = useAppSelector((state) => state.app.user);
-  // useEffect(() => {
-  //   setIsActive(props.isActive);
-  //   setCount(props.collectCount);
-  // }, [props.isActive, props.collectCount]);
+  const { trigger } = useSWRMutation({ url: '/api/v1/like-post/' + props.postId });
   return (
     <AuthButton
+      className={classNames({
+        [styles.active]: props.isActive,
+      })}
       type="text"
-      onClick={async () => {
-        // if (!user) {
-        //   dispatch(showLoginModal(true));
-        // }
-        if (isActive) {
-          // await deleteApi({ postId: props.postId });
-          setCount(count - 1);
-        } else {
-          // await createApi({ postId: props.postId });
-          setCount(count + 1);
-        }
-        setIsActive(!isActive);
+      size="small"
+      onClick={() => {
+        trigger();
       }}
     >
-      <span>
-        <div
-          className={classNames(styles.btn, {
-            [styles.active]: isActive,
-          })}
-        >
-          <StarOutlined />
-        </div>
-        <span>收藏</span>
-      </span>
+      <Space size={4}>
+        <StarOutlined />
+        <span>{props.count}收藏</span>
+      </Space>
     </AuthButton>
   );
 }

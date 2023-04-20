@@ -32,7 +32,7 @@ interface State {
     username: string;
     account: string;
     image: string;
-    isActived: boolean;
+    actived: boolean;
   };
   isShowWriteModal?: {
     postId?: number;

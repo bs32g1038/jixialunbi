@@ -6,13 +6,14 @@ import { Avatar, Button, Space, Tag, Popover, Tooltip } from 'antd';
 import { AntDesignOutlined, CommentOutlined, LikeOutlined, StarOutlined, UserOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 import LikeButton from '../../../LikeButton';
-import CollectButton from '../../../CollectButton';
 import CommentList from '../../../post/components/CommentList';
 import EllipsisDropdown from './components/EllipsisDropdown';
 import { unionBy } from 'lodash';
 import TimeLine from './components/TimeLine';
 import dynamic from 'next/dynamic';
 import AuthButton from '@/components/AuthButton';
+import CollectButton from '@/components/CollectButton';
+
 const CImage: any = dynamic(() => import('./components/CImage') as any, {
   ssr: false,
 });
@@ -20,7 +21,7 @@ const CImage: any = dynamic(() => import('./components/CImage') as any, {
 export default function TopicItem(props: { item: any }) {
   const [open, setOpen] = useState(false);
   const item = props.item;
-  const participants = item?.participants;
+  const participants = unionBy(item?.participants, 'id');
   return (
     <div key={item.title} className={styles.item}>
       <div className={styles.liner}>
@@ -74,25 +75,18 @@ export default function TopicItem(props: { item: any }) {
             <Space style={{ display: 'flex', justifyContent: 'space-between' }}>
               <Space>
                 <div className={styles.footer}>
-                  <Space size={8}>
-                    <LikeButton likeCount={item.likeCount} isActive={false} postId={item.id} />
-                    <Button
-                      type="text"
-                      size="small"
-                      className={classNames(styles.commentClick, { [styles.active]: open })}
-                      onClick={() => setOpen(!open)}
-                    >
-                      <span>
+                  <Space size={5}>
+                    <Button type="text" size="small" href={`/posts/${item.id}`}>
+                      {item.visitCount} 浏览
+                    </Button>
+                    <LikeButton isActive={item.like} postId={item.id} count={item.likeCount}></LikeButton>
+                    <Button type="text" size="small" href={`/posts/${item.id}#comment`}>
+                      <Space size={4}>
                         <CommentOutlined />
                         <span>{item.commentCount + '条评论'}</span>
-                      </span>
+                      </Space>
                     </Button>
-                    <Button type="text" size="small">
-                      <span>
-                        <StarOutlined />
-                        <span>收藏{item.collectCount}</span>
-                      </span>
-                    </Button>
+                    <CollectButton isActive={false} postId={0} count={0}></CollectButton>
                   </Space>
                 </div>
               </Space>

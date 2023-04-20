@@ -57,3 +57,13 @@
     color: rgba(0, 0, 0, 0.45);
   }
 }
+
+.cont {
+  display: flex;
+  justify-content: flex-end;
+  // :global {
+  //   .ant-btn {
+  //     color: rgba(0, 0, 0, 0.65);
+  //   }
+  // }
+}

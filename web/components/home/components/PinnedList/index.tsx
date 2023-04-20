@@ -85,7 +85,7 @@ export default function PinnedList() {
         return (
           <div className={styles.topItem} key={item.id}>
             <div className={styles.topLabel}>置顶</div>
-            <Link className={styles.topContent} href={`/category/${item.category.id}?postId=${item.id}`}>
+            <Link className={styles.topContent} href={`/posts/${item.id}`}>
               {item.title.replace(/<[^<>]+>/g, '')}
             </Link>
           </div>

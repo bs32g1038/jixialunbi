@@ -87,11 +87,6 @@
   display: flex;
   gap: 8px;
   padding: 0 10px;
-  svg {
-    fill: rgba(0, 0, 0, 0.45);
-    margin-right: 4px;
-    margin-left: 4px;
-  }
 }
 
 .core {
@@ -225,10 +220,11 @@ ol.stories li:first-child div.story_liner {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: rgba(0, 0, 0, 0.65);
   :global {
-    button {
-      padding: 0 !important;
-      color: rgba(0, 0, 0, 0.65) !important;
+    .ant-btn {
+      padding: 0 2px !important;
+      color: rgba(0, 0, 0, 0.65);
     }
   }
 }

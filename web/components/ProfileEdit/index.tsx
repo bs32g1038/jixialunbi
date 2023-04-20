@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { useAppStore } from '@/store';
 import { useSWR, useSWRMutation } from '@/hooks';
+import { message } from 'antd';
+import styles from './index.module.scss';
 
 const EditableInput: any = dynamic(() => import('../EditableInput') as any, {
   ssr: false,
@@ -17,11 +19,13 @@ export default function ProfileEdit() {
   const data = _data?.data ?? {};
   const { trigger } = useSWRMutation({ url: '/api/v1/user/update' });
   const onFinish = (values) => {
-    trigger(values);
+    trigger(values).then(() => {
+      message.success('提交成功！');
+    });
   };
   return (
     <Layout key={router.isReady}>
-      <div>
+      <div className={styles.wrap}>
         <EditableInput
           type="upload"
           value={data.image}
@@ -44,7 +48,7 @@ export default function ProfileEdit() {
           type="email"
           label="邮箱"
           name="email"
-          extra={user?.isActived ? '当前邮箱已通过验证' : '当前邮箱尚未验证'}
+          extra={user?.actived ? '当前邮箱已通过验证' : '当前邮箱尚未验证'}
           placeholder="邮箱"
           loading={isLoading}
           onFinish={onFinish}

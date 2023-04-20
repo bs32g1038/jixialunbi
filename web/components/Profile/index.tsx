@@ -28,7 +28,7 @@ export default function Profile() {
                 关注
               </Button>
               <div className={styles.func}>
-                {user?.account === id && (
+                {user?.account === account && (
                   <Button size="small" type="dashed" onClick={() => router.push('/profile/edit/' + data?.account)}>
                     <EditOutlined></EditOutlined>账号设置
                   </Button>

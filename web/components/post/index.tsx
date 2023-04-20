@@ -6,6 +6,10 @@ import CommentList from './components/CommentList';
 import { useRouter } from 'next/router';
 import WriteComment from './components/WriteComment';
 import { useSWR } from '@/hooks';
+import LikeButton from '../LikeButton';
+import classNames from 'classnames';
+import { CommentOutlined } from '@ant-design/icons';
+import CollectButton from '../CollectButton';
 
 export default function Post() {
   const [open, setOpen] = useState(false);
@@ -20,7 +24,6 @@ export default function Post() {
       postId,
     },
   });
-  console.log(resPostData?.data);
   return (
     <Layout>
       <div className={styles.wrap}>
@@ -48,7 +51,25 @@ export default function Post() {
             >
               <div dangerouslySetInnerHTML={{ __html: data.content }}></div>
             </div>
-            <h2 className={styles.commentBase}>
+            <div className={styles.cont}>
+              <Space size={8}>
+                <div>{data.visitCount}人阅读</div>
+                <LikeButton count={data.likeCount} isActive={data.like} postId={data.id} />
+                <Button
+                  type="text"
+                  size="small"
+                  className={classNames(styles.commentClick, { [styles.active]: open })}
+                  onClick={() => setOpen(!open)}
+                >
+                  <Space size={4}>
+                    <CommentOutlined />
+                    <span>{data.commentCount + '条评论'}</span>
+                  </Space>
+                </Button>
+                <CollectButton isActive={false} postId={0} count={0}></CollectButton>
+              </Space>
+            </div>
+            <h2 className={styles.commentBase} id="comment">
               <span className={styles.commentSign}>评论</span>
               <span className={styles.commentNumber}>{data?.commentCount}</span>
             </h2>
