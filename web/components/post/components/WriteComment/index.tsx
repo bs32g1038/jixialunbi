@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from './index.module.scss';
-import { Avatar, Button, Form, Input, message } from 'antd';
+import { Avatar, Form, Input, message } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { useSWRMutation } from '@/hooks';
 import { useAppStore } from '@/store';
+import AuthButton from '@/components/AuthButton';
 
 interface Props {
   postId: number;
@@ -42,9 +43,9 @@ export default function WriteComment(props: Props) {
           ></Input.TextArea>
         </Form.Item>
         <div className={styles.footer}>
-          <Button className={styles.footerBtn} onClick={() => form.submit()}>
+          <AuthButton className={styles.footerBtn} onClick={() => form.submit()}>
             发布
-          </Button>
+          </AuthButton>
         </div>
       </Form>
     </div>

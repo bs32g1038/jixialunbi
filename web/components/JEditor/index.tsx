@@ -75,7 +75,7 @@ const MenuBar = ({ editor, len, loading }: any) => {
           <ClearSvg></ClearSvg>
         </Button>
       </div>
-      <div style={{ color: '#72727D' }}>{len}/400字</div>
+      <div style={{ color: '#72727D' }}>{len}/2000字</div>
       <Button
         size="small"
         style={{ fontSize: '14px' }}

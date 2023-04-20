@@ -7,7 +7,6 @@ export default function AuthButton(props: ButtonProps) {
   return (
     <Button
       {...props}
-      size="small"
       onClick={(e) => {
         if (!user) {
           return showLoginModal(true);

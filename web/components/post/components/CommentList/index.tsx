@@ -3,6 +3,7 @@ import styles from './index.module.scss';
 import WriteComment from '../WriteComment';
 import { useFetchCommentsQuery } from '@/apis';
 import CommentItem from './CommentItem';
+import { Empty } from 'antd';
 
 interface Props {
   postId: number;
@@ -28,6 +29,7 @@ export default function CommentList(props: Props) {
           return <CommentItem key={item.id} postId={postId} item={item}></CommentItem>;
         }
       )}
+      {items?.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}></Empty>}
     </div>
   );
 }
