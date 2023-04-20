@@ -30,7 +30,7 @@ const Home = () => {
   const { items = [], count = 0 } = data?.data ?? {};
   return (
     <Layout>
-      <TopTip></TopTip>
+      {/* <TopTip></TopTip> */}
       <Search></Search>
       <PinnedList></PinnedList>
       {type !== 'search' && <CategoryList></CategoryList>}
