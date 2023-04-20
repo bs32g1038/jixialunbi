@@ -5,14 +5,14 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.3</version>
+        <version>3.0.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.github.yildizmy</groupId>
-    <artifactId>pet-clinic</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>pet-clinic</name>
-    <description>Spring Boot app used for managing pets and vets data</description>
+    <groupId>com.github.bs32g1038</groupId>
+    <artifactId>jixialunbi</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>jixialunbi</name>
+    <description>一个简单易用的社区</description>
     <properties>
         <java.version>17</java.version>
         <projectlombok.version>1.18.26</projectlombok.version>
@@ -162,5 +162,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
