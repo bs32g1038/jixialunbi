@@ -1,6 +1,6 @@
 spring:
   application:
-    name: pet-clinic
+    name: jixialunbi
   main:
     banner-mode: console
   banner:
@@ -12,7 +12,7 @@ spring:
     date-format: 'dd.MM.yyyy'
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/${DB_NAME}?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://127.0.0.1:3306/${DB_NAME}?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&use
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
   jpa:
@@ -57,7 +57,7 @@ logging:
     org.springframework.security: error
 
 server:
-  port: 8080
+  port: 8000
   error:
     include-message: always
     include-binding-errors: always

@@ -24,7 +24,7 @@ public class Post {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "content")
+    @Column(name = "content", columnDefinition = "text")
     private String content;
 
     @OneToOne(cascade = {CascadeType.ALL})

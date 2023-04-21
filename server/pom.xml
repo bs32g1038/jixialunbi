@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.4</version>
+        <version>3.0.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.github.bs32g1038</groupId>
@@ -104,7 +104,6 @@
             <version>1.6.2</version>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -161,5 +160,13 @@
                 </executions>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>static/**</exclude>
+                </excludes>
+            </resource>
+        </resources>
     </build>
 </project>

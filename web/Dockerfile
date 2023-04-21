@@ -1,8 +1,10 @@
-FROM node:16-alpine3.15
+FROM node:16-alpine3.16
 WORKDIR /code
 COPY ./package.json /code
-ENV PROXY_HOST=server
-RUN yarn install
+RUN npm install
 COPY . /code
-RUN yarn run build
+RUN npm run build
+FROM node:16-alpine3.16
+WORKDIR /code
+COPY --from=0 /code /code
 EXPOSE 4000

@@ -5,39 +5,31 @@ services:
     restart: always
     depends_on:
       - db
-    ports:
-      - 4000:8080
-    volumes:
-      - ./data/public/static/upload:/code/public/static/upload
     environment:
-       DATABASE_URL: mysql://lzc:bs32g1038@db:3306/jixialunbi
-    networks:
-      - jixialunbi-network
+       DB_NAME: jixialunbi
+       DB_USERNAME: lzc
+       DB_PASSWORD: bs32g1038
+       JWT_SECRET: appSecretKey
+       EMAIL_PASS: XXX
+    network_mode: host
+    volumes:
+      - ./data/static:/app/static
   web:
     image: ghcr.io/bs32g1038/jixialunbi-web:v1
     restart: always
     command: npm run start
     depends_on:
       - server
-    ports:
-      - 3000:3000
-    networks:
-      - jixialunbi-network
+    network_mode: host
   db:
     image: mysql:8.0
     restart: always
     environment:
       MYSQL_DATABASE: jixialunbi
-      MYSQL_USER: root
+      MYSQL_USER: lzc
       MYSQL_PASSWORD: bs32g1038
-      MYSQL_RANDOM_ROOT_PASSWORD: yes
+      MYSQL_ROOT_PASSWORD: ubuntu
     volumes:
       - ./scripts/mysql.sql:/docker-entrypoint-initdb.d/mysql.sql
       - ./data/mysql/data:/var/lib/mysql
-    ports:
-      - 3306:3306
-    networks:
-      - jixialunbi-network
-networks:
-  jixialunbi-network:
-      driver: bridge
+    network_mode: host

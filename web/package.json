@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 3000",
+    "start": "next start -p 4000",
     "tsc": "tsc",
     "lint": "next lint",
     "ts:check": "tsc -p tsconfig.json --noEmit",
@@ -16,6 +16,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "@tiptap/extension-link": "^2.0.3",
     "@tiptap/extension-placeholder": "^2.0.3",
+    "@tiptap/pm": "^2.0.3",
     "@tiptap/react": "^2.0.3",
     "@tiptap/starter-kit": "^2.0.3",
     "@types/js-cookie": "^3.0.3",
