@@ -39,7 +39,7 @@ export default function Layout(props: any) {
       {children}
       <AppFooter></AppFooter>
       <LoginModal></LoginModal>
-      <Write></Write>
+      {/* <Write></Write> */}
       <FloatButton.BackTop>
         <div style={style}>
           <ArrowUpOutlined />

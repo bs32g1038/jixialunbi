@@ -1,32 +1,43 @@
 .wrap {
-  //   border: 1px solid #ebedf2;
   :global {
-    // .ProseMirror {
-    //   > * + * {
-    //     margin-top: 0.75em;
-    //   }
-    // }
-    /* Placeholder (at the top) */
+    .ProseMirror p.is-editor-empty:first-child::before {
+      content: attr(data-placeholder);
+      float: left;
+      color: #adb5bd;
+      pointer-events: none;
+      height: 0;
+    }
+    .ProseMirror {
+      img {
+        height: auto;
+        max-width: 100%;
+
+        &.ProseMirror-selectednode {
+          border: 1px solid #e5e5e5;
+          padding: 1px;
+        }
+      }
+    }
   }
 }
 
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   border-top: 1px solid rgba(26, 26, 26, 0.08);
   border-bottom: 1px solid #ebebeb;
-  align-items: center;
 }
 
 .menuBar {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 10px;
   align-items: center;
   transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
   flex-wrap: wrap;
-  padding: 5px 0;
+  padding: 0;
   background: #fff;
   position: relative;
   :global {
@@ -40,13 +51,19 @@
       border: 1px solid transparent;
       box-sizing: border-box;
       cursor: pointer;
-      height: 20px;
-      line-height: 20px;
       white-space: nowrap;
       position: relative;
       display: block;
+      padding: 0px 4px;
+      box-shadow: none;
       &.is-active {
         color: #056de8;
+      }
+      &:hover {
+        color: #4096ff;
+        background: #eee;
+        border-radius: 2px;
+        border-color: #eee;
       }
     }
     svg {
@@ -54,5 +71,12 @@
       width: 20px;
       height: 20px;
     }
+    .ant-upload-wrapper {
+      line-height: 0;
+    }
   }
+}
+
+.editor {
+  min-height: 140px;
 }

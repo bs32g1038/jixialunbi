@@ -92,7 +92,7 @@ export default function AppHeader() {
           size="small"
           type="text"
           onClick={() => {
-            showWriteModal(null, true);
+            router.push('/write');
           }}
         >
           <Space>

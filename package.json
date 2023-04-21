@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "swr": "^2.1.1",
-    "zustand": "^4.3.7"
-  }
-}
