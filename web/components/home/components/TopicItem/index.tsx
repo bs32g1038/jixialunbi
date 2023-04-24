@@ -98,7 +98,7 @@ export default function TopicItem(props: { item: any }) {
                 >
                   {participants?.map((item: any) => {
                     return (
-                      <Link key={item.id} href={'/profile/' + item?.id}>
+                      <Link key={item.id} href={'/profile/' + item?.account}>
                         <Popover
                           placement="bottom"
                           title={item?.username}
