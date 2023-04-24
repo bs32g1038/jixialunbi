@@ -51,6 +51,9 @@ public class PostController {
     CommentRepository commentRepository;
 
     @Autowired
+    FollowUserRepository followUserRepository;
+
+    @Autowired
     UserService userService;
 
     @Autowired
@@ -155,7 +158,6 @@ public class PostController {
     }
 
     @GetMapping("/posts/{postId}")
-    @Transactional
     public R getPost(@PathVariable long postId, Principal principal) {
         var post = postRepository.findById(postId);
         if (!post.get().equals(null)) {
@@ -173,6 +175,8 @@ public class PostController {
             post.get().setLiked(res != null && res.getDeleted() == null);
             var cn = postCollectionRepository.findOneByPostIdAndAuthorId(postId, user.getId());
             post.get().setCollected(cn != null && cn.getDeleted() == null);
+            var frs = followUserRepository.findOneByUserIdAndFollowUser(post.get().getAuthor().getId(), user);
+            post.get().getAuthor().setFollowed(frs != null);
         }
         return R.ok().data(post);
     }

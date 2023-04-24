@@ -65,6 +65,10 @@ public class UserController {
 
     @GetMapping("/user-info/{account}")
     public R getUserInfo(@PathVariable String account, Principal principal) {
+        if(principal == null){
+            var user = userRepository.findByAccount(account);
+            return R.ok().data(user);
+        }
         var login_user = userService.getByAccount(principal.getName());
         var user = userRepository.findByAccount(account);
         var res = followUserRepository.findOneByUserIdAndFollowUser(login_user.getId(), user.get());

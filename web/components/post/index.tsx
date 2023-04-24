@@ -10,6 +10,7 @@ import LikeButton from '../LikeButton';
 import classNames from 'classnames';
 import { CommentOutlined } from '@ant-design/icons';
 import CollectButton from '../CollectButton';
+import FollowButton from '../FollowButton';
 
 export default function Post() {
   const [open, setOpen] = useState(false);
@@ -40,7 +41,11 @@ export default function Post() {
                   </div>
                 </div>
               </Space>
-              <Button size="small">关注</Button>
+              <FollowButton
+                key={data?.author?.followed}
+                account={data?.author?.account}
+                followed={data?.author?.followed}
+              />
             </div>
             <div
               className="rich-text"

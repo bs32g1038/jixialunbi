@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import Layout from '../Layout';
-import { Avatar, Button, Tabs } from 'antd';
+import { Avatar, Tabs } from 'antd';
 import styles from './index.module.scss';
-import { EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { EditOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { useSWR, useSWRMutation } from '@/hooks';
+import { useSWR } from '@/hooks';
 import Posts from './components/Posts';
 import CollectionPosts from './components/CollectionPosts';
+import AuthButton from '../AuthButton';
+import FollowButton from '../FollowButton';
 
 const TABS = {
   post: '帖子',
@@ -17,11 +19,10 @@ const TABS = {
 export default function Profile() {
   const router = useRouter();
   const [tab, setTab] = useState(TABS.post);
-  const account = router.query?.account;
-  const { data: _data, mutate } = useSWR({ url: '/api/v1/user-info/' + account });
+  const account = router.query.account as string;
+  const { data: _data } = useSWR({ url: '/api/v1/user-info/' + account });
   const user = _data?.data ?? {};
   const data = _data?.data ?? {};
-  const { trigger, isMutating } = useSWRMutation({ url: '/api/v1/follow-user/' + account });
   return (
     <Layout>
       <div className={styles.profit}>
@@ -33,32 +34,12 @@ export default function Profile() {
               <p className={styles.desc}>{data.about ?? '这家伙很懒，什么都没留下'}</p>
             </div>
             <div className={styles.control}>
-              <Button
-                size="small"
-                type="primary"
-                icon={<PlusOutlined></PlusOutlined>}
-                loading={isMutating}
-                style={
-                  user.followed
-                    ? {
-                        backgroundColor: '#f2f3f5',
-                        color: '#8a919f',
-                      }
-                    : {}
-                }
-                onClick={() => {
-                  trigger().then(() => {
-                    mutate();
-                  });
-                }}
-              >
-                {user.followed ? '已关注' : '关注'}
-              </Button>
+              <FollowButton account={account} followed={user?.followed} />
               <div className={styles.func}>
                 {user?.account === account && (
-                  <Button size="small" type="dashed" onClick={() => router.push('/profile/edit/' + data?.account)}>
+                  <AuthButton size="small" type="dashed" onClick={() => router.push('/profile/edit/' + data?.account)}>
                     <EditOutlined></EditOutlined>账号设置
-                  </Button>
+                  </AuthButton>
                 )}
               </div>
             </div>
