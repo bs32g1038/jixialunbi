@@ -8,6 +8,7 @@ import com.jixialunbi.dto.request.PostRequest;
 import com.jixialunbi.model.*;
 import com.jixialunbi.repository.*;
 import com.jixialunbi.service.CategoryService;
+import com.jixialunbi.service.FollowUserService;
 import com.jixialunbi.service.UserService;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -39,9 +40,6 @@ public class PostController {
     PostRepository postRepository;
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
     PostLikeRepository postLikeRepository;
 
     @Autowired
@@ -51,10 +49,10 @@ public class PostController {
     CommentRepository commentRepository;
 
     @Autowired
-    FollowUserRepository followUserRepository;
+    UserService userService;
 
     @Autowired
-    UserService userService;
+    FollowUserService followUserService;
 
     @Autowired
     CategoryService categoryService;
@@ -176,8 +174,8 @@ public class PostController {
             post.get().setLiked(res != null && res.getDeleted() == null);
             var cn = postCollectionRepository.findOneByPostIdAndAuthorId(postId, user.getId());
             post.get().setCollected(cn != null && cn.getDeleted() == null);
-            var frs = followUserRepository.findOneByUserIdAndFollowUser(post.get().getAuthor().getId(), user);
-            post.get().getAuthor().setFollowed(frs != null);
+            var followed = followUserService.isFollow(post.get().getAuthor().getId(), user);
+            post.get().getAuthor().setFollowed(followed);
         }
         return R.ok().data(post);
     }

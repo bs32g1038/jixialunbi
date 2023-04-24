@@ -34,7 +34,7 @@ export default function Profile() {
               <p className={styles.desc}>{data.about ?? '这家伙很懒，什么都没留下'}</p>
             </div>
             <div className={styles.control}>
-              <FollowButton account={account} followed={user?.followed} />
+              <FollowButton key={user?.followed} account={account} followed={user?.followed} />
               <div className={styles.func}>
                 {user?.account === account && (
                   <AuthButton size="small" type="dashed" onClick={() => router.push('/profile/edit/' + data?.account)}>

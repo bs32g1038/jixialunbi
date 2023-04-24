@@ -8,6 +8,7 @@ import com.jixialunbi.model.FollowUser;
 import com.jixialunbi.model.User;
 import com.jixialunbi.repository.FollowUserRepository;
 import com.jixialunbi.repository.UserRepository;
+import com.jixialunbi.service.FollowUserService;
 import com.jixialunbi.service.UserService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -34,6 +35,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    FollowUserService followUserService;
 
     @GetMapping("/users")
     public R fetchUsers(@RequestParam int page, @RequestParam int pageSize) {
@@ -65,14 +69,14 @@ public class UserController {
 
     @GetMapping("/user-info/{account}")
     public R getUserInfo(@PathVariable String account, Principal principal) {
-        if(principal == null){
+        if (principal == null) {
             var user = userRepository.findByAccount(account);
             return R.ok().data(user);
         }
         var login_user = userService.getByAccount(principal.getName());
         var user = userRepository.findByAccount(account);
-        var res = followUserRepository.findOneByUserIdAndFollowUser(login_user.getId(), user.get());
-        user.get().setFollowed(res != null);
+        boolean followed = followUserService.isFollow(login_user.getId(), user.get());
+        user.get().setFollowed(followed);
         return R.ok().data(user);
     }
 
