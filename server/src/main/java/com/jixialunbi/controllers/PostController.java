@@ -158,6 +158,7 @@ public class PostController {
     }
 
     @GetMapping("/posts/{postId}")
+    @Transactional
     public R getPost(@PathVariable long postId, Principal principal) {
         var post = postRepository.findById(postId);
         if (!post.get().equals(null)) {
