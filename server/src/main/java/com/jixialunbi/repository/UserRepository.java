@@ -24,5 +24,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("update User p set p.followCount = p.followCount + :followCount where p.id = :id")
     void increaseFollowCount(@Param("id") Long id, @Param("followCount") Integer followCount);
 
+    @Transactional
+    @Modifying
+    @Query("update User p set p.fanCount = p.fanCount + :fanCount where p.id = :id")
+    void increaseFanCount(@Param("id") Long id, @Param("fanCount") Integer fanCount);
+
 
 }

@@ -14,15 +14,15 @@ import java.util.Date;
 @Setter
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-//@Where(clause = "deleted is null")
 public class FollowUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "user_id")
-    private long userId;
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "follow_user_id")

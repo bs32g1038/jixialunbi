@@ -50,12 +50,12 @@ export default function Profile() {
               <div className={styles.metaItemDesc}>帖子</div>
             </div>
             <div className={styles.metaItem}>
-              <div>{data?.followersCount ?? '0'}</div>
-              <div className={styles.metaItemDesc}>关注者</div>
+              <div>{data?.fanCount ?? '0'}</div>
+              <div className={styles.metaItemDesc}>粉丝</div>
             </div>
             <div className={styles.metaItem}>
-              <div>{data?.followingCount ?? '0'}</div>
-              <div className={styles.metaItemDesc}>被关注</div>
+              <div>{data?.followCount ?? '0'}</div>
+              <div className={styles.metaItemDesc}>关注</div>
             </div>
             <div className={styles.metaItem}>
               <div>{data?.likeCount}</div>

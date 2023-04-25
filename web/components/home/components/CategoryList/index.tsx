@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './index.module.scss';
 import { Button, Select, Space, Spin } from 'antd';
 import Link from 'next/link';
-import HotSvg from '../../../AppHeader/Hot';
+import HotSvg from './components/HotSvg';
 import classNames from 'classnames';
 import { EditOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';

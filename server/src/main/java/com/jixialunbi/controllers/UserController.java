@@ -4,13 +4,11 @@ import com.jixialunbi.common.R;
 import com.jixialunbi.dto.request.UserRequest;
 import com.jixialunbi.dto.request.UserUpdateRequest;
 import com.jixialunbi.enums.HttpReponseResultCodeEnum;
-import com.jixialunbi.model.FollowUser;
 import com.jixialunbi.model.User;
 import com.jixialunbi.repository.FollowUserRepository;
 import com.jixialunbi.repository.UserRepository;
 import com.jixialunbi.service.FollowUserService;
 import com.jixialunbi.service.UserService;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,7 +18,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Date;
 
 
 @RestController
@@ -29,9 +26,6 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
-
-    @Autowired
-    FollowUserRepository followUserRepository;
 
     @Autowired
     UserService userService;
@@ -75,7 +69,7 @@ public class UserController {
         }
         var login_user = userService.getByAccount(principal.getName());
         var user = userRepository.findByAccount(account);
-        boolean followed = followUserService.isFollow(login_user.getId(), user.get());
+        boolean followed = followUserService.isFollow(login_user.getId(), user.get().getId());
         user.get().setFollowed(followed);
         return R.ok().data(user);
     }
@@ -99,30 +93,12 @@ public class UserController {
         return R.ok().data(true);
     }
 
-    @Transactional
     @PostMapping("/follow-user/{account}")
     public R followUser(@PathVariable String account, Principal principal) {
-        var login_user = userService.getByAccount(principal.getName());
-        var user = userService.getByAccount(account);
-        var res = followUserRepository.findOneByUserIdAndFollowUser(user.getId(), login_user);
-        if (res != null) {
-            if (res.getDeleted() == null) {
-                res.setDeleted(new Date());
-                userRepository.increaseFollowCount(user.getId(), -1);
-            } else {
-                res.setDeleted(null);
-                userRepository.increaseFollowCount(user.getId(), 1);
-            }
-            followUserRepository.save(res);
-            return R.ok().data(true);
-        }
-        var followUser = new FollowUser();
-        followUser.setUserId(login_user.getId());
-        followUser.setFollowUser(user);
-        followUser.setDeleted(null);
-        userRepository.increaseFollowCount(user.getId(), 1);
-        followUserRepository.save(followUser);
-        return R.ok().data(true);
+        var user = userService.getByAccount(principal.getName());
+        var followUser = userService.getByAccount(account);
+        boolean res = followUserService.followUser(user.getId(), followUser.getId());
+        return R.ok().data(res);
     }
 
 }

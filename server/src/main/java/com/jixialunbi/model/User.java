@@ -62,6 +62,9 @@ public class User {
     @Column(name = "follow_count")
     private int followCount;
 
+    @Column(name = "fan_count")
+    private int fanCount;
+
     @Transient
     private Boolean followed;
 

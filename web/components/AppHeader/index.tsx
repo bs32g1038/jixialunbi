@@ -7,9 +7,10 @@ import { useRouter } from 'next/router';
 import logo from './logo.png';
 import classNames from 'classnames';
 import Cookies from 'js-cookie';
-import WriteSvg from './WriteSvg';
+import WriteSvg from './components/WriteSvg';
 import AuthButton from '../AuthButton';
 import { useAppStore } from '@/store';
+import Search from './components/Search';
 
 const NotificationIcon = () => {
   const data = [];
@@ -71,7 +72,7 @@ const NotificationIcon = () => {
 
 export default function AppHeader() {
   const router = useRouter();
-  const { showLoginModal, showWriteModal, user } = useAppStore();
+  const { showLoginModal, user } = useAppStore();
   return (
     <header className={styles.header}>
       <div className={styles.headerleft}>
@@ -82,6 +83,7 @@ export default function AppHeader() {
           </Link>
         </span>
       </div>
+      <Search></Search>
       <div className={styles.headerRight}>
         <Link href="/" passHref={true}>
           <Button size="small" type="text">

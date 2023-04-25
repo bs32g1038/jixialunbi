@@ -1,7 +1,6 @@
 .item {
   background-color: #fff;
-  padding: 10px;
-  // border-bottom: 1px dashed #d6d2d2;
+  padding: 12px 10px 0;
   width: 100%;
 }
 
@@ -13,17 +12,11 @@
 
 .avatarWrap {
   border-radius: 50%;
-  // height: 24px;
   margin-bottom: 2px;
   margin-right: 5px;
-  // width: 24px;
-  // background-color: #ccc;
-
   .avatar {
     border-radius: 50%;
     height: 32px;
-    // margin-bottom: 2px;
-    // margin-right: 2px;
     width: 32px;
     vertical-align: baseline;
     background-color: #eee;
@@ -31,7 +24,6 @@
 }
 
 .replyUserList {
-  // margin-top: 10px;
   img {
     width: 20px;
     height: 20px;
@@ -151,18 +143,12 @@ ol.stories li:first-child div.story_liner {
 .tag {
   font-size: 13px !important;
   text-decoration: none;
-  // position: absolute;
-  // left: -144px;
-  // display: flex;
-  // flex-direction: column;
   gap: 5px;
+  margin-top: 10px;
   :global {
     .ant-tag {
       border: none;
-      // border-radius: 3px;
-      // background-color: #eee;
-      // border: 1px solid #eee;
-      // color: #111;
+      color: #888;
     }
   }
 }
@@ -308,8 +294,8 @@ ol.stories li:first-child div.story_liner {
   flex-wrap: wrap;
 
   .pic {
-    border: 1px dashed #e1e1e1;
-    padding: 2px;
+    // border: 1px dashed #e1e1e1;
+    padding: 2px 4px;
     display: inline-block;
     width: 120px;
     height: 80px;

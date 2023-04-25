@@ -6,7 +6,10 @@ import com.jixialunbi.common.utils.PageUtil;
 import com.jixialunbi.dto.request.IdRequest;
 import com.jixialunbi.dto.request.PostRequest;
 import com.jixialunbi.model.*;
-import com.jixialunbi.repository.*;
+import com.jixialunbi.repository.CommentRepository;
+import com.jixialunbi.repository.PostCollectionRepository;
+import com.jixialunbi.repository.PostLikeRepository;
+import com.jixialunbi.repository.PostRepository;
 import com.jixialunbi.service.CategoryService;
 import com.jixialunbi.service.FollowUserService;
 import com.jixialunbi.service.UserService;
@@ -64,6 +67,7 @@ public class PostController {
         post.setTitle(postRequest.getTitle());
         post.setCategory(categoryService.getById(postRequest.getCategoryId()));
         post.setContent(postRequest.getContent());
+        post.setPics(postRequest.getPics());
         post.setAuthor(userService.getByAccount(principal.getName()));
         if (!StrUtil.isEmpty(postRequest.getTags())) {
             post.setTags(postRequest.getTags());
@@ -174,7 +178,7 @@ public class PostController {
             post.get().setLiked(res != null && res.getDeleted() == null);
             var cn = postCollectionRepository.findOneByPostIdAndAuthorId(postId, user.getId());
             post.get().setCollected(cn != null && cn.getDeleted() == null);
-            var followed = followUserService.isFollow(post.get().getAuthor().getId(), user);
+            var followed = followUserService.isFollow(user.getId(), post.get().getAuthor().getId());
             post.get().getAuthor().setFollowed(followed);
         }
         return R.ok().data(post);

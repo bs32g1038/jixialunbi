@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './index.module.scss';
 import Layout from '../Layout';
-import { Avatar, Button, Space } from 'antd';
+import { Avatar, Button, Space, Image } from 'antd';
 import CommentList from './components/CommentList';
 import { useRouter } from 'next/router';
 import WriteComment from './components/WriteComment';
@@ -11,6 +11,11 @@ import classNames from 'classnames';
 import { CommentOutlined } from '@ant-design/icons';
 import CollectButton from '../CollectButton';
 import FollowButton from '../FollowButton';
+import dynamic from 'next/dynamic';
+
+const CImage: any = dynamic(() => import('../home/components/TopicItem/components/CImage') as any, {
+  ssr: false,
+});
 
 export default function Post() {
   const [open, setOpen] = useState(false);
@@ -74,6 +79,19 @@ export default function Post() {
                 <CollectButton isActive={data.collected} postId={data.id} count={data.collectionCount} />
               </Space>
             </div>
+            {data?.pics && (
+              <Image.PreviewGroup>
+                <div className={styles.pics}>
+                  {data?.pics?.split(',').map((pic) => {
+                    return (
+                      <div key={pic} className={styles.pic}>
+                        <CImage src={pic}></CImage>
+                      </div>
+                    );
+                  })}
+                </div>
+              </Image.PreviewGroup>
+            )}
             <h2 className={styles.commentBase} id="comment">
               <span className={styles.commentSign}>评论</span>
               <span className={styles.commentNumber}>{data?.commentCount}</span>

@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { parseTime } from '../../../../libs/time';
 import styles from './index.module.scss';
-import { Avatar, Button, Space, Tag, Popover, Tooltip } from 'antd';
-import { AntDesignOutlined, CommentOutlined, LikeOutlined, StarOutlined, UserOutlined } from '@ant-design/icons';
-import classNames from 'classnames';
+import { Avatar, Button, Space, Tag, Popover, Image } from 'antd';
+import { CommentOutlined } from '@ant-design/icons';
 import LikeButton from '../../../LikeButton';
-import CommentList from '../../../post/components/CommentList';
 import EllipsisDropdown from './components/EllipsisDropdown';
 import { unionBy } from 'lodash';
-import TimeLine from './components/TimeLine';
 import dynamic from 'next/dynamic';
-import AuthButton from '@/components/AuthButton';
 import CollectButton from '@/components/CollectButton';
 
 const CImage: any = dynamic(() => import('./components/CImage') as any, {
@@ -19,7 +15,6 @@ const CImage: any = dynamic(() => import('./components/CImage') as any, {
 });
 
 export default function TopicItem(props: { item: any }) {
-  const [open, setOpen] = useState(false);
   const item = props.item;
   const participants = unionBy(item?.participants, 'id');
   return (
@@ -54,7 +49,9 @@ export default function TopicItem(props: { item: any }) {
                     ></EllipsisDropdown>
                   </Space>
                 </div>
-                <p className={styles.about}>{item?.author?.about}</p>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <p className={styles.about}>{item?.author?.about}</p>
+                </div>
               </div>
             </div>
             <h2 className={styles.title}>
@@ -62,15 +59,17 @@ export default function TopicItem(props: { item: any }) {
             </h2>
             {item.content && <p className={styles.summary}>{item.content}</p>}
             {item?.pics && (
-              <div className={styles.pics}>
-                {item?.pics?.split(',').map((pic) => {
-                  return (
-                    <div key={pic} className={styles.pic}>
-                      <CImage src={pic}></CImage>
-                    </div>
-                  );
-                })}
-              </div>
+              <Image.PreviewGroup>
+                <div className={styles.pics}>
+                  {item?.pics?.split(',').map((pic) => {
+                    return (
+                      <div key={pic} className={styles.pic}>
+                        <CImage src={pic}></CImage>
+                      </div>
+                    );
+                  })}
+                </div>
+              </Image.PreviewGroup>
             )}
             <Space style={{ display: 'flex', justifyContent: 'space-between' }}>
               <Space>
@@ -112,18 +111,17 @@ export default function TopicItem(props: { item: any }) {
                   })}
                 </Avatar.Group>
               )}
-              {/* <Avatar.Group maxCount={3} size="small">
-                <Avatar size="small" src="https://joesch.moe/api/v1/random?key=1" />
-                <a href="https://ant.design">
-                  <Avatar size="small">K</Avatar>
-                </a>
-                <Tooltip title="Ant User" placement="top">
-                  <Avatar size="small" icon={<UserOutlined />} />
-                </Tooltip>
-                <Avatar size="small" icon={<AntDesignOutlined />} />
-              </Avatar.Group> */}
             </Space>
-            {/* {open && <CommentList postId={item.id}></CommentList>} */}
+            {item?.tags && (
+              <div className={styles.tag}>
+                {item?.tags?.split(',').map((tag: string) => {
+                  if (!tag) {
+                    return null;
+                  }
+                  return <Tag key={tag}>{tag}</Tag>;
+                })}
+              </div>
+            )}
           </div>
         </div>
       </div>

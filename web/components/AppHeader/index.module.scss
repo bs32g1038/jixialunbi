@@ -67,19 +67,6 @@
   align-items: center;
 }
 
-.inputSearch {
-  color: #333;
-
-  // border: 1px solid #ccc;
-  border-radius: 20px;
-  padding: 2px 5px;
-  background: #f6f6f6;
-
-  svg {
-    fill: #888;
-  }
-}
-
 .input {
   width: 160px;
   font-size: 14px;
@@ -138,7 +125,7 @@
 }
 
 .inputWrap {
-  max-width: 135px;
+  max-width: 110px;
   overflow: hidden;
   overflow: hidden;
   white-space: nowrap;

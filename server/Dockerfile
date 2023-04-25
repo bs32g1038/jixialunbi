@@ -7,7 +7,6 @@ COPY src ./src
 
 RUN mvn clean install & mvn package
 
-
 # stage-2 : minimal runtime environment
 FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app

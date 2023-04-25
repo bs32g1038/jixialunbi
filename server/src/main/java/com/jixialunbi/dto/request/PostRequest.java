@@ -23,4 +23,6 @@ public class PostRequest {
     private long categoryId;
 
     private String tags;
+
+    private String pics;
 }

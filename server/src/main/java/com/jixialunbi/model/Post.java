@@ -47,6 +47,9 @@ public class Post {
     @Column(name = "tags")
     private String tags;
 
+    @Column(name = "pics")
+    private String pics;
+
     @Column(name = "good")
     private Boolean good;
 
