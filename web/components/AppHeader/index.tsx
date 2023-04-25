@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './index.module.scss';
 import Link from 'next/link';
-import { Avatar, Badge, Button, Dropdown, List, Menu, message, Space } from 'antd';
+import { Avatar, Badge, Button, Dropdown, List, Space } from 'antd';
 import { BellOutlined, DownOutlined, HomeOutlined, LoginOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import logo from './logo.png';
@@ -83,8 +83,8 @@ export default function AppHeader() {
           </Link>
         </span>
       </div>
-      <Search></Search>
       <div className={styles.headerRight}>
+        <Search></Search>
         <Link href="/" passHref={true}>
           <Button size="small" type="text">
             <HomeOutlined></HomeOutlined>首页
