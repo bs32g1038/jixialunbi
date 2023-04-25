@@ -62,13 +62,16 @@ public class PostController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/posts")
+    @Transactional
     public ResponseEntity<Post> createPost(@Valid @RequestBody PostRequest postRequest, Principal principal) {
+        User user = userService.getByAccount(principal.getName());
         var post = new Post();
         post.setTitle(postRequest.getTitle());
         post.setCategory(categoryService.getById(postRequest.getCategoryId()));
         post.setContent(postRequest.getContent());
         post.setPics(postRequest.getPics());
-        post.setAuthor(userService.getByAccount(principal.getName()));
+        post.setAuthor(user);
+        user.setPostCount(user.getPostCount() + 1);
         if (!StrUtil.isEmpty(postRequest.getTags())) {
             post.setTags(postRequest.getTags());
         }
@@ -238,7 +241,7 @@ public class PostController {
     @PostMapping("/delete-post")
     @Transactional
     public R deletePosts(@Valid @RequestBody IdRequest idRequest, Principal principal) {
-        var user = userService.getByAccount(principal.getName());
+        User user = userService.getByAccount(principal.getName());
         var test = postRepository.findByIdAndAuthorId(idRequest.getId(), user.getId());
         test.setDeleted(new Date());
         user.setPostCount(user.getPostCount() - 1);
