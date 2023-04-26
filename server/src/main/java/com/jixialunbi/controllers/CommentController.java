@@ -62,13 +62,10 @@ public class CommentController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/comments")
-    @Transactional
     public R createComment(@Valid @RequestBody CommentRequest commentRequest, Principal principal) {
         var comment = new Comment();
         comment.setContent(commentRequest.getContent());
-        var reply = new Comment();
-        reply.setId(commentRequest.getReplyId());
-        comment.setReply(reply);
+        comment.setReplyId(commentRequest.getReplyId());
         comment.setParentId(commentRequest.getParentId());
         comment.setPostId(commentRequest.getPostId());
         User author = userService.getByAccount(principal.getName());
@@ -76,11 +73,7 @@ public class CommentController {
         Post post = postRepository.findOneById(commentRequest.getPostId());
         post.setCommentCount(post.getCommentCount() + 1);
         comment.setAuthor(author);
-        try {
-            return R.ok().data(commentRepository.save(comment));
-        } catch (Exception e) {
-            return R.error().message("系统异常");
-        }
+        return R.ok().data(commentRepository.save(comment));
     }
 
 }

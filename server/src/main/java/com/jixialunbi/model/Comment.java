@@ -34,8 +34,11 @@ public class Comment {
     @Column(name = "parent_id")
     private Long parentId;
 
+    @Column(name = "reply_id")
+    private Long replyId;
+
     @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "reply_id", nullable = false)
+    @JoinColumn(name = "reply_id", insertable = false, updatable = false)
     private Comment reply;
 
     @CreatedDate
