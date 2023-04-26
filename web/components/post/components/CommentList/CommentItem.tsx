@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import styles from './index.module.scss';
 import { Avatar, Button, Space } from 'antd';
 import WriteComment from '../WriteComment';
-import { parseTime, timeAgo } from '@/libs/time';
-import LikeButton from '../../../LikeButton';
+import { parseTime } from '@/libs/time';
 import { CommentOutlined } from '@ant-design/icons';
 
 interface Props {
+  key?: React.Key;
   postId: number;
   item: any;
   parentCommentId?: number;
@@ -24,19 +24,10 @@ export default function CommentItem(props: Props) {
             <div className={styles.name}>{item?.author?.username}</div>
             <div className={styles.about}>{item?.author?.about}</div>
           </div>
-          <Space>
-            {/* <LikeButton isActive={false} postId={0} likeCount={0}></LikeButton> */}
-            {/* <Button type="text" size="small" onClick={() => setShow(!show)}>
-              <span>
-                <CommentOutlined></CommentOutlined>
-                评论
-              </span>
-            </Button> */}
-          </Space>
         </div>
-        {item.replyId && (
+        {item.reply && (
           <div className={styles.reply}>
-            <span>回复给：@{item?.author?.username}</span>
+            回复 <span className={styles.replyAuthor}>@{item?.reply?.author?.username}</span>
           </div>
         )}
         <p className={styles.content}>{item.content}</p>
@@ -50,6 +41,9 @@ export default function CommentItem(props: Props) {
           </Button>
         </Space>
         {show && <WriteComment postId={postId} parentId={parentCommentId} replyId={item.id}></WriteComment>}
+        {item.childrens?.map((item) => {
+          return <CommentItem key={item.id} parentCommentId={parentCommentId} postId={postId} item={item} />;
+        })}
         <Space direction="vertical" style={{ display: 'flex' }}>
           {item?.comments?.map((replyItem) => {
             return <CommentItem key={item.id} postId={postId} item={replyItem} parentCommentId={item.id}></CommentItem>;

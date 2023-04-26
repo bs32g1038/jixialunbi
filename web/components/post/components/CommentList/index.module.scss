@@ -57,3 +57,10 @@
 .avatar {
   flex: 1 0 auto;
 }
+
+.reply {
+  font-size: 13px;
+  .replyAuthor {
+    color: #eb7350;
+  }
+}

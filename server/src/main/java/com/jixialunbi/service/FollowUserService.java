@@ -6,10 +6,9 @@ import com.jixialunbi.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 /**
@@ -37,7 +36,7 @@ public class FollowUserService {
         var res = followUserRepository.findOneByUserIdAndFollowUserId(userId, followUserId);
         if (res != null) {
             if (res.getDeleted() == null) {
-                res.setDeleted(new Date());
+                res.setDeleted(LocalDateTime.now());
                 userRepository.increaseFollowCount(userId, -1);
                 userRepository.increaseFanCount(followUserId, -1);
             } else {

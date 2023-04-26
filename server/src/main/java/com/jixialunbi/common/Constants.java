@@ -6,8 +6,8 @@ package com.jixialunbi.common;
 public final class Constants {
 
     public static final String TRACE = "trace";
-    public static final String DATE_FORMAT = "dd.MM.yyyy";
-    public static final String DATE_TIME_FORMAT = "dd.MM.yyyy HH:mm:ss";
+    public static final String DATE_FORMAT = "yyyy-MM-dd";
+    public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String VALIDATION_ERROR = "Validation error. Check 'errors' field for details";
     public static final String METHOD_ARGUMENT_NOT_VALID = "MethodArgumentNotValid exception";
     public static final String DELETED_USER = "User is deleted";

@@ -1,7 +1,5 @@
 import React from 'react';
 import styles from './index.module.scss';
-import WriteComment from '../WriteComment';
-import { useFetchCommentsQuery } from '@/apis';
 import CommentItem from './CommentItem';
 import { Empty } from 'antd';
 
@@ -14,7 +12,6 @@ export default function CommentList(props: Props) {
   const { postId, items = [] } = props;
   return (
     <div className={styles.commentArea}>
-      {/* <WriteComment postId={postId}></WriteComment> */}
       {items.map(
         (item: {
           createdAt: string;
@@ -26,7 +23,7 @@ export default function CommentList(props: Props) {
           };
           content: string;
         }) => {
-          return <CommentItem key={item.id} postId={postId} item={item}></CommentItem>;
+          return <CommentItem key={item.id} parentCommentId={item.id} postId={postId} item={item}></CommentItem>;
         }
       )}
       {items?.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}></Empty>}

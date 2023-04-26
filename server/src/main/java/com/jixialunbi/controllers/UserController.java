@@ -5,7 +5,6 @@ import com.jixialunbi.dto.request.UserRequest;
 import com.jixialunbi.dto.request.UserUpdateRequest;
 import com.jixialunbi.enums.HttpReponseResultCodeEnum;
 import com.jixialunbi.model.User;
-import com.jixialunbi.repository.FollowUserRepository;
 import com.jixialunbi.repository.UserRepository;
 import com.jixialunbi.service.FollowUserService;
 import com.jixialunbi.service.UserService;

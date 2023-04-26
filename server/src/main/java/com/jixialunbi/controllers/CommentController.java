@@ -1,5 +1,7 @@
 package com.jixialunbi.controllers;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.jixialunbi.common.R;
 import com.jixialunbi.dto.request.CommentRequest;
 import com.jixialunbi.model.Comment;
@@ -15,6 +17,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -42,8 +46,15 @@ public class CommentController {
 
     @GetMapping("/post-comments")
     public R fetchCommentsByPostId(@RequestParam(required = true) long postId) {
+        List<Comment> list = commentRepository.findByPostId(postId);
+        List<Comment> parentList = list.stream().filter(v -> v.getParentId() == null).toList();
+        List<Map<String, Object>> result = parentList.stream().map(v -> {
+            Map<String, Object> map = BeanUtil.beanToMap(v);
+            map.put("childrens", list.stream().filter(d -> ObjectUtil.equals(d.getParentId(), v.getId())));
+            return map;
+        }).toList();
         try {
-            return R.ok().data(commentRepository.findByPostId(postId));
+            return R.ok().data(result);
         } catch (Exception e) {
             return R.error().message("系统异常");
         }
@@ -55,7 +66,9 @@ public class CommentController {
     public R createComment(@Valid @RequestBody CommentRequest commentRequest, Principal principal) {
         var comment = new Comment();
         comment.setContent(commentRequest.getContent());
-        comment.setReplyId(commentRequest.getReplyId());
+        var reply = new Comment();
+        reply.setId(commentRequest.getReplyId());
+        comment.setReply(reply);
         comment.setParentId(commentRequest.getParentId());
         comment.setPostId(commentRequest.getPostId());
         User author = userService.getByAccount(principal.getName());

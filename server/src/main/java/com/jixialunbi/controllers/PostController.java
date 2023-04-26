@@ -29,8 +29,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -194,7 +194,7 @@ public class PostController {
         var res = postLikeRepository.findOneByPostIdAndAuthorId(postId, user.getId());
         if (res != null) {
             if (res.getDeleted() == null) {
-                res.setDeleted(new Date());
+                res.setDeleted(LocalDateTime.now());
                 postRepository.increaseLikeCount(postId, -1);
             } else {
                 res.setDeleted(null);
@@ -219,7 +219,7 @@ public class PostController {
         var res = postCollectionRepository.findOneByPostIdAndAuthorId(postId, user.getId());
         if (res != null) {
             if (res.getDeleted() == null) {
-                res.setDeleted(new Date());
+                res.setDeleted(LocalDateTime.now());
                 postRepository.increaseCollectionCount(postId, -1);
             } else {
                 res.setDeleted(null);
@@ -243,7 +243,7 @@ public class PostController {
     public R deletePosts(@Valid @RequestBody IdRequest idRequest, Principal principal) {
         User user = userService.getByAccount(principal.getName());
         var test = postRepository.findByIdAndAuthorId(idRequest.getId(), user.getId());
-        test.setDeleted(new Date());
+        test.setDeleted(LocalDateTime.now());
         user.setPostCount(user.getPostCount() - 1);
         return R.ok().data(test);
     }
