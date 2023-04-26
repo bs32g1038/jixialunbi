@@ -12,18 +12,17 @@ import { CommentOutlined } from '@ant-design/icons';
 import CollectButton from '../CollectButton';
 import FollowButton from '../FollowButton';
 import dynamic from 'next/dynamic';
+import axios from '@/libs/axios';
 
 const CImage: any = dynamic(() => import('../home/components/TopicItem/components/CImage') as any, {
   ssr: false,
 });
 
-export default function Post() {
+export default function Post(props) {
+  const { data = {} } = props.data;
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const postId = router.query.id as unknown as number;
-  const { data: { data = {} } = {} } = useSWR({
-    url: '/api/v1/posts/' + postId,
-  });
   const resPostData = useSWR({
     url: '/api/v1/post-comments',
     params: {
@@ -36,7 +35,7 @@ export default function Post() {
         <div className={styles.inner}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
             <h2 className={styles.title}>{data.title}</h2>
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 10 }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
               <Space>
                 <Avatar src={data?.author?.image}></Avatar>
                 <div style={{ marginRight: '20px' }}>
@@ -56,7 +55,6 @@ export default function Post() {
               className="rich-text"
               style={{
                 color: '#333',
-                // padding: '0 20px',
               }}
             >
               <div dangerouslySetInnerHTML={{ __html: data.content }}></div>
@@ -103,4 +101,16 @@ export default function Post() {
       </div>
     </Layout>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { query } = context;
+  const { id } = query as any;
+  const url = '/api/v1/posts/' + id;
+  const post = await axios.get(url).then((res) => res.data);
+  return {
+    props: {
+      data: post,
+    },
+  };
 }

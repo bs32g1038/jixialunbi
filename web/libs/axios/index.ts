@@ -1,9 +1,22 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-axios.defaults.headers.withCredentials = true;
+let baseUrl = '';
+if (typeof window !== 'undefined') {
+  baseUrl = '';
+} else {
+  baseUrl = 'http://127.0.0.1:8000';
+}
 
-axios.interceptors.request.use(
+const instance = axios.create({
+  baseURL: baseUrl,
+});
+
+instance.defaults.timeout = 5000;
+
+instance.defaults.headers.withCredentials = true;
+
+instance.interceptors.request.use(
   function (c: any) {
     c.headers.Authorization = `Bearer ${Cookies.get('token')}`;
     return c;
@@ -13,7 +26,7 @@ axios.interceptors.request.use(
   }
 );
 
-axios.interceptors.response.use(
+instance.interceptors.response.use(
   function (response) {
     const config = response.config as any;
     return response;
@@ -23,6 +36,4 @@ axios.interceptors.response.use(
   }
 );
 
-export default axios;
-
-
+export default instance;
