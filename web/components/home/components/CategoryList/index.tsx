@@ -60,7 +60,6 @@ const CategoryItem = (props: { item: any; isActive: boolean; isAdmin?: boolean; 
 
 export default function CategoryList() {
   const { data, isLoading, mutate } = useSWR('/api/v1/categories', fetcher);
-  console.log(data, isLoading);
   const router = useRouter();
   const [select, setSelect] = useState(router.query.sort ?? 'default');
   // const user = useAppSelector((state) => state.app.user);

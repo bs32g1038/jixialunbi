@@ -38,7 +38,6 @@ const Write = (props: { visible: boolean; postId?: number }) => {
       if (ref.current.getLength() > 3000) {
         return message.error('不能大于3000字');
       }
-      console.log(values);
       Object.assign(values, {
         pics: values.pics
           ?.map((item) => {

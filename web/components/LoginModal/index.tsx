@@ -40,7 +40,6 @@ export default function LoginModal() {
       if (tab === LOGIN_TYPE.login) {
         login(values).then((res) => {
           const token = res.data?.data?.token;
-          console.log(res);
           message.success('登录成功！');
           Cookies.set('token', token);
           setUser(res.data?.data);

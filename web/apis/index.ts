@@ -19,7 +19,6 @@ const axiosBaseQuery =
   > =>
   async ({ url, method, data, params, notification }: any) => {
     const result = await axios({ url: baseUrl + url, method, data, params, notification } as any);
-    console.log(result);
     return { data: result.data.data };
   };
 
