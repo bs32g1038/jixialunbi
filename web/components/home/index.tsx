@@ -7,25 +7,12 @@ import CategoryList from './components/CategoryList';
 import { isUndefined, omitBy } from 'lodash';
 import { useRouter } from 'next/router';
 import PinnedList from './components/PinnedList';
-import { useSWR } from '@/hooks';
+import axios from '@/libs/axios';
 
-const Home = () => {
-  const [page, setPage] = useState(1);
+const Home = (props: { data: any }) => {
   const router = useRouter();
-  const { categoryId, sort, postId, type, q } = router.query;
-  const reqParams = omitBy(
-    {
-      categoryId,
-      isHot: sort === 'hot',
-      id: postId,
-      type,
-      query: q,
-      page: page - 1,
-    },
-    isUndefined
-  );
-  const { data } = useSWR({ url: '/api/v1/posts', params: reqParams });
-  const { items = [], count = 0 } = data?.data ?? {};
+  const { type, page } = router.query;
+  const { items = [], count = 0 } = props.data?.data ?? {};
   return (
     <Layout>
       <PinnedList></PinnedList>
@@ -37,16 +24,19 @@ const Home = () => {
           ))}
           {items?.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}></Empty>}
         </div>
-        {count > 20 && (
+        {count > 10 && (
           <Pagination
             className={styles.pagination}
-            size="small"
-            current={page}
-            pageSize={20}
+            current={Number(page ?? 1)}
+            pageSize={10}
             total={count}
             showSizeChanger={false}
             onChange={(p) => {
-              setPage(p);
+              router.push({
+                query: {
+                  page: p,
+                },
+              });
             }}
           />
         )}
@@ -55,3 +45,25 @@ const Home = () => {
   );
 };
 export default Home;
+
+export async function getServerSideProps(context) {
+  const { query } = context;
+  const { categoryId, sort, type, q, page = 1 } = query;
+  const reqParams = omitBy(
+    {
+      categoryId,
+      isHot: sort === 'hot',
+      type,
+      query: q,
+      page: page - 1,
+    },
+    isUndefined
+  );
+  const url = '/api/v1/posts';
+  const res = await axios.get(url, { params: reqParams }).then((res) => res.data);
+  return {
+    props: {
+      data: res,
+    },
+  };
+}
