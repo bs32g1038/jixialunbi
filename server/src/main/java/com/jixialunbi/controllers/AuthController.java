@@ -7,7 +7,10 @@ import com.jixialunbi.dto.request.LoginRequest;
 import com.jixialunbi.dto.request.UserRequest;
 import com.jixialunbi.dto.response.CommandResponse;
 import com.jixialunbi.dto.response.JwtResponse;
+import com.jixialunbi.enums.NotificationTypeEnum;
+import com.jixialunbi.model.Notification;
 import com.jixialunbi.service.AuthService;
+import com.jixialunbi.service.NotificationService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +28,12 @@ import java.time.Clock;
 public class AuthController {
 
     private final Clock clock;
+
+    @Autowired
     private final AuthService authService;
+
+    @Autowired
+    private final NotificationService notificationService;
 
     @Autowired
     HttpSession session;
@@ -39,6 +47,14 @@ public class AuthController {
     @PostMapping("/signup")
     public R signup(@Valid @RequestBody UserRequest request) {
         final CommandResponse response = authService.signup(request);
+        Notification notification = new Notification();
+        notification.setSenderId(0);
+        notification.setReceiverId(response.id());
+        notification.setTitle("系统通知");
+        notification.setContent("欢迎您，加入到积下论笔社区\uD83D\uDE00");
+        notification.setBeRead(false);
+        notification.setType(NotificationTypeEnum.HUANGYING.getCode());
+        notificationService.createNotification(notification);
         return R.ok().data(response);
     }
 

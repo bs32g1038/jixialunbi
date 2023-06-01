@@ -10,7 +10,6 @@ import com.jixialunbi.model.User;
 import com.jixialunbi.repository.CommentRepository;
 import com.jixialunbi.repository.PostRepository;
 import com.jixialunbi.service.UserService;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
