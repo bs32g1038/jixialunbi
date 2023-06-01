@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './index.module.scss';
 import Link from 'next/link';
 import { Avatar, Badge, Button, Dropdown, List, Space } from 'antd';
-import { BellOutlined, DownOutlined, HomeOutlined, LoginOutlined, LogoutOutlined } from '@ant-design/icons';
+import { BellOutlined, DownOutlined, EditOutlined, HomeOutlined, LoginOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import logo from './logo.png';
 import classNames from 'classnames';
@@ -97,9 +97,7 @@ export default function AppHeader() {
             router.push('/write');
           }}
         >
-          <Space>
-            <WriteSvg></WriteSvg>写作
-          </Space>
+          <EditOutlined /> 写作
         </AuthButton>
         <span className={styles.headerlinks}>
           {user ? (

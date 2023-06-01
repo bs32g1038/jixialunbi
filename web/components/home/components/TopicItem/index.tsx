@@ -5,10 +5,10 @@ import styles from './index.module.scss';
 import { Avatar, Button, Space, Tag, Popover, Image } from 'antd';
 import { CommentOutlined } from '@ant-design/icons';
 import LikeButton from '../../../LikeButton';
-import EllipsisDropdown from './components/EllipsisDropdown';
 import { unionBy } from 'lodash';
 import dynamic from 'next/dynamic';
 import CollectButton from '@/components/CollectButton';
+import EllipsisDropdown from './components/EllipsisDropdown';
 
 const CImage: any = dynamic(() => import('./components/CImage') as any, {
   ssr: false,
@@ -21,42 +21,32 @@ export default function TopicItem(props: { item: any }) {
     <div key={item.title} className={styles.item}>
       <div className={styles.liner}>
         <div className={styles.details}>
-          <div className={styles.avatarWrap}>
-            <img className={styles.avatar} src={item?.author?.image} alt="" />
-          </div>
           <div className={styles.core}>
-            <div className={styles.header}>
-              <div style={{ flex: '1 0 auto' }}>
-                <div className={styles.byline}>
-                  <div>
-                    <Link href={`/profile/${item?.author?.account}`} className={styles.about}>
-                      {item?.author?.username}
-                    </Link>
-                  </div>
-                  <Space size={4} style={{ fontSize: '12px' }}>
-                    <Space size={4}>
-                      <p className={styles.lastEditTime}>{parseTime(item.updatedAt)}</p>
-                      <span>·</span>
-                      <div style={{ fontSize: 12, border: 'none', background: 'none', color: 'rgba(0, 0, 0, 0.45)' }}>
-                        {item?.category?.name}
-                      </div>
-                    </Space>
-                    <EllipsisDropdown
-                      pinned={item.pinned}
-                      authorId={item?.author?.id}
-                      postId={item.id}
-                      id={0}
-                    ></EllipsisDropdown>
-                  </Space>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <p className={styles.about}>{item?.author?.about}</p>
-                </div>
-              </div>
-            </div>
             <h2 className={styles.title}>
               <a href={`/posts/${item.id}`}>{item.title}</a>
+              {item?.tags && (
+                <div className={styles.tag}>
+                  <Tag>{item?.category?.name}</Tag>
+                  {item?.tags?.split(',').map((tag: string) => {
+                    if (!tag) {
+                      return null;
+                    }
+                    return <Tag key={tag}>{tag}</Tag>;
+                  })}
+                </div>
+              )}
             </h2>
+            <Space size={4} style={{ marginBottom: 5 }}>
+              <div className={styles.avatarWrap}>
+                <img className={styles.avatar} src={item?.author?.image} alt="" />
+              </div>
+              <div style={{ marginRight: 5 }}>
+                <Link href={`/profile/${item?.author?.account}`} className={styles.about}>
+                  {item?.author?.username}
+                </Link>
+              </div>
+              <p className={styles.lastEditTime}>{parseTime(item.updatedAt)}</p>
+            </Space>
             {item.content && <p className={styles.summary}>{item.content}</p>}
             {item?.pics && (
               <Image.PreviewGroup>
@@ -86,6 +76,12 @@ export default function TopicItem(props: { item: any }) {
                       </Space>
                     </Button>
                     <CollectButton isActive={item.collected} postId={item.id} count={item.collectionCount} />
+                    <EllipsisDropdown
+                      pinned={item.pinned}
+                      authorId={item?.author?.id}
+                      postId={item.id}
+                      id={0}
+                    ></EllipsisDropdown>
                   </Space>
                 </div>
               </Space>
@@ -112,16 +108,6 @@ export default function TopicItem(props: { item: any }) {
                 </Avatar.Group>
               )}
             </Space>
-            {item?.tags && (
-              <div className={styles.tag}>
-                {item?.tags?.split(',').map((tag: string) => {
-                  if (!tag) {
-                    return null;
-                  }
-                  return <Tag key={tag}>{tag}</Tag>;
-                })}
-              </div>
-            )}
           </div>
         </div>
       </div>

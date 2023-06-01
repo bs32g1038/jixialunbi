@@ -15,7 +15,7 @@ export default function FollowButton(props: Props) {
   return (
     <AuthButton
       size="small"
-      type="primary"
+      type="text"
       icon={<PlusOutlined></PlusOutlined>}
       loading={isMutating}
       style={

@@ -1,6 +1,6 @@
 .item {
   background-color: #fff;
-  padding: 0 10px 8px;
+  padding: 0 10px 12px;
   width: 100%;
 }
 
@@ -12,14 +12,14 @@
 
 .avatarWrap {
   border-radius: 50%;
-  margin-bottom: 2px;
+  // margin-bottom: 2px;
   margin-right: 5px;
   .avatar {
     border-radius: 50%;
-    height: 32px;
-    width: 32px;
-    vertical-align: baseline;
-    background-color: #eee;
+    height: 16px;
+    margin-right: 2px;
+    width: 16px;
+    display: block;
   }
 }
 
@@ -144,7 +144,6 @@ ol.stories li:first-child div.story_liner {
   font-size: 13px !important;
   text-decoration: none;
   gap: 5px;
-  margin-top: 10px;
   :global {
     .ant-tag {
       border: none;
@@ -211,6 +210,8 @@ ol.stories li:first-child div.story_liner {
     .ant-btn {
       padding: 0 2px !important;
       color: rgba(0, 0, 0, 0.65);
+      // font-size: 12px !important;
+      // line-height: 20px !important;
     }
   }
 }
@@ -284,7 +285,7 @@ ol.stories li:first-child div.story_liner {
 
 .about {
   color: rgba(0, 0, 0, 0.45);
-  font-size: 12px;
+  font-size: 14px;
   margin-bottom: 0;
 }
 
@@ -317,14 +318,16 @@ ol.stories li:first-child div.story_liner {
 }
 
 .title {
-  margin-top: 8px;
   margin-bottom: 8px;
+  display: flex;
+  align-items: baseline;
   a {
     color: rgba(0, 0, 0, 0.85);
     text-decoration: none;
     font-weight: 600;
     font-size: 16px;
     display: block;
+    margin-right: 8px;
   }
 }
 

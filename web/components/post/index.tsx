@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './index.module.scss';
 import Layout from '../Layout';
-import { Avatar, Button, Space, Image } from 'antd';
+import { Button, Space, Image, Tag } from 'antd';
 import CommentList from './components/CommentList';
 import { useRouter } from 'next/router';
 import WriteComment from './components/WriteComment';
@@ -13,6 +13,8 @@ import CollectButton from '../CollectButton';
 import FollowButton from '../FollowButton';
 import dynamic from 'next/dynamic';
 import axios from '@/libs/axios';
+import Link from 'next/link';
+import { parseTime } from '@/libs/time';
 
 const CImage: any = dynamic(() => import('../home/components/TopicItem/components/CImage') as any, {
   ssr: false,
@@ -34,23 +36,36 @@ export default function Post(props) {
       <div className={styles.wrap}>
         <div className={styles.inner}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-            <h2 className={styles.title}>{data.title}</h2>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Space>
-                <Avatar src={data?.author?.image}></Avatar>
-                <div style={{ marginRight: '20px' }}>
-                  <div className={styles.author}>{data?.author?.username}</div>
-                  <div className={styles.authorDes}>
-                    {data?.updatedAt} | {data?.author?.about}
-                  </div>
+            <h2 className={styles.title}>
+              <a href={`/posts/${data.id}`}>{data.title}</a>
+              {data?.tags && (
+                <div className={styles.tag}>
+                  <Tag>{data?.category?.name}</Tag>
+                  {data?.tags?.split(',').map((tag: string) => {
+                    if (!tag) {
+                      return null;
+                    }
+                    return <Tag key={tag}>{tag}</Tag>;
+                  })}
                 </div>
-              </Space>
+              )}
+            </h2>
+            <Space size={4}>
+              <div className={styles.avatarWrap}>
+                <img className={styles.avatar} src={data?.author?.image} alt="" />
+              </div>
+              <div style={{ marginRight: 5 }}>
+                <Link href={`/profile/${data?.author?.account}`} className={styles.about}>
+                  {data?.author?.username}
+                </Link>
+              </div>
+              <p className={styles.lastEditTime}>{parseTime(data.updatedAt)}</p>
               <FollowButton
                 key={data?.author?.followed}
                 account={data?.author?.account}
                 followed={data?.author?.followed}
               />
-            </div>
+            </Space>
             <div
               className="rich-text"
               style={{
@@ -60,7 +75,7 @@ export default function Post(props) {
               <div dangerouslySetInnerHTML={{ __html: data.content }}></div>
             </div>
             <div className={styles.cont}>
-              <Space size={8}>
+              <Space size={4}>
                 <div>{data.visitCount}人阅读</div>
                 <LikeButton isActive={data.liked} postId={data.id} count={data.likeCount} />
                 <Button
