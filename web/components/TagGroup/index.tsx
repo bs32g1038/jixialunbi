@@ -37,7 +37,7 @@ const TagGroup = (props: Props) => {
 
   const showInput = () => {
     if (tags.length >= 5) {
-      return message.warn("最多5个标签！")
+      return message.warning("最多5个标签！")
     }
     setInputVisible(true);
   };

@@ -1,6 +1,7 @@
 .item {
-  // border-bottom: 1px dashed #f1f1f1;
-  padding-top: 5px;
+  background-color: #fff;
+  padding: 5px 12px;
+  width: 100%;
 }
 
 .liner {
@@ -11,25 +12,17 @@
 
 .avatarWrap {
   border-radius: 50%;
-  // height: 24px;
-  margin-bottom: 2px;
+  // margin-bottom: 2px;
   margin-right: 5px;
-  // width: 24px;
-  // background-color: #ccc;
-
   .avatar {
-    border-radius: 50%;
+    border-radius: 4px;
     height: 32px;
-    // margin-bottom: 2px;
-    // margin-right: 2px;
     width: 32px;
-    vertical-align: baseline;
+    display: block;
   }
 }
 
 .replyUserList {
-
-  // margin-top: 10px;
   img {
     width: 20px;
     height: 20px;
@@ -84,17 +77,12 @@
   width: 100%;
   display: flex;
   gap: 8px;
-  border-bottom: 1px dashed #f0f0f0;
-
-  svg {
-    fill: rgba(0, 0, 0, 0.45);
-    margin-right: 4px;
-    margin-left: 4px;
-  }
+  padding: 0 10px;
 }
 
 .core {
   width: 100%;
+  position: relative;
 }
 
 .text {
@@ -154,7 +142,14 @@ ol.stories li:first-child div.story_liner {
 .tag {
   font-size: 13px !important;
   text-decoration: none;
-  margin-top: 10px;
+  gap: 2px;
+  white-space: nowrap;
+  :global {
+    .ant-tag {
+      border: none;
+      color: #888;
+    }
+  }
 }
 
 .domain {
@@ -175,7 +170,7 @@ ol.stories li:first-child div.story_liner {
   line-height: 1.65;
   letter-spacing: 0.5px;
   color: #333;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .mata {
@@ -201,17 +196,22 @@ ol.stories li:first-child div.story_liner {
 .lastEditTime {
   color: rgba(0, 0, 0, 0.45);
   font-size: 12px;
-  padding: 8px 5px;
   margin-bottom: 0;
 }
 
 .footer {
-  padding: 0 0 5px 0;
-  font-size: 12px;
-  color: rgba(0, 0, 0, 0.65);
+  font-size: 13px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: rgba(0, 0, 0, 0.65);
+  :global {
+    .ant-btn {
+      padding: 0 2px !important;
+      color: rgba(0, 0, 0, 0.45);
+      font-size: 13px !important;
+    }
+  }
 }
 
 .username {
@@ -283,7 +283,7 @@ ol.stories li:first-child div.story_liner {
 
 .about {
   color: rgba(0, 0, 0, 0.45);
-  font-size: 12px;
+  font-size: 13px;
   margin-bottom: 0;
 }
 
@@ -293,8 +293,7 @@ ol.stories li:first-child div.story_liner {
   flex-wrap: wrap;
 
   .pic {
-    border: 1px dashed #e1e1e1;
-    padding: 2px;
+    padding: 2px 4px;
     display: inline-block;
     width: 120px;
     height: 80px;
@@ -313,4 +312,25 @@ ol.stories li:first-child div.story_liner {
       height: 100%;
     }
   }
+}
+
+.title {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: baseline;
+  a {
+    color: rgba(0, 0, 0, 0.85);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    display: block;
+    margin-right: 8px;
+  }
+}
+
+.summary {
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.65);
+  margin-bottom: 8px;
+  line-height: 22px;
 }

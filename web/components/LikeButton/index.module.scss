@@ -1,19 +1,18 @@
+.wrap {
+  text-align: center;
+}
+
 .btn {
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.65);
-  padding: 0;
-  &:hover {
-    color: #85a5ff !important;
-  }
-  svg {
-    fill: currentColor;
+  :global {
+    .anticon {
+      margin-inline-start: 4px;
+    }
   }
 }
 
 .active {
-  background: rgba(0, 0, 0, 0.018);
-  color: #85a5ff !important;
+  // background: rgba(0, 0, 0, 0.05) !important;
   svg {
-    fill: currentColor;
+    fill: #85a5ff !important;
   }
 }

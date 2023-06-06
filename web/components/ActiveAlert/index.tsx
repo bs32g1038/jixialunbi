@@ -1,12 +1,12 @@
-import { useAppSelector } from '@/hooks';
+import { useAppStore } from '@/store';
 import { Alert, Button, Space } from 'antd';
 import { useRouter } from 'next/router';
 import React from 'react';
 
 export default function ActiveAlert() {
   const router = useRouter();
-  const user = useAppSelector((state) => state.app.user);
-  return user && !user?.isActived ? (
+  const user = useAppStore((state) => state.user);
+  return user && !user?.actived ? (
     <Alert
       showIcon
       message={

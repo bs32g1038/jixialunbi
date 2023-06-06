@@ -1,9 +1,11 @@
 .top {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+  background-color: #fff;
+  padding: 0 20px 10px;
   .topItem {
-    display: flex;
+    display: inline-flex;
     align-items: center;
   }
   .topLabel {
@@ -18,11 +20,12 @@
     border-radius: 1px;
   }
   .topContent {
-    width: 90%;
-    font-size: 13px;
+    font-size: 14px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     color: inherit;
+    text-decoration: none;
+    color: #252933;
   }
 }

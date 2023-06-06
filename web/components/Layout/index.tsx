@@ -1,8 +1,6 @@
-import { useGetLoginUserQuery } from '@/apis';
 import { ArrowUpOutlined } from '@ant-design/icons';
-import { BackTop } from 'antd';
+import { FloatButton } from 'antd';
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { setUser } from '../../store/app';
 import ActiveAlert from '../ActiveAlert';
 import AppFooter from '../AppFooter';
@@ -10,6 +8,9 @@ import AppHeader from '../AppHeader';
 import LoginModal from '../LoginModal';
 import Write from '../Write';
 import styles from './index.module.scss';
+import useSWR from 'swr';
+import { fetcher } from '../home/services';
+import { useAppStore } from '@/store';
 
 const style: React.CSSProperties = {
   height: 40,
@@ -24,24 +25,27 @@ const style: React.CSSProperties = {
 
 export default function Layout(props: any) {
   const children = props.children;
-  const { data: user } = useGetLoginUserQuery();
-  const dispatch = useDispatch();
+  const { data } = useSWR('/api/v1/login-user-info', fetcher);
+  const { setUser } = useAppStore();
   useEffect(() => {
-    dispatch(setUser(user));
-  }, [dispatch, user]);
+    if (data?.data) {
+      setUser(data.data);
+    }
+  }, [data, setUser]);
   return (
     <div className={styles.wrap}>
       <AppHeader></AppHeader>
-      <ActiveAlert></ActiveAlert>
+      {/* <ActiveAlert></ActiveAlert> */}
       {children}
       <AppFooter></AppFooter>
       <LoginModal></LoginModal>
-      <Write></Write>
-      <BackTop>
+      {/* <Write></Write> */}
+      <FloatButton.BackTop>
         <div style={style}>
           <ArrowUpOutlined />
         </div>
-      </BackTop>
+      </FloatButton.BackTop>
+      {/* </div> */}
     </div>
   );
 }

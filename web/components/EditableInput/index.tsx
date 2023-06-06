@@ -5,9 +5,9 @@ import { AutoSizeType } from 'rc-textarea';
 import { Rule } from 'antd/lib/form';
 import style from './style.module.scss';
 import UploadButton from '../UploadButton';
-import { useActiveEmailMutation, useSendEmailMutation } from '@/apis';
-import { useAppSelector } from '@/hooks';
 import { useRouter } from 'next/router';
+import { useAppStore } from '@/store';
+import { useSWRMutation } from '@/hooks';
 
 interface Props {
   label: string;
@@ -23,10 +23,10 @@ interface Props {
 }
 
 const EmailActive = () => {
-  const [sendEmail] = useSendEmailMutation();
+  const { trigger: sendEmail } = useSWRMutation({ url: '/api/v1/send-email' });
   const [emailCode, setEmailCode] = useState<any>('');
   const [active, setActive] = useState(false);
-  const [activeEmail] = useActiveEmailMutation();
+  const { trigger: activeEmail } = useSWRMutation({ url: '/api/v1/active-email/' + emailCode });
   const router = useRouter();
   return (
     <Space>
@@ -34,11 +34,9 @@ const EmailActive = () => {
         <Button
           size="small"
           onClick={() => {
-            return sendEmail()
-              .unwrap()
-              .then(() => {
-                setActive(true);
-              });
+            return sendEmail().then(() => {
+              setActive(true);
+            });
           }}
         >
           验证
@@ -54,12 +52,18 @@ const EmailActive = () => {
           />
           <Button
             onClick={() => {
-              activeEmail({ emailCode })
-                .unwrap()
-                .then(() => {
-                  message.success('激活成功，感谢您的支持。');
-                  router.reload();
+              if (emailCode) {
+                activeEmail().then((res) => {
+                  if (res.data.data) {
+                    message.success('验证成功，感谢您的支持。');
+                    setTimeout(() => {
+                      router.reload();
+                    }, 50);
+                  } else {
+                    message.success('验证码不正确！');
+                  }
                 });
+              }
             }}
             size="small"
           >
@@ -75,7 +79,7 @@ export default function Index(props: Props) {
   const { name, placeholder, value, label, loading, type = 'input', autoSize, rules, extra } = props;
   const [form] = Form.useForm();
   const [disabled, setDisabled] = useState(true);
-  const user = useAppSelector((state) => state.app.user);
+  const user = useAppStore((state) => state.user);
 
   const onFinish = (values: any) => {
     if (props.onFinish) {
@@ -112,7 +116,7 @@ export default function Index(props: Props) {
               >
                 <EditOutlined></EditOutlined>编辑
               </Button>
-              {!user?.isActived && value && type === 'email' && <EmailActive></EmailActive>}
+              {!user?.actived && value && type === 'email' && <EmailActive></EmailActive>}
             </Space>
           )}
         </label>

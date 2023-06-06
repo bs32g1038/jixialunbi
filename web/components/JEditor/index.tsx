@@ -5,21 +5,41 @@ import StarterKit from '@tiptap/starter-kit';
 import { noop } from 'lodash';
 import Placeholder from '@tiptap/extension-placeholder';
 import OlSvg from './components/ol';
-import { Button } from 'antd';
+import { Button, Input, message, Popover, Upload, UploadProps } from 'antd';
 import UlSvg from './components/ul';
 import BoldSvg from './components/bold';
 import ItalicSvg from './components/italic';
 import CodeBlockSvg from './components/code-block';
 import QuoteSvg from './components/quote';
-import { SendOutlined } from '@ant-design/icons';
 import ClearSvg from './components/clear';
 import HSvg from './components/h';
 import Link from '@tiptap/extension-link';
+import Image from '@tiptap/extension-image';
+import CodeSvg from './components/code';
+import LinkSvg from './components/link';
+import ImageSvg from './components/image';
+import Cookies from 'js-cookie';
 
-const MenuBar = ({ editor, len, loading }: any) => {
+const MenuBar = ({ editor }: any) => {
   if (!editor) {
     return null;
   }
+  const props: UploadProps = {
+    name: 'file',
+    action: '/api/v1/files/upload',
+    headers: {
+      authorization: typeof localStorage !== 'undefined' && Cookies.get('token'),
+    },
+    showUploadList: false,
+    onChange(info) {
+      if (info.file.status === 'done') {
+        editor.commands.setImage({ src: info.file.response.data });
+        message.success(`${info.file.name} 文件上传成功。`);
+      } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} 文件上传失败。`);
+      }
+    },
+  };
   return (
     <div className={style.header}>
       <div className={style.menuBar}>
@@ -37,6 +57,28 @@ const MenuBar = ({ editor, len, loading }: any) => {
         >
           <ItalicSvg></ItalicSvg>
         </Button>
+        <Button
+          onClick={() => editor.chain().focus().toggleCode().run()}
+          className={editor.isActive('code') ? 'is-active' : ''}
+        >
+          <CodeSvg></CodeSvg>
+        </Button>
+        <Popover
+          content={
+            <Input
+              placeholder="请输入链接"
+              value={editor.getAttributes('link').href}
+              onChange={(e) => {
+                editor.commands.toggleLink({ href: e.target.value, target: '_blank' });
+              }}
+            />
+          }
+          trigger="click"
+        >
+          <Button className={editor.isActive('link') ? 'is-active' : ''}>
+            <LinkSvg></LinkSvg>
+          </Button>
+        </Popover>
         <Button
           onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
           className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}
@@ -67,6 +109,11 @@ const MenuBar = ({ editor, len, loading }: any) => {
         >
           <QuoteSvg></QuoteSvg>
         </Button>
+        <Upload {...props}>
+          <Button className={editor.isActive('image') ? 'is-active' : ''}>
+            <ImageSvg></ImageSvg>
+          </Button>
+        </Upload>
         <Button
           onClick={() => {
             editor.chain().focus().clearNodes().unsetAllMarks().run();
@@ -75,17 +122,6 @@ const MenuBar = ({ editor, len, loading }: any) => {
           <ClearSvg></ClearSvg>
         </Button>
       </div>
-      <div style={{ color: '#72727D' }}>{len}/400字</div>
-      <Button
-        size="small"
-        style={{ fontSize: '14px' }}
-        type="text"
-        loading={loading}
-        icon={<SendOutlined style={{ display: 'inline-block', marginRight: 0 }} />}
-        htmlType="submit"
-      >
-        发布
-      </Button>
     </div>
   );
 };
@@ -112,8 +148,9 @@ export default React.forwardRef(function JEditor(props: Props, ref) {
         placeholder: placeholder || '来了，就说点什么吧！',
       }),
       Link.configure({
-        openOnClick: true,
+        openOnClick: false,
       }),
+      Image.configure({}),
     ],
     content: value,
     onUpdate: ({ editor }) => {
@@ -133,7 +170,9 @@ export default React.forwardRef(function JEditor(props: Props, ref) {
   return (
     <div className={style.wrap}>
       <MenuBar loading={loading} editor={editor} len={editor?.getText()?.length ?? 0} />
-      <EditorContent className="toastui-editor-contents" editor={editor} />
+      <div className={style.editor}>
+        <EditorContent className="rich-text" editor={editor} />
+      </div>
     </div>
   );
 });

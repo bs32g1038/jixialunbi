@@ -2,22 +2,16 @@ import React, { useState } from 'react';
 import styles from './index.module.scss';
 import { Button, Select, Space, Spin } from 'antd';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
-import HotSvg from '../../../AppHeader/Hot';
+import HotSvg from './components/HotSvg';
 import classNames from 'classnames';
 import { EditOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { useAppSelector } from '@/hooks';
-import { useFetchCategoriesQuery } from '@/apis';
+import useSWR from 'swr';
 import EditModal from './components/EditModal';
 import { omit } from 'lodash';
 import queryString from 'query-string';
-const CreateCategory = dynamic(
-  () => import('@/components/home/components/CategoryList/components/CreateCategory') as any,
-  {
-    ssr: false,
-  }
-);
+import { fetcher } from '../../services';
+
 const { Option } = Select;
 
 const CategoryItem = (props: { item: any; isActive: boolean; isAdmin?: boolean; refetch: () => void }) => {
@@ -65,12 +59,9 @@ const CategoryItem = (props: { item: any; isActive: boolean; isAdmin?: boolean; 
 };
 
 export default function CategoryList() {
-  const { data = [], refetch, isLoading } = useFetchCategoriesQuery();
+  const { data, isLoading, mutate } = useSWR('/api/v1/categories', fetcher);
   const router = useRouter();
   const [select, setSelect] = useState(router.query.sort ?? 'default');
-  const description = data?.find((item) => item.id === Number(router.query.id))?.description;
-  const user = useAppSelector((state) => state.app.user);
-  const isAdmin = user?.role === 'SuperAdmin';
   return (
     <Spin spinning={isLoading}>
       <div className={styles.wrap}>
@@ -86,18 +77,17 @@ export default function CategoryList() {
               <Space>全站</Space>
             </Button>
           </Link>
-          {data.map((item: { name: string; id: number }) => {
+          {data?.data?.map((item: { name: string; id: number }) => {
             return (
               <CategoryItem
                 key={item.id}
                 item={item}
                 isActive={parseInt(router.query.categoryId as string) === item.id}
-                isAdmin={isAdmin}
-                refetch={refetch}
+                isAdmin={false}
+                refetch={mutate}
               ></CategoryItem>
             );
           })}
-          <CreateCategory></CreateCategory>
         </div>
         <div>
           <Select
@@ -126,11 +116,6 @@ export default function CategoryList() {
           </Select>
         </div>
       </div>
-      {/* <p className={styles.description}>
-        <span>{'"'}</span>
-        {description || '一览众山小'}
-        <span>{'"'}</span>
-      </p> */}
     </Spin>
   );
 }

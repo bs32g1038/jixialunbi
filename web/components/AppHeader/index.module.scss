@@ -1,10 +1,11 @@
 .header {
-  padding-top: 20px;
-  padding-bottom: 10px;
-  line-height: 18px;
   display: flex;
   justify-content: space-between;
-  font-size: 15px;
+  font-size: 16px;
+  background-color: #fff;
+  border-radius: 2px;
+  padding: 15px 20px;
+  flex: 0;
 }
 
 .headerleft {
@@ -19,6 +20,7 @@
   display: flex;
   align-items: center;
   gap: 2px;
+  text-decoration: none !important;
   img {
     display: block;
   }
@@ -60,19 +62,6 @@
   align-items: center;
 }
 
-.inputSearch {
-  color: #333;
-
-  // border: 1px solid #ccc;
-  border-radius: 20px;
-  padding: 2px 5px;
-  background: #f6f6f6;
-
-  svg {
-    fill: #888;
-  }
-}
-
 .input {
   width: 160px;
   font-size: 14px;
@@ -99,12 +88,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    // position: absolute;
-    // left: 13px;
-    // bottom: -1px;
-    // overflow: hidden;
     z-index: 1;
-
     &.green {
       background-color: #73d13d;
     }
@@ -112,7 +96,6 @@
 }
 
 .logo {
-  // width: 24px;
   height: 24px;
 }
 
@@ -131,7 +114,7 @@
 }
 
 .inputWrap {
-  max-width: 135px;
+  max-width: 110px;
   overflow: hidden;
   overflow: hidden;
   white-space: nowrap;

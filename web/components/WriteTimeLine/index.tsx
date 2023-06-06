@@ -20,7 +20,8 @@ function WriteTimeLine(props: { visible: boolean; id?: number; postId?: number; 
   const onFinish = (values: any) => {
     form.validateFields().then(() => {
       if (ref.current.getLength() > 300) {
-        return message.error('不能大于300字');
+        message.error('不能大于300字');
+        return;
       }
       if (id) {
         return updateTimeLine({ ...values, id }).then(() => {

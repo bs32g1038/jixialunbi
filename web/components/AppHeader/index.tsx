@@ -1,84 +1,43 @@
 import React from 'react';
 import styles from './index.module.scss';
 import Link from 'next/link';
-import { Avatar, Badge, Button, Dropdown, List, Menu, message, Space } from 'antd';
-import { BellOutlined, DownOutlined, HomeOutlined, LoginOutlined, LogoutOutlined } from '@ant-design/icons';
+import { Avatar, Badge, Button, Dropdown, Space } from 'antd';
+import {
+  BellOutlined,
+  DownOutlined,
+  EditOutlined,
+  HomeOutlined,
+  LoginOutlined,
+  LogoutOutlined,
+} from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import logo from './logo.png';
 import classNames from 'classnames';
 import Cookies from 'js-cookie';
-import { useAppSelector } from '../../hooks';
-import { useDispatch } from 'react-redux';
-import { setWriteModalState, showLoginModal } from '../../store/app';
-import WriteSvg from './WriteSvg';
 import AuthButton from '../AuthButton';
-import { useFetchNotificationsQuery, useUpdateNotificationsMutation } from '@/apis';
+import { useAppStore } from '@/store';
+import Search from './components/Search';
 
 const NotificationIcon = () => {
-  const user = useAppSelector((state) => state.app.user);
-  const { data, refetch } = useFetchNotificationsQuery({ receiverId: user?.id ?? 0 }, { skip: !user?.id });
-  const [update] = useUpdateNotificationsMutation();
+  const router = useRouter();
   return (
-    <Dropdown
-      trigger={['click']}
-      onOpenChange={(val) => {
-        if (val) {
-          refetch();
-        }
+    <Button
+      type="text"
+      size="small"
+      onClick={() => {
+        router.push('/notifications');
       }}
-      dropdownRender={() => (
-        <List
-          className={styles.noticeList}
-          style={{
-            width: 300,
-            backgroundColor: '#fff',
-            boxShadow:
-              '0 6px 16px -8px rgb(0 0 0 / 8%), 0 9px 28px 0 rgb(0 0 0 / 5%), 0 12px 48px 16px rgb(0 0 0 / 3%)',
-          }}
-          itemLayout="horizontal"
-          dataSource={data}
-          renderItem={(item) => (
-            <List.Item>
-              <List.Item.Meta
-                title={
-                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <div>{item.title}</div>
-                    <Button
-                      size="small"
-                      type="ghost"
-                      onClick={() => {
-                        update({ id: item.id })
-                          .unwrap()
-                          .then(() => {
-                            message.success('已经标记为已读！');
-                            refetch();
-                          });
-                      }}
-                    >
-                      标记为已读
-                    </Button>
-                  </div>
-                }
-                description={<p>{item.content}</p>}
-              />
-            </List.Item>
-          )}
-        />
-      )}
     >
-      <Button type="text" size="small">
-        <Badge count={data?.length ?? 0} size="small">
-          <BellOutlined style={{ fontSize: '18px' }} />
-        </Badge>
-      </Button>
-    </Dropdown>
+      <Badge size="small">
+        <BellOutlined style={{ fontSize: '18px' }} />
+      </Badge>
+    </Button>
   );
 };
 
 export default function AppHeader() {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.app.user);
+  const { showLoginModal, user } = useAppStore();
   return (
     <header className={styles.header}>
       <div className={styles.headerleft}>
@@ -90,6 +49,7 @@ export default function AppHeader() {
         </span>
       </div>
       <div className={styles.headerRight}>
+        <Search></Search>
         <Link href="/" passHref={true}>
           <Button size="small" type="text">
             <HomeOutlined></HomeOutlined>首页
@@ -98,17 +58,11 @@ export default function AppHeader() {
         <AuthButton
           size="small"
           type="text"
-          onClick={() =>
-            dispatch(
-              setWriteModalState({
-                visible: true,
-              })
-            )
-          }
+          onClick={() => {
+            router.push('/write');
+          }}
         >
-          <Space>
-            <WriteSvg></WriteSvg>写作
-          </Space>
+          <EditOutlined /> 写作
         </AuthButton>
         <span className={styles.headerlinks}>
           {user ? (
@@ -118,7 +72,7 @@ export default function AppHeader() {
                 menu={{
                   items: [
                     {
-                      label: <Link href={'/profile/' + user.id}>个人信息</Link>,
+                      label: <Link href={'/profile/' + user.account}>个人信息</Link>,
                       key: '0',
                     },
                   ],
@@ -153,7 +107,7 @@ export default function AppHeader() {
           ) : (
             <Button
               onClick={() => {
-                dispatch(showLoginModal(true));
+                showLoginModal(true);
               }}
               type="text"
               size="small"
