@@ -1,6 +1,6 @@
 import type { DocumentContext, DocumentInitialProps } from 'next/document';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
+import { createCache, extractStyle, StyleProvider, legacyLogicalPropertiesTransformer } from '@ant-design/cssinjs';
 
 class MyDocument extends Document {
     static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {

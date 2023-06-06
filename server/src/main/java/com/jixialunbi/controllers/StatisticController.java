@@ -30,7 +30,7 @@ public class StatisticController {
     public R fetchCategories() {
         Map map = new HashMap<>();
         map.put("userCount", userRepository.count());
-        map.put("postCount", postRepository.count());
+        map.put("postCount", postRepository.countByDeleted(null));
         map.put("commentCount", commentRepository.count());
         try {
             return R.ok().data(map);
