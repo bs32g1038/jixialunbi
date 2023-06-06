@@ -8,6 +8,7 @@ import { isUndefined, omitBy } from 'lodash';
 import { useRouter } from 'next/router';
 import PinnedList from './components/PinnedList';
 import axios from '@/libs/axios';
+import TopTip from './components/TopTip';
 
 const Home = (props: { data: any }) => {
   const router = useRouter();
@@ -15,6 +16,7 @@ const Home = (props: { data: any }) => {
   const { items = [], count = 0 } = props.data?.data ?? {};
   return (
     <Layout>
+      <TopTip></TopTip>
       <PinnedList></PinnedList>
       {type !== 'search' && <CategoryList></CategoryList>}
       <div className={styles.content}>

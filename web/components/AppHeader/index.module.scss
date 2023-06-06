@@ -4,13 +4,8 @@
   font-size: 16px;
   background-color: #fff;
   border-radius: 2px;
-  padding: 20px;
+  padding: 15px 20px;
   flex: 0;
-  // :global {
-  //   .ant-btn {
-  //     font-size: 16px !important;
-  //   }
-  // }
 }
 
 .headerleft {
@@ -93,12 +88,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    // position: absolute;
-    // left: 13px;
-    // bottom: -1px;
-    // overflow: hidden;
     z-index: 1;
-
     &.green {
       background-color: #73d13d;
     }
@@ -106,7 +96,6 @@
 }
 
 .logo {
-  // width: 24px;
   height: 24px;
 }
 

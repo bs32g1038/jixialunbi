@@ -1,6 +1,6 @@
 .item {
   background-color: #fff;
-  padding: 0 10px 12px;
+  padding: 5px 12px;
   width: 100%;
 }
 
@@ -15,10 +15,9 @@
   // margin-bottom: 2px;
   margin-right: 5px;
   .avatar {
-    border-radius: 50%;
-    height: 16px;
-    margin-right: 2px;
-    width: 16px;
+    border-radius: 4px;
+    height: 32px;
+    width: 32px;
     display: block;
   }
 }
@@ -143,7 +142,8 @@ ol.stories li:first-child div.story_liner {
 .tag {
   font-size: 13px !important;
   text-decoration: none;
-  gap: 5px;
+  gap: 2px;
+  white-space: nowrap;
   :global {
     .ant-tag {
       border: none;
@@ -196,12 +196,11 @@ ol.stories li:first-child div.story_liner {
 .lastEditTime {
   color: rgba(0, 0, 0, 0.45);
   font-size: 12px;
-  padding: 0 5px;
   margin-bottom: 0;
 }
 
 .footer {
-  font-size: 12px;
+  font-size: 13px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -209,9 +208,8 @@ ol.stories li:first-child div.story_liner {
   :global {
     .ant-btn {
       padding: 0 2px !important;
-      color: rgba(0, 0, 0, 0.65);
-      // font-size: 12px !important;
-      // line-height: 20px !important;
+      color: rgba(0, 0, 0, 0.45);
+      font-size: 13px !important;
     }
   }
 }
@@ -285,7 +283,7 @@ ol.stories li:first-child div.story_liner {
 
 .about {
   color: rgba(0, 0, 0, 0.45);
-  font-size: 14px;
+  font-size: 13px;
   margin-bottom: 0;
 }
 
@@ -295,7 +293,6 @@ ol.stories li:first-child div.story_liner {
   flex-wrap: wrap;
 
   .pic {
-    // border: 1px dashed #e1e1e1;
     padding: 2px 4px;
     display: inline-block;
     width: 120px;
@@ -325,7 +322,7 @@ ol.stories li:first-child div.story_liner {
     color: rgba(0, 0, 0, 0.85);
     text-decoration: none;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 15px;
     display: block;
     margin-right: 8px;
   }

@@ -100,4 +100,18 @@ public class UserController {
         return R.ok().data(res);
     }
 
+    @GetMapping("/recent-users")
+    public R fetchRecentUsers() {
+        try {
+            Pageable pageable = PageRequest.of(0, 10);
+            Page<User> data = userRepository.findAll(pageable);
+            if (data.getSize() <= 0) {
+                return R.ok().setResult(HttpReponseResultCodeEnum.NOT_CONTENT);
+            }
+            return R.ok().data(data);
+        } catch (Exception e) {
+            return R.error().message("系统异常");
+        }
+    }
+
 }
