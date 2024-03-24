@@ -32,13 +32,12 @@ export default function Post(props) {
   const router = useRouter();
   const url = '/api/v1/posts/' + id;
   const { data: newData = {} } = useSWR({ url });
-  const data = newData?.data ?? {}
+  const data = newData?.data ?? {};
   const [open, setOpen] = useState(false);
-  const postId =  id;
   const resPostData = useSWR({
     url: '/api/v1/post-comments',
     params: {
-      postId,
+      postId: id,
     },
   });
   return (
@@ -49,8 +48,8 @@ export default function Post(props) {
         {/* <CategoryList></CategoryList> */}
         <TopicItem item={data} key={data.id}></TopicItem>
         <div className={styles.inner}>
-          <WriteComment postId={postId}></WriteComment>
-          <CommentList postId={postId} items={resPostData?.data?.data ?? []}></CommentList>
+          <WriteComment postId={Number(id)}></WriteComment>
+          <CommentList postId={Number(id)} items={resPostData?.data?.data ?? []}></CommentList>
         </div>
       </div>
     </Layout>

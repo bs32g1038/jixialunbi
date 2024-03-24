@@ -10,7 +10,7 @@ export default function CreateCategory() {
   return (
     user?.role === 'SuperAdmin' && (
       <React.Fragment>
-        <Button size="small" type="ghost" onClick={() => setOpen(true)}>
+        <Button size="small" onClick={() => setOpen(true)}>
           <PlusOutlined></PlusOutlined>添加分类
         </Button>
         {open && <EditModal visible={open} onCancel={() => setOpen(false)} onOk={() => setOpen(false)}></EditModal>}
