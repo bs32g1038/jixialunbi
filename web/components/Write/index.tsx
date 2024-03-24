@@ -12,7 +12,7 @@ import Layout from '../Layout';
 import { PlusOutlined } from '@ant-design/icons';
 import { useAppStore } from '@/store';
 
-const Write = (props: { visible: boolean; postId?: number }) => {
+const Write = () => {
   const [form] = useForm();
   const router = useRouter();
   const { user } = useAppStore();
