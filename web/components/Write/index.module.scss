@@ -12,9 +12,26 @@
 .footer {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .ctrl {
   display: flex;
   justify-content: flex-end;
+  button {
+    border-radius: 3px;
+  }
+}
+
+input.input {
+  border: none;
+  font-size: 26px;
+  font-weight: bold;
+  &:placeholder {
+    font-weight: bold;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
 }

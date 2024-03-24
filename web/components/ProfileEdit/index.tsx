@@ -1,6 +1,8 @@
+'use client';
+
 import React from 'react';
 import Layout from '../Layout';
-import { useRouter } from 'next/router';
+import { useParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { useAppStore } from '@/store';
 import { useSWR, useSWRMutation } from '@/hooks';
@@ -12,8 +14,7 @@ const EditableInput: any = dynamic(() => import('../EditableInput') as any, {
 });
 
 export default function ProfileEdit() {
-  const router = useRouter();
-  const account = router.query.account;
+  const { account } = useParams();
   const user = useAppStore((state) => state.user);
   const { data: _data, isLoading } = useSWR({ url: '/api/v1/user-info/' + account });
   const data = _data?.data ?? {};
@@ -24,7 +25,7 @@ export default function ProfileEdit() {
     });
   };
   return (
-    <Layout key={router.isReady}>
+    <Layout>
       <div className={styles.wrap}>
         <EditableInput
           type="upload"

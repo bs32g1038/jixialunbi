@@ -1,12 +1,12 @@
 import { NotificationOutlined } from '@ant-design/icons';
-import { Avatar, Space, Statistic, Tooltip } from 'antd';
+import { Avatar, Skeleton, Space, Statistic, Tooltip } from 'antd';
 import Link from 'next/link';
 import React from 'react';
 import styles from './index.module.scss';
 import { useSWR } from '@/hooks';
 
 export default function TopTip() {
-  const { data } = useSWR({ url: '/api/v1/recent-users' });
+  const { data, isLoading: getUserLoading } = useSWR({ url: '/api/v1/recent-users' });
   const { data: statistic, isLoading } = useSWR({ url: '/api/v1/statistic' });
   const statisticData = statistic?.data ?? {};
   return (
@@ -20,15 +20,19 @@ export default function TopTip() {
             </Space>
           </div>
           <div className={styles.footer}>
-            {data?.data?.content?.map((item) => {
-              return (
-                <Tooltip title={item.username} placement="top" key={item.id}>
-                  <Link href={`/profile/${item?.account}`}>
-                    <Avatar src={item?.image} />
-                  </Link>
-                </Tooltip>
-              );
-            })}
+            <Skeleton loading={getUserLoading} paragraph={false}>
+              <Avatar.Group>
+                {data?.data?.content?.map((item) => {
+                  return (
+                    <Tooltip title={item.username} placement="top" key={item.id}>
+                      <Link href={`/profile/${item?.account}`}>
+                        <Avatar src={item?.image} />
+                      </Link>
+                    </Tooltip>
+                  );
+                })}
+              </Avatar.Group>
+            </Skeleton>
           </div>
         </div>
         <Space size={20}>

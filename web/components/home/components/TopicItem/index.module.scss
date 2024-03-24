@@ -1,6 +1,6 @@
 .item {
   background-color: #fff;
-  padding: 5px 12px;
+  padding: 5px 0;
   width: 100%;
 }
 
@@ -12,7 +12,6 @@
 
 .avatarWrap {
   border-radius: 50%;
-  // margin-bottom: 2px;
   margin-right: 5px;
   .avatar {
     border-radius: 4px;
@@ -77,7 +76,7 @@
   width: 100%;
   display: flex;
   gap: 8px;
-  padding: 0 10px;
+  padding: 0;
 }
 
 .core {
@@ -204,7 +203,7 @@ ol.stories li:first-child div.story_liner {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: rgba(0, 0, 0, 0.65);
+  color: rgba(0, 0, 0, 0.45);
   :global {
     .ant-btn {
       padding: 0 2px !important;
@@ -315,7 +314,7 @@ ol.stories li:first-child div.story_liner {
 }
 
 .title {
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   display: flex;
   align-items: baseline;
   a {

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { parseTime } from '../../../../libs/time';
 import styles from './index.module.scss';
 import { Avatar, Button, Space, Tag, Popover, Image } from 'antd';
-import { CommentOutlined, EyeOutlined } from '@ant-design/icons';
+import { CommentOutlined, EyeOutlined, FlagOutlined, TagOutlined } from '@ant-design/icons';
 import LikeButton from '../../../LikeButton';
 import { unionBy } from 'lodash';
 import dynamic from 'next/dynamic';
@@ -30,6 +30,23 @@ export default function TopicItem(props: { item: any }) {
           <div className={styles.core}>
             <h2 className={styles.title}>
               <a href={`/posts/${item.id}`}>{item.title}</a>
+              {/* {item?.tags && (
+                <div className={styles.tag}>
+                  <Tag color="magenta">{item?.category?.name}</Tag>
+                  {item?.tags?.split(',').map((tag: string, index) => {
+                    if (!tag) {
+                      return null;
+                    }
+                    return (
+                      <Tag key={tag} color={['volcano', 'geekblue', 'gold'][index]}>
+                        {tag}
+                      </Tag>
+                    );
+                  })}
+                </div>
+              )} */}
+            </h2>
+            {/* <p>
               {item?.tags && (
                 <div className={styles.tag}>
                   <Tag color="magenta">{item?.category?.name}</Tag>
@@ -45,13 +62,22 @@ export default function TopicItem(props: { item: any }) {
                   })}
                 </div>
               )}
-            </h2>
-            <div
-              className={styles.summary}
-              dangerouslySetInnerHTML={{
-                __html: item.content,
-              }}
-            ></div>
+            </p> */}
+            <Space style={{ marginBottom: 8 }}>
+              <Link href={`/profile/${item?.author?.account}`} className={styles.about}>
+                {item?.author?.username}
+              </Link>
+              <span>·</span>
+              <p className={styles.lastEditTime}>{parseTime(item.updatedAt)}</p>
+            </Space>
+            {item.content && (
+              <p
+                className={styles.summary}
+                dangerouslySetInnerHTML={{
+                  __html: item.content,
+                }}
+              ></p>
+            )}
             {item?.pics && (
               <Image.PreviewGroup>
                 <div className={styles.pics}>
@@ -65,20 +91,30 @@ export default function TopicItem(props: { item: any }) {
                 </div>
               </Image.PreviewGroup>
             )}
-            <Space style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Space>
+            <Space style={{ display: 'flex' }}>
+              {/* <Space>
                 <Link href={`/profile/${item?.author?.account}`} className={styles.about}>
                   {item?.author?.username}
                 </Link>
                 <p className={styles.lastEditTime}>{parseTime(item.updatedAt)}</p>
+              </Space> */}
+              <Space className={styles.footer} size={3}>
+                <TagOutlined />
+                {item.tags?.map((item) => {
+                  return (
+                    <span style={{ paddingRight: 2 }} key={item.id}>
+                      {item.name}
+                    </span>
+                  );
+                })}
               </Space>
-              <Space size={0}>
+              <Space size={4} style={{ display: 'flex' }}>
                 <Space>
                   <div className={styles.footer}>
                     <Space size={4}>
-                      <Button type="text" size="small" href={`/posts/${item.id}`}>
+                      {/* <Button type="text" size="small" href={`/posts/${item.id}`}>
                         {item.visitCount}浏览
-                      </Button>
+                      </Button> */}
                       <LikeButton isActive={item.liked} postId={item.id} count={item.likeCount}></LikeButton>
                       <Button type="text" size="small" href={`/posts/${item.id}#comment`}>
                         <Space size={3}>
@@ -96,28 +132,32 @@ export default function TopicItem(props: { item: any }) {
                     </Space>
                   </div>
                 </Space>
-                {participants?.length > 0 && (
-                  <Avatar.Group
-                    maxCount={3}
-                    size="small"
-                    maxStyle={{ color: 'rgba(0, 0, 0, 0.45)', backgroundColor: 'rgb(246, 246, 246)' }}
-                  >
-                    {participants?.map((item: any) => {
-                      return (
-                        <Link key={item.id} href={'/profile/' + item?.account}>
-                          <Popover
-                            placement="bottom"
-                            title={item?.username}
-                            content={<span style={{ fontSize: 12 }}>{item?.about ?? '这家伙很懒，什么都没留下'}</span>}
-                            trigger="hover"
-                          >
-                            <Avatar size="small" src={item?.image} style={{ cursor: 'pointer' }} alt="" />
-                          </Popover>
-                        </Link>
-                      );
-                    })}
-                  </Avatar.Group>
-                )}
+                <div>
+                  {participants?.length > 0 && (
+                    <Avatar.Group
+                      maxCount={3}
+                      size="small"
+                      maxStyle={{ color: 'rgba(0, 0, 0, 0.45)', backgroundColor: 'rgb(246, 246, 246)' }}
+                    >
+                      {participants?.map((item: any) => {
+                        return (
+                          <Link key={item.id} href={'/profile/' + item?.account}>
+                            <Popover
+                              placement="bottom"
+                              title={item?.username}
+                              content={
+                                <span style={{ fontSize: 12 }}>{item?.about ?? '这家伙很懒，什么都没留下'}</span>
+                              }
+                              trigger="hover"
+                            >
+                              <Avatar size="small" src={item?.image} style={{ cursor: 'pointer' }} alt="" />
+                            </Popover>
+                          </Link>
+                        );
+                      })}
+                    </Avatar.Group>
+                  )}
+                </div>
               </Space>
             </Space>
           </div>

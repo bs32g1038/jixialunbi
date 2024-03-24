@@ -6,10 +6,7 @@ import com.jixialunbi.common.utils.PageUtil;
 import com.jixialunbi.dto.request.IdRequest;
 import com.jixialunbi.dto.request.PostRequest;
 import com.jixialunbi.model.*;
-import com.jixialunbi.repository.CommentRepository;
-import com.jixialunbi.repository.PostCollectionRepository;
-import com.jixialunbi.repository.PostLikeRepository;
-import com.jixialunbi.repository.PostRepository;
+import com.jixialunbi.repository.*;
 import com.jixialunbi.service.CategoryService;
 import com.jixialunbi.service.FollowUserService;
 import com.jixialunbi.service.UserService;
@@ -33,6 +30,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+
+import static io.jsonwebtoken.lang.Collections.isEmpty;
 
 
 @RestController
@@ -52,6 +52,9 @@ public class PostController {
     CommentRepository commentRepository;
 
     @Autowired
+    TagRepository tagRepository;
+
+    @Autowired
     UserService userService;
 
     @Autowired
@@ -67,13 +70,13 @@ public class PostController {
         User user = userService.getByAccount(principal.getName());
         var post = new Post();
         post.setTitle(postRequest.getTitle());
-        post.setCategory(categoryService.getById(postRequest.getCategoryId()));
         post.setContent(postRequest.getContent());
         post.setPics(postRequest.getPics());
         post.setAuthor(user);
         user.setPostCount(user.getPostCount() + 1);
-        if (!StrUtil.isEmpty(postRequest.getTags())) {
-            post.setTags(postRequest.getTags());
+        if (!isEmpty(postRequest.getTags())) {
+            var ids = postRequest.getTags();
+            post.setTags(tagRepository.findAllById(ids));
         }
         var result = postRepository.save(post);
         return ResponseEntity.ok(result);

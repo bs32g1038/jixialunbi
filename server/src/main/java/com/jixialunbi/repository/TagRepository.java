@@ -1,9 +1,10 @@
 package com.jixialunbi.repository;
 
 import com.jixialunbi.model.Category;
+import com.jixialunbi.model.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface CategoryRepository extends JpaRepository<Category, Long> {
+public interface TagRepository extends JpaRepository<Tag, Long> {
 
 }

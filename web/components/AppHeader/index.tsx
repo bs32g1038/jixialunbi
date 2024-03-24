@@ -10,7 +10,7 @@ import {
   LoginOutlined,
   LogoutOutlined,
 } from '@ant-design/icons';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import logo from './logo.png';
 import classNames from 'classnames';
 import Cookies from 'js-cookie';
@@ -44,12 +44,11 @@ export default function AppHeader() {
         <span className={styles.headerlinks}>
           <Link href="/" passHref={true} className={styles.title}>
             <img className={styles.logo} src={logo.src} alt="" />
-            <h1 title="积下论笔社区">积下论笔社区</h1>
+            <h1 title="积下社区">积下社区</h1>
           </Link>
         </span>
       </div>
       <div className={styles.headerRight}>
-        {/* <Search></Search> */}
         <Link href="/" passHref={true}>
           <Button size="small" type="text">
             <HomeOutlined></HomeOutlined>首页
@@ -95,7 +94,7 @@ export default function AppHeader() {
               <Button
                 onClick={() => {
                   Cookies.remove('token');
-                  router.reload();
+                  router.refresh();
                 }}
                 type="text"
                 size="small"

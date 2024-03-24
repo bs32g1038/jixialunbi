@@ -1,6 +1,6 @@
 .wrap {
   background-color: #fff;
-  padding: 0 20px 10px;
+  padding: 0 0 10px;
 }
 
 .tabs {
@@ -26,11 +26,15 @@
   width: fit-content;
   flex-wrap: wrap;
   gap: 10px;
-  border-radius: 2px;
+  border-radius: 0 !important;
   .switchItem {
+    border-radius: 0 !important;
+    padding-bottom: 2px;
+    height: auto;
+    border-bottom: 2px solid transparent;
     &.active {
-      background: #85a5ff;
-      color: #fff;
+      border-bottom-color: #85a5ff !important;
+      color: #85a5ff;
     }
     &:hover {
       color: #85a5ff;

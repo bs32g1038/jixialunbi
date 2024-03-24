@@ -16,7 +16,6 @@ const CImage: any = dynamic(() => import('./components/CImage') as any, {
 
 export default function TopicItem(props: { item: any }) {
   const item = props.item;
-  console.log(item)
   const participants = unionBy(item?.participants, 'id');
   return (
     <div key={item.title} className={styles.item}>

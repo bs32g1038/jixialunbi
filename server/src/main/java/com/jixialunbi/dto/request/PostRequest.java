@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * Data Transfer Object for Profile request
  */
@@ -19,10 +21,11 @@ public class PostRequest {
     @Size(max = 12000)
     private String content;
 
-    @NotNull
-    private long categoryId;
+//    @NotNull
+//    private long categoryId;
 
-    private String tags;
+    @NotNull
+    private List<Long> tags;
 
     private String pics;
 }

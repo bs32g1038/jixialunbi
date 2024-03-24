@@ -1,5 +1,6 @@
 package com.jixialunbi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -43,8 +44,13 @@ public class Post {
     @Transient
     private boolean collected = false;
 
-    @Column(name = "tags")
-    private String tags;
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "post_tag",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    @JsonIgnoreProperties({"posts"})
+    private List<Tag> tags = new ArrayList<>();
+
 
     @Column(name = "pics")
     private String pics;

@@ -1,3 +1,5 @@
+"use client"
+
 import { ArrowUpOutlined } from '@ant-design/icons';
 import { FloatButton } from 'antd';
 import React, { useEffect } from 'react';

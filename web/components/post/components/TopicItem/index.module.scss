@@ -111,7 +111,7 @@ ol.stories li:first-child div.story_liner {
 }
 
 .byline {
-  color: rgba(0, 0, 0, 0.85);
+  color: rgba(0, 0, 0, 0.65);
   font-size: 14px;
   display: flex;
   align-items: center;
@@ -162,18 +162,15 @@ ol.stories li:first-child div.story_liner {
 
 .summary {
   position: relative;
-  // display: -webkit-box;
+  display: -webkit-box;
   // -webkit-line-clamp: 2;
   // overflow: hidden;
   // text-overflow: ellipsis;
-  // -webkit-box-orient: vertical;
-  // line-height: 1.65;
-  // letter-spacing: 0.5px;
+  -webkit-box-orient: vertical;
+  line-height: 1.65;
+  letter-spacing: 0.5px;
   color: #333;
   font-size: 14px;
-  p{
-    margin-bottom: 5px;
-  }
 }
 
 .mata {
@@ -207,7 +204,7 @@ ol.stories li:first-child div.story_liner {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: rgba(0, 0, 0, 0.65);
+  color: rgba(0, 0, 0, 0.45);
   :global {
     .ant-btn {
       padding: 0 2px !important;
@@ -318,7 +315,7 @@ ol.stories li:first-child div.story_liner {
 }
 
 .title {
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   display: flex;
   align-items: baseline;
   a {
@@ -333,7 +330,7 @@ ol.stories li:first-child div.story_liner {
 
 .summary {
   line-height: 1.5;
-  color: rgba(0, 0, 0, 0.85);
+  color: rgba(0, 0, 0, 0.65);
   margin-bottom: 8px;
   line-height: 22px;
 }

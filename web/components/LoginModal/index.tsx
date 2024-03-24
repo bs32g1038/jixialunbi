@@ -32,7 +32,7 @@ export default function LoginModal() {
   const { isShowLoginModal, setUser, showLoginModal } = useAppStore();
   const [form] = useForm();
   const [tab, setTab] = useState(LOGIN_TYPE.login);
-  const router = useRouter();
+  // const router = useRouter();
   const { trigger: login } = useSWRMutation('/api/v1/auth/login', sendRequest);
   const { trigger: register } = useSWRMutation('/api/v1/auth/signup', sendRequest);
   const onFinish = (values: any) => {
@@ -43,7 +43,7 @@ export default function LoginModal() {
           message.success('登录成功！');
           Cookies.set('token', token);
           setUser(res.data?.data);
-          router.reload();
+          // router.reload();
         });
         return;
       }
@@ -55,7 +55,7 @@ export default function LoginModal() {
         Cookies.set('token', res.token);
         axios.defaults.headers.common = { Authorization: `bearer ${res.token}` };
         setUser(res.user);
-        router.reload();
+        // router.reload();
       });
     });
   };

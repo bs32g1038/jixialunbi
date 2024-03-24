@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const path = require('path');
+import path from 'path';
 const proxy_host = process.env.PROXY_HOST || '127.0.0.1'
 const nextConfig = {
   reactStrictMode: true,
@@ -12,9 +12,9 @@ const nextConfig = {
     ]
   },
   webpack: config => {
-    config.resolve.alias['@'] = path.resolve(__dirname);
+    // config.resolve.alias['@'] = path.resolve(__dirname);
     return config;
   }
 }
 
-module.exports = nextConfig
+export default nextConfig

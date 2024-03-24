@@ -1,14 +1,17 @@
+'use client';
+
 import React, { useState } from 'react';
 import Layout from '../Layout';
 import { Avatar, Tabs } from 'antd';
 import styles from './index.module.scss';
 import { EditOutlined } from '@ant-design/icons';
-import { useRouter } from 'next/router';
+import { useParams, useRouter } from 'next/navigation';
 import { useSWR } from '@/hooks';
 import Posts from './components/Posts';
 import CollectionPosts from './components/CollectionPosts';
 import AuthButton from '../AuthButton';
 import FollowButton from '../FollowButton';
+import { useAppStore } from '@/store';
 
 const TABS = {
   post: '帖子',
@@ -18,9 +21,11 @@ const TABS = {
 
 export default function Profile() {
   const router = useRouter();
+  const { account } = useParams();
+  const { user: currentUser } = useAppStore();
   const [tab, setTab] = useState(TABS.post);
-  const account = router.query.account as string;
   const { data: _data } = useSWR({ url: '/api/v1/user-info/' + account });
+  // console.log("data", data)
   const user = _data?.data ?? {};
   const data = _data?.data ?? {};
   return (
@@ -28,20 +33,24 @@ export default function Profile() {
       <div className={styles.profit}>
         <Avatar size="large" src={data.image}></Avatar>
         <div className={styles.info}>
-          <div style={{ display: 'flex', flex: '1 0 auto', alignItems: 'flex-end', gap: 10 }}>
-            <div>
-              <h3 className={styles.name}>{data.username}</h3>
-              <p className={styles.desc}>{data.about ?? '这家伙很懒，什么都没留下'}</p>
-            </div>
-            <div className={styles.control}>
-              <FollowButton key={user?.followed} account={account} followed={user?.followed} />
-              <div className={styles.func}>
-                {user?.account === account && (
-                  <AuthButton size="small" type="dashed" onClick={() => router.push('/profile/edit/' + data?.account)}>
-                    <EditOutlined></EditOutlined>账号设置
-                  </AuthButton>
-                )}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', flex: '1 0 auto', alignItems: 'flex-end', gap: 10 }}>
+              <div>
+                <h3 className={styles.name}>{data.username}</h3>
+                <p className={styles.desc}>{data.about ?? '这家伙很懒，什么都没留下'}</p>
               </div>
+              {account !== currentUser?.account && (
+                <div className={styles.control}>
+                  <FollowButton key={user?.followed} account={user.account} followed={user?.followed} />
+                </div>
+              )}
+            </div>
+            <div className={styles.func}>
+              {currentUser?.account === account && (
+                <AuthButton size="small" type="dashed" onClick={() => router.push('/profile/edit/' + data?.account)}>
+                  <EditOutlined></EditOutlined>账号设置
+                </AuthButton>
+              )}
             </div>
           </div>
           <div className={styles.meta}>

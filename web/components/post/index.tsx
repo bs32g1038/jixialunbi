@@ -1,9 +1,11 @@
+'use client';
+
 import React, { useState } from 'react';
 import styles from './index.module.scss';
 import Layout from '../Layout';
 import { Button, Space, Image, Tag } from 'antd';
 import CommentList from './components/CommentList';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import WriteComment from './components/WriteComment';
 import { useSWR } from '@/hooks';
 import LikeButton from '../LikeButton';
@@ -19,16 +21,20 @@ import TopTip from '../home/components/TopTip';
 import PinnedList from '../home/components/PinnedList';
 import CategoryList from '../home/components/CategoryList';
 import TopicItem from './components/TopicItem';
+import { useParams } from 'next/navigation';
 
 const CImage: any = dynamic(() => import('../home/components/TopicItem/components/CImage') as any, {
   ssr: false,
 });
 
 export default function Post(props) {
-  const { data = {} } = props.data;
-  const [open, setOpen] = useState(false);
+  const { id } = useParams();
   const router = useRouter();
-  const postId = router.query.id as unknown as number;
+  const url = '/api/v1/posts/' + id;
+  const { data: newData = {} } = useSWR({ url });
+  const data = newData?.data ?? {}
+  const [open, setOpen] = useState(false);
+  const postId =  id;
   const resPostData = useSWR({
     url: '/api/v1/post-comments',
     params: {
