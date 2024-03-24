@@ -51,7 +51,7 @@ public class AuthController {
         notification.setSenderId(0);
         notification.setReceiverId(response.id());
         notification.setTitle("系统通知");
-        notification.setContent("欢迎您，加入到积下论笔社区\uD83D\uDE00");
+        notification.setContent("欢迎您，加入到积下论笔社区");
         notification.setBeRead(false);
         notification.setType(NotificationTypeEnum.HUANGYING.getCode());
         notificationService.createNotification(notification);
