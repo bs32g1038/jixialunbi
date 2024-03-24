@@ -17,7 +17,7 @@ const Home = (props: { data: any }) => {
   return (
     <Layout>
       <TopTip></TopTip>
-      <PinnedList></PinnedList>
+      {/* <PinnedList></PinnedList> */}
       {type !== 'search' && <CategoryList></CategoryList>}
       <div className={styles.content}>
         <div className={styles.inner}>

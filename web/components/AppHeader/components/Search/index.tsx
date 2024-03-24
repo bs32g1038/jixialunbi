@@ -14,11 +14,7 @@ export default function Search() {
       setInput(router.query.q as any);
     }
   }, [router.query.q]);
-  return user ? (
-    <Button size="small" type="text">
-      <SearchOutlined />搜索
-    </Button>
-  ) : (
+  return (
     <div className={styles.inputSearch} style={{ width: 250 }}>
       <Input
         placeholder="搜索你想要的..."

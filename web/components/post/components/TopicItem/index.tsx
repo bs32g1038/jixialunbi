@@ -16,7 +16,7 @@ const CImage: any = dynamic(() => import('./components/CImage') as any, {
 
 export default function TopicItem(props: { item: any }) {
   const item = props.item;
-  console.log(item)
+  console.log(item);
   const participants = unionBy(item?.participants, 'id');
   return (
     <div key={item.title} className={styles.item}>
@@ -46,7 +46,12 @@ export default function TopicItem(props: { item: any }) {
                 </div>
               )}
             </h2>
-            {item.content && <p className={styles.summary}>{item.content}</p>}
+            <div
+              className={styles.summary}
+              dangerouslySetInnerHTML={{
+                __html: item.content,
+              }}
+            ></div>
             {item?.pics && (
               <Image.PreviewGroup>
                 <div className={styles.pics}>

@@ -15,6 +15,10 @@ import dynamic from 'next/dynamic';
 import axios from '@/libs/axios';
 import Link from 'next/link';
 import { parseTime } from '@/libs/time';
+import TopTip from '../home/components/TopTip';
+import PinnedList from '../home/components/PinnedList';
+import CategoryList from '../home/components/CategoryList';
+import TopicItem from './components/TopicItem';
 
 const CImage: any = dynamic(() => import('../home/components/TopicItem/components/CImage') as any, {
   ssr: false,
@@ -34,84 +38,13 @@ export default function Post(props) {
   return (
     <Layout>
       <div className={styles.wrap}>
+        <TopTip></TopTip>
+        {/* <PinnedList></PinnedList> */}
+        {/* <CategoryList></CategoryList> */}
+        <TopicItem item={data} key={data.id}></TopicItem>
         <div className={styles.inner}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-            <h2 className={styles.title}>
-              <a href={`/posts/${data.id}`}>{data.title}</a>
-              {data?.tags && (
-                <div className={styles.tag}>
-                  <Tag>{data?.category?.name}</Tag>
-                  {data?.tags?.split(',').map((tag: string) => {
-                    if (!tag) {
-                      return null;
-                    }
-                    return <Tag key={tag}>{tag}</Tag>;
-                  })}
-                </div>
-              )}
-            </h2>
-            <Space size={4}>
-              <div className={styles.avatarWrap}>
-                <img className={styles.avatar} src={data?.author?.image} alt="" />
-              </div>
-              <div style={{ marginRight: 5 }}>
-                <Link href={`/profile/${data?.author?.account}`} className={styles.about}>
-                  {data?.author?.username}
-                </Link>
-              </div>
-              <p className={styles.lastEditTime}>{parseTime(data.updatedAt)}</p>
-              <FollowButton
-                key={data?.author?.followed}
-                account={data?.author?.account}
-                followed={data?.author?.followed}
-              />
-            </Space>
-            <div
-              className="rich-text"
-              style={{
-                color: '#333',
-              }}
-            >
-              <div dangerouslySetInnerHTML={{ __html: data.content }}></div>
-            </div>
-            <div className={styles.cont}>
-              <Space size={4}>
-                <div>{data.visitCount}人阅读</div>
-                <LikeButton isActive={data.liked} postId={data.id} count={data.likeCount} />
-                <Button
-                  type="text"
-                  size="small"
-                  className={classNames(styles.commentClick, { [styles.active]: open })}
-                  onClick={() => setOpen(!open)}
-                >
-                  <Space size={4}>
-                    <CommentOutlined />
-                    <span>{data.commentCount + '条评论'}</span>
-                  </Space>
-                </Button>
-                <CollectButton isActive={data.collected} postId={data.id} count={data.collectionCount} />
-              </Space>
-            </div>
-            {data?.pics && (
-              <Image.PreviewGroup>
-                <div className={styles.pics}>
-                  {data?.pics?.split(',').map((pic) => {
-                    return (
-                      <div key={pic} className={styles.pic}>
-                        <CImage src={pic}></CImage>
-                      </div>
-                    );
-                  })}
-                </div>
-              </Image.PreviewGroup>
-            )}
-            <h2 className={styles.commentBase} id="comment">
-              <span className={styles.commentSign}>评论</span>
-              <span className={styles.commentNumber}>{data?.commentCount}</span>
-            </h2>
-            <WriteComment postId={postId}></WriteComment>
-            <CommentList postId={postId} items={resPostData?.data?.data ?? []}></CommentList>
-          </div>
+          <WriteComment postId={postId}></WriteComment>
+          <CommentList postId={postId} items={resPostData?.data?.data ?? []}></CommentList>
         </div>
       </div>
     </Layout>

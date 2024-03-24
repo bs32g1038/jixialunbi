@@ -1,4 +1,4 @@
-.wrap{
+.wrap {
   background-color: #fff;
   padding: 0 20px 10px;
 }
@@ -25,7 +25,7 @@
   align-items: center;
   width: fit-content;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 10px;
   border-radius: 2px;
   .switchItem {
     &.active {
@@ -33,7 +33,7 @@
       color: #fff;
     }
     &:hover {
-      border: 1px solid #85a5ff;
+      color: #85a5ff;
     }
   }
   svg {

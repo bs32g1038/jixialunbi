@@ -49,7 +49,7 @@ export default function AppHeader() {
         </span>
       </div>
       <div className={styles.headerRight}>
-        <Search></Search>
+        {/* <Search></Search> */}
         <Link href="/" passHref={true}>
           <Button size="small" type="text">
             <HomeOutlined></HomeOutlined>首页

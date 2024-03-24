@@ -28,7 +28,7 @@ export default function WriteComment(props: Props) {
     <div className={styles.write}>
       <Form form={form} layout="inline" onFinish={onFinish}>
         <Form.Item>
-          <Avatar src={user?.image}></Avatar>
+          <Avatar src={user?.image} size={28}></Avatar>
         </Form.Item>
         <Form.Item
           name="content"

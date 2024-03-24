@@ -17,20 +17,21 @@ export default function CommentItem(props: Props) {
   const [show, setShow] = useState(false);
   return (
     <div className={styles.commentAreaItem}>
-      <Avatar size="large" className={styles.avatar} src={item?.author?.image} alt="" />
+      <Avatar size={28} className={styles.avatar} src={item?.author?.image} alt="" />
       <div className={styles.right}>
         <div className={styles.commentAreaItemHeader}>
-          <div>
+          <Space>
             <div className={styles.name}>{item?.author?.username}</div>
             <div className={styles.about}>{item?.author?.about}</div>
-          </div>
+            {item.reply && (
+              <div className={styles.reply}>
+                <span className={styles.replyAuthor}>@{item?.reply?.author?.username}</span>
+              </div>
+            )}
+          </Space>
+          {item.reply && <p className={styles.content}>{item.content}</p>}
         </div>
-        {item.reply && (
-          <div className={styles.reply}>
-            回复 <span className={styles.replyAuthor}>@{item?.reply?.author?.username}</span>
-          </div>
-        )}
-        <p className={styles.content}>{item.content}</p>
+        {!item.reply && <p className={styles.content}>{item.content}</p>}
         <Space>
           <span className={styles.time}>{parseTime(item.createdAt)}</span>
           <Button className={styles.replyBtn} type="text" size="small" onClick={() => setShow(!show)}>
