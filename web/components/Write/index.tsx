@@ -1,11 +1,10 @@
 'use client';
 
-import React, { use, useRef } from 'react';
+import React, { useRef } from 'react';
 import styles from './index.module.scss';
 import { Button, Form, Input, Select, Upload, message } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import JEditor from '../JEditor';
-import TagGroup from '../TagGroup';
 import { useRouter } from 'next/navigation';
 import { useSWR, useSWRMutation } from '@/hooks';
 import Layout from '../Layout';
@@ -17,7 +16,7 @@ const Write = () => {
   const router = useRouter();
   const { user } = useAppStore();
   const { data, isLoading } = useSWR({ url: '/api/v1/tags' });
-  const { trigger: createPost } = useSWRMutation({ url: '/api/v1/posts' });
+  const { trigger: createPost, isMutating } = useSWRMutation({ url: '/api/v1/posts' });
   const ref = useRef(null);
   const handleUpload = (info) => {
     if (Array.isArray(info)) {
@@ -77,7 +76,7 @@ const Write = () => {
             </Select>
           </Form.Item>
           <div className={styles.ctrl}>
-            <Button onClick={() => form.submit()} type="primary">
+            <Button onClick={() => form.submit()} type="primary" loading={isMutating}>
               发布
             </Button>
           </div>

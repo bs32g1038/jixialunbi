@@ -3,7 +3,7 @@ import Modal from '../Modal';
 import { Form, Input, Button, message, Space, Image, Checkbox } from 'antd';
 import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'antd/lib/form/Form';
 import Cookies from 'js-cookie';
 import styles from './index.module.scss';
@@ -32,7 +32,7 @@ export default function LoginModal() {
   const { isShowLoginModal, setUser, showLoginModal } = useAppStore();
   const [form] = useForm();
   const [tab, setTab] = useState(LOGIN_TYPE.login);
-  // const router = useRouter();
+  const router = useRouter();
   const { trigger: login } = useSWRMutation('/api/v1/auth/login', sendRequest);
   const { trigger: register } = useSWRMutation('/api/v1/auth/signup', sendRequest);
   const onFinish = (values: any) => {
@@ -43,7 +43,8 @@ export default function LoginModal() {
           message.success('登录成功！');
           Cookies.set('token', token);
           setUser(res.data?.data);
-          // router.reload();
+          router.refresh();
+          showLoginModal(false);
         });
         return;
       }

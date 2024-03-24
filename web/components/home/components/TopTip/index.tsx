@@ -21,17 +21,15 @@ export default function TopTip() {
           </div>
           <div className={styles.footer}>
             <Skeleton loading={getUserLoading} paragraph={false}>
-              <Avatar.Group>
-                {data?.data?.content?.map((item) => {
-                  return (
-                    <Tooltip title={item.username} placement="top" key={item.id}>
-                      <Link href={`/profile/${item?.account}`}>
-                        <Avatar src={item?.image} />
-                      </Link>
-                    </Tooltip>
-                  );
-                })}
-              </Avatar.Group>
+              {data?.data?.content?.map((item) => {
+                return (
+                  <Tooltip title={item.username} placement="top" key={item.id}>
+                    <Link href={`/profile/${item?.account}`}>
+                      <Avatar src={item?.image} />
+                    </Link>
+                  </Tooltip>
+                );
+              })}
             </Skeleton>
           </div>
         </div>
