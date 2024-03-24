@@ -16,7 +16,7 @@ const Write = () => {
   const [form] = useForm();
   const router = useRouter();
   const { user } = useAppStore();
-  const { data, isLoading } = useSWR({ url: '/api/v1/categories' });
+  const { data, isLoading } = useSWR({ url: '/api/v1/tags' });
   const { trigger: createPost } = useSWRMutation({ url: '/api/v1/posts' });
   const ref = useRef(null);
   const handleUpload = (info) => {
