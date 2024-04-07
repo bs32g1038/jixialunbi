@@ -9,7 +9,7 @@
 旧版分支看这里 [V1 Nodejs 版本](https://github.com/bs32g1038/jixialunbi/tree/v1)
 
 <p align="center">
-    积下论笔社区: <a href="http://www.jixialunbi.com" target="_blank" rel="noopener noreferrer">www.jixialunbi.com</a>，当前已重新开放访问，如无法访问请尝试科学上网
+    积下论笔社区: <a href="https://bbs.lizc.net" target="_blank" rel="noopener noreferrer">bbs.lizc.net</a>，当前已重新开放访问，如无法访问请尝试科学上网
 </p>
 
 ![社区首页](https://github.com/bs32g1038/jixialunbi/blob/main/screenshots/home.png?raw=true)
