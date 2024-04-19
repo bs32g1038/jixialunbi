@@ -132,7 +132,9 @@ public class PostController {
         arr.toList().forEach(postId -> {
             var a = test.getContent().get(i[0]);
             String regex = "<.*?>";
-            a.setContent(a.getContent().replaceAll(regex, ""));
+            if(a.getContent() != null){
+                a.setContent(a.getContent().replaceAll(regex, ""));
+            }
             // 组合评论数据
             var comments = commentRepository.findAll(new Specification<Comment>() {
                 @Override

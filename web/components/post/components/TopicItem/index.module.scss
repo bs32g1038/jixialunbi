@@ -1,6 +1,6 @@
 .item {
   background-color: #fff;
-  padding: 5px 12px;
+  padding: 5px 0;
   width: 100%;
 }
 
@@ -77,7 +77,6 @@
   width: 100%;
   display: flex;
   gap: 8px;
-  padding: 0 10px;
 }
 
 .core {
@@ -163,9 +162,6 @@ ol.stories li:first-child div.story_liner {
 .summary {
   position: relative;
   display: -webkit-box;
-  // -webkit-line-clamp: 2;
-  // overflow: hidden;
-  // text-overflow: ellipsis;
   -webkit-box-orient: vertical;
   line-height: 1.65;
   letter-spacing: 0.5px;
@@ -330,7 +326,7 @@ ol.stories li:first-child div.story_liner {
 
 .summary {
   line-height: 1.5;
-  color: rgba(0, 0, 0, 0.65);
+  color: rgba(0, 0, 0, 0.85);
   margin-bottom: 8px;
   line-height: 22px;
 }

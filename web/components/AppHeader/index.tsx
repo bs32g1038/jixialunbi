@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './index.module.scss';
 import Link from 'next/link';
-import { Avatar, Badge, Button, Dropdown, Space } from 'antd';
+import { Avatar, Badge, Button, Drawer, Dropdown, Space } from 'antd';
 import {
   BellOutlined,
   DownOutlined,
@@ -9,6 +9,7 @@ import {
   HomeOutlined,
   LoginOutlined,
   LogoutOutlined,
+  SettingOutlined,
 } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
 import logo from './logo.png';
@@ -38,6 +39,7 @@ const NotificationIcon = () => {
 export default function AppHeader() {
   const router = useRouter();
   const { showLoginModal, user } = useAppStore();
+  const [open, setOpen] = useState(false);
   return (
     <header className={styles.header}>
       <div className={styles.headerleft}>
@@ -115,6 +117,17 @@ export default function AppHeader() {
               注册/登录
             </Button>
           )}
+        </span>
+        <span>
+          <Button
+            size="small"
+            type="text"
+            onClick={() => {
+              router.push('/setting');
+            }}
+          >
+            <SettingOutlined></SettingOutlined>
+          </Button>
         </span>
       </div>
     </header>

@@ -29,14 +29,13 @@ export default function TopicItem(props: { item: any }) {
             <h2 className={styles.title}>
               <a href={`/posts/${item.id}`}>{item.title}</a>
             </h2>
-            <Space style={{ marginBottom: 8 }}>
+            <Space>
               <Link href={`/profile/${item?.author?.account}`} className={styles.about}>
                 {item?.author?.username}
               </Link>
               <span>·</span>
               <p className={styles.lastEditTime}>{item.updatedAt}</p>
             </Space>
-
             {item.content && <p className={styles.summary}>{item.content}</p>}
             {item?.pics && (
               <Image.PreviewGroup>

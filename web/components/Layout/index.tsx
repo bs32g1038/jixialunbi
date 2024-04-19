@@ -1,18 +1,16 @@
-"use client"
+'use client';
 
 import { ArrowUpOutlined } from '@ant-design/icons';
 import { FloatButton } from 'antd';
 import React, { useEffect } from 'react';
-import { setUser } from '../../store/app';
-import ActiveAlert from '../ActiveAlert';
 import AppFooter from '../AppFooter';
 import AppHeader from '../AppHeader';
 import LoginModal from '../LoginModal';
-import Write from '../Write';
 import styles from './index.module.scss';
 import useSWR from 'swr';
 import { fetcher } from '../home/services';
 import { useAppStore } from '@/store';
+import RightSide from './RightSide';
 
 const style: React.CSSProperties = {
   height: 40,
@@ -35,19 +33,22 @@ export default function Layout(props: any) {
     }
   }, [data, setUser]);
   return (
-    <div className={styles.wrap}>
-      <AppHeader></AppHeader>
-      {/* <ActiveAlert></ActiveAlert> */}
-      {children}
-      <AppFooter></AppFooter>
-      <LoginModal></LoginModal>
-      {/* <Write></Write> */}
-      <FloatButton.BackTop>
-        <div style={style}>
-          <ArrowUpOutlined />
-        </div>
-      </FloatButton.BackTop>
-      {/* </div> */}
+    <div style={{ display: 'flex', gap: 10, maxWidth: 645 + 280, margin: '0 auto', paddingLeft: 30 }}>
+      <div className={styles.wrap}>
+        <AppHeader></AppHeader>
+        {/* <ActiveAlert></ActiveAlert> */}
+        {children}
+        <AppFooter></AppFooter>
+        <LoginModal></LoginModal>
+        {/* <Write></Write> */}
+        <FloatButton.BackTop>
+          <div style={style}>
+            <ArrowUpOutlined />
+          </div>
+        </FloatButton.BackTop>
+        {/* </div> */}
+      </div>
+      <RightSide />
     </div>
   );
 }

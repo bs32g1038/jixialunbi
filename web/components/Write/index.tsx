@@ -60,7 +60,7 @@ const Write = () => {
         <Form.Item name="title" rules={[{ required: true, message: '标题不能为空！' }]}>
           <Input size="large" className={styles.input} placeholder="输入标题..."></Input>
         </Form.Item>
-        <Form.Item name="content" rules={[{ required: true, message: '内容不能为空！' }]}>
+        <Form.Item name="content">
           <JEditor loading={false} ref={ref}></JEditor>
         </Form.Item>
         <div className={styles.footer}>

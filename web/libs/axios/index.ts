@@ -5,7 +5,7 @@ let baseUrl = '';
 if (typeof window !== 'undefined') {
   baseUrl = '';
 } else {
-  baseUrl = 'http://127.0.0.1:8000';
+  baseUrl = 'http://127.0.0.1:8100';
 }
 
 const instance = axios.create({

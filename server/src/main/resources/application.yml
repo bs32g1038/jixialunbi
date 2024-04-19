@@ -57,7 +57,7 @@ logging:
     org.springframework.security: error
 
 server:
-  port: 8000
+  port: 8100
   error:
     include-message: always
     include-binding-errors: always
