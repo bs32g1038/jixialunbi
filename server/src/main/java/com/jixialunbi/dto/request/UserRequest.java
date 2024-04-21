@@ -15,8 +15,8 @@ public class UserRequest {
     private Long id;
 
     @NotBlank
-    @Size(min = 3, max = 20)
-    private String account;
+    @Size(min = 6, max = 40)
+    private String email;
 
     @NotBlank
     @Size(min = 6, max = 100)

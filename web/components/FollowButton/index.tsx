@@ -4,14 +4,14 @@ import { PlusOutlined } from '@ant-design/icons';
 import { useSWRMutation } from '@/hooks';
 
 interface Props {
-  account: string;
+  userId: string;
   followed: boolean;
 }
 
 export default function FollowButton(props: Props) {
-  const { account } = props;
+  const { userId } = props;
   const [followed, setFollowed] = useState(props.followed);
-  const { trigger, isMutating } = useSWRMutation({ url: '/api/v1/follow-user/' + account });
+  const { trigger, isMutating } = useSWRMutation({ url: '/api/v1/follow-user/' + userId });
   return (
     <AuthButton
       size="small"

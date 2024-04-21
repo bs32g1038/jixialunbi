@@ -24,7 +24,7 @@ export default function TopTip() {
               {data?.data?.content?.map((item) => {
                 return (
                   <Tooltip title={item.username} placement="top" key={item.id}>
-                    <Link href={`/profile/${item?.account}`}>
+                    <Link href={`/profile/${item?.id}`}>
                       <Avatar src={item?.image} />
                     </Link>
                   </Tooltip>

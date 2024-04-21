@@ -1,12 +1,12 @@
 package com.jixialunbi.controllers;
 
-import cn.hutool.core.util.StrUtil;
 import com.jixialunbi.common.R;
 import com.jixialunbi.common.utils.PageUtil;
 import com.jixialunbi.dto.request.IdRequest;
 import com.jixialunbi.dto.request.PostRequest;
 import com.jixialunbi.model.*;
 import com.jixialunbi.repository.*;
+import com.jixialunbi.security.UserDetailsImpl;
 import com.jixialunbi.service.CategoryService;
 import com.jixialunbi.service.FollowUserService;
 import com.jixialunbi.service.UserService;
@@ -23,6 +23,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -30,7 +31,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import static io.jsonwebtoken.lang.Collections.isEmpty;
 
@@ -87,19 +87,13 @@ public class PostController {
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int pageSize,
             @RequestParam(required = false) Long categoryId,
-            @RequestParam(required = false) String account,
+            @RequestParam(required = false) Long userId,
             @RequestParam(required = false, defaultValue = "false") boolean isHot,
-            Principal principal
-    ) {
-        User user;
-        if (principal == null) {
-            user = null;
-        } else {
-            user = userService.getByAccount(principal.getName());
-        }
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+            ) {
         Long authorId = null;
-        if (account != null) {
-            authorId = userService.getByAccount(account).getId();
+        if (userId != null) {
+            authorId = userService.getById(userId.longValue()).getId();
         }
         List<Sort.Order> orders = new ArrayList<Sort.Order>();
         if (isHot) {
@@ -132,7 +126,7 @@ public class PostController {
         arr.toList().forEach(postId -> {
             var a = test.getContent().get(i[0]);
             String regex = "<.*?>";
-            if(a.getContent() != null){
+            if (a.getContent() != null) {
                 a.setContent(a.getContent().replaceAll(regex, ""));
             }
             // 组合评论数据
@@ -150,7 +144,8 @@ public class PostController {
                 return item.getAuthor();
             }).toList());
             // 点赞数据，收藏数据
-            if (user != null) {
+            if (userDetails != null) {
+                User user = userService.getById(userDetails.getId());
                 var like = postLikeRepository.findOneByPostIdAndAuthorId(postId, user.getId());
                 a.setLiked(like != null && like.getDeleted() == null);
                 var cn = postCollectionRepository.findOneByPostIdAndAuthorId(postId, user.getId());

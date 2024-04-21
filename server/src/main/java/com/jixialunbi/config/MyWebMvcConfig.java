@@ -12,6 +12,6 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         System.out.println(getJarFilePath());
         System.out.println("getJarFilePath()");
-        registry.addResourceHandler("/static/**").addResourceLocations("file:" + getJarFilePath() + "/static/");
+        registry.addResourceHandler("/static/**").addResourceLocations("file:" + getJarFilePath() + "/static/").addResourceLocations("file:" + getJarFilePath() + "/classes/static/");
     }
 }

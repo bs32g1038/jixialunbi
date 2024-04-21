@@ -1,6 +1,5 @@
 package com.jixialunbi.service;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.jixialunbi.common.Constants;
 import com.jixialunbi.model.User;
 import com.jixialunbi.repository.UserRepository;
@@ -23,12 +22,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
-        final User user = userRepository.findByAccount(account)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format(Constants.NOT_FOUND_ACCOUNT, account)));
-        var _user = new User();
-        BeanUtil.copyProperties(user, _user);
-        _user.setUsername(user.getAccount());
-        return UserDetailsImpl.build(_user);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        final User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException(Constants.NOT_FOUND_ACCOUNT));
+        return UserDetailsImpl.build(user);
     }
 }

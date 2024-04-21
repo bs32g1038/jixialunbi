@@ -14,9 +14,9 @@ const EditableInput: any = dynamic(() => import('../EditableInput') as any, {
 });
 
 export default function ProfileEdit() {
-  const { account } = useParams();
+  const { id } = useParams();
   const user = useAppStore((state) => state.user);
-  const { data: _data, isLoading } = useSWR({ url: '/api/v1/user-info/' + account });
+  const { data: _data, isLoading } = useSWR({ url: '/api/v1/user-info/' + id });
   const data = _data?.data ?? {};
   const { trigger } = useSWRMutation({ url: '/api/v1/user/update' });
   const onFinish = (values) => {
@@ -42,7 +42,7 @@ export default function ProfileEdit() {
           placeholder="用户名"
           loading={isLoading}
           onFinish={onFinish}
-          rules={[{ required: true, type: 'string', min: 1, max: 18, message: '请输入用户名，字数1-18位之间!' }]}
+          rules={[{ required: true, type: 'string', min: 1, max: 30, message: '请输入用户名，字数1-30位之间!' }]}
         ></EditableInput>
         <EditableInput
           value={data?.email}

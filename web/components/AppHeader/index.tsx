@@ -10,6 +10,7 @@ import {
   LoginOutlined,
   LogoutOutlined,
   SettingOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
 import logo from './logo.png';
@@ -73,10 +74,40 @@ export default function AppHeader() {
                 menu={{
                   items: [
                     {
-                      label: <Link href={'/profile/' + user.account}>个人信息</Link>,
-                      key: '0',
+                      label: (
+                        <Space size={4}>
+                          <UserOutlined></UserOutlined>
+                          <span>个人信息</span>
+                        </Space>
+                      ),
+                      key: 'userInfo',
+                    },
+                    {
+                      label: (
+                        <div
+                          onClick={() => {
+                            Cookies.remove('token');
+                            router.refresh();
+                          }}
+                        >
+                          <Space size={4}>
+                            <LogoutOutlined />
+                            <span>注销</span>
+                          </Space>
+                        </div>
+                      ),
+                      key: 'logout',
                     },
                   ],
+                  onClick: ({ key }) => {
+                    if (key === 'userInfo') {
+                      router.push('/profile/' + user.id);
+                    }
+                    if (key === 'logout') {
+                      Cookies.remove('token');
+                      window.location.reload();
+                    }
+                  },
                 }}
                 trigger={['click']}
               >
@@ -93,17 +124,6 @@ export default function AppHeader() {
                   </Space>
                 </Button>
               </Dropdown>
-              <Button
-                onClick={() => {
-                  Cookies.remove('token');
-                  router.refresh();
-                }}
-                type="text"
-                size="small"
-              >
-                <LogoutOutlined />
-                注销
-              </Button>
             </React.Fragment>
           ) : (
             <Button

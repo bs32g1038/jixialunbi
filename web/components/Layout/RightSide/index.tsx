@@ -18,7 +18,7 @@ export default function RightSide() {
           <Skeleton loading={getUserLoading} className={styles.list}>
             {(data?.data?.content ?? []).map((item) => {
               return (
-                <Link href={`/profile/${item?.account}`} className={styles.item} key={item.id}>
+                <Link href={`/profile/${item?.id}`} className={styles.item} key={item.id}>
                   <Avatar className={styles.avatar} src={item.image}></Avatar>
                   <div>
                     <p>{item.username}</p>

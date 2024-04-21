@@ -38,11 +38,11 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         try {
             String jwt = parseJwt(request);
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
-                final String username = jwtUtils.getUsernameFromJwtToken(jwt);
-                if (username == null) {
+                final String email = jwtUtils.getUsernameFromJwtToken(jwt);
+                if (email == null) {
                     return;
                 }
-                final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                final UserDetails userDetails = userDetailsService.loadUserByUsername(email);
                 final UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
                                 userDetails,

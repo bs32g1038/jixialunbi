@@ -24,7 +24,7 @@ interface State {
   user: {
     role: string;
     banned: boolean;
-    id: number;
+    id: string;
     email: string;
     createdAt: string;
     updatedAt: string;

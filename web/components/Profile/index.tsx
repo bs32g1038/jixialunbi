@@ -21,10 +21,10 @@ const TABS = {
 
 export default function Profile() {
   const router = useRouter();
-  const { account } = useParams();
+  const { id } = useParams();
   const { user: currentUser } = useAppStore();
   const [tab, setTab] = useState(TABS.post);
-  const { data: _data } = useSWR({ url: '/api/v1/user-info/' + account });
+  const { data: _data } = useSWR({ url: '/api/v1/user-info/' + id });
   // console.log("data", data)
   const user = _data?.data ?? {};
   const data = _data?.data ?? {};
@@ -39,15 +39,15 @@ export default function Profile() {
                 <h3 className={styles.name}>{data.username}</h3>
                 <p className={styles.desc}>{data.about ?? '这家伙很懒，什么都没留下'}</p>
               </div>
-              {account !== currentUser?.account && (
+              {id !== currentUser?.id && (
                 <div className={styles.control}>
-                  <FollowButton key={user?.followed} account={user.account} followed={user?.followed} />
+                  <FollowButton key={user?.followed} userId={user.id} followed={user?.followed} />
                 </div>
               )}
             </div>
             <div className={styles.func}>
-              {currentUser?.account === account && (
-                <AuthButton size="small" type="dashed" onClick={() => router.push('/profile/edit/' + data?.account)}>
+              {currentUser?.id === id && (
+                <AuthButton size="small" type="dashed" onClick={() => router.push('/profile/edit/' + data?.id)}>
                   <EditOutlined></EditOutlined>账号设置
                 </AuthButton>
               )}

@@ -22,7 +22,7 @@ export default function TopicItem(props: { item: any }) {
     <div key={item.title} className={styles.item}>
       <div className={styles.liner}>
         <div className={styles.details}>
-          <Link href={`/profile/${item?.author?.account}`}>
+          <Link href={`/profile/${item?.author?.id}`}>
             <div className={styles.avatarWrap}>
               <Avatar className={styles.avatar} src={item?.author?.image} />
             </div>
@@ -64,7 +64,7 @@ export default function TopicItem(props: { item: any }) {
               )}
             </p> */}
             <Space style={{ marginBottom: 8 }}>
-              <Link href={`/profile/${item?.author?.account}`} className={styles.about}>
+              <Link href={`/profile/${item?.author?.id}`} className={styles.about}>
                 {item?.author?.username}
               </Link>
               <span>·</span>
@@ -92,12 +92,6 @@ export default function TopicItem(props: { item: any }) {
               </Image.PreviewGroup>
             )}
             <Space style={{ display: 'flex' }}>
-              {/* <Space>
-                <Link href={`/profile/${item?.author?.account}`} className={styles.about}>
-                  {item?.author?.username}
-                </Link>
-                <p className={styles.lastEditTime}>{parseTime(item.updatedAt)}</p>
-              </Space> */}
               <Space className={styles.footer} size={3}>
                 <TagOutlined />
                 {item.tags?.map((item) => {
@@ -141,7 +135,7 @@ export default function TopicItem(props: { item: any }) {
                     >
                       {participants?.map((item: any) => {
                         return (
-                          <Link key={item.id} href={'/profile/' + item?.account}>
+                          <Link key={item.id} href={'/profile/' + item?.id}>
                             <Popover
                               placement="bottom"
                               title={item?.username}

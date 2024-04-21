@@ -27,7 +27,6 @@ const EmailActive = () => {
   const [emailCode, setEmailCode] = useState<any>('');
   const [active, setActive] = useState(false);
   const { trigger: activeEmail } = useSWRMutation({ url: '/api/v1/active-email/' + emailCode });
-  const router = useRouter();
   return (
     <Space>
       {!active && (
@@ -56,9 +55,6 @@ const EmailActive = () => {
                 activeEmail().then((res) => {
                   if (res.data.data) {
                     message.success('验证成功，感谢您的支持。');
-                    setTimeout(() => {
-                      router.reload();
-                    }, 50);
                   } else {
                     message.success('验证码不正确！');
                   }

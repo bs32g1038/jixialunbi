@@ -1,13 +1,12 @@
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import React from 'react';
 import TopicItem from '../../../home/components/TopicItem';
 import { useSWR } from '@/hooks';
 import { Empty } from 'antd';
 
 export default function Posts() {
-  const router = useRouter();
-  const { account } = useParams();
-  const { data } = useSWR({ url: '/api/v1/posts?account=' + account });
+  const { id } = useParams();
+  const { data } = useSWR({ url: '/api/v1/posts?userId=' + id });
   const posts = data?.data;
   return (
     <div>

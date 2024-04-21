@@ -50,7 +50,7 @@ const Write = () => {
       });
       createPost(values).then((res) => {
         message.success('发布成功！');
-        router.push('/profile/' + user.account);
+        router.push('/profile/' + user.id);
       });
     });
   };

@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import Modal from '../Modal';
-import { Form, Input, Button, message, Space, Image, Checkbox } from 'antd';
-import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
+import { message } from 'antd';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'antd/lib/form/Form';
 import Cookies from 'js-cookie';
 import styles from './index.module.scss';
-import CaptchaSvg from './components/CaptchaSvg';
 import { omit } from 'lodash';
 import useSWRMutation from 'swr/mutation';
 import { useAppStore } from '@/store';
+import Login from './components/Login';
+import Register from './components/Register';
 
 export const LOGIN_TYPE = {
   login: 'login',
@@ -62,113 +62,19 @@ export default function LoginModal() {
   };
   return isShowLoginModal ? (
     <Modal
-      style={{ top: 40 }}
+      wrapClassName={styles.modal}
+      title="积下社区"
       footer={null}
       width={330}
+      centered
       open={isShowLoginModal}
+      maskClosable={false}
       onCancel={() => {
         showLoginModal(false);
       }}
     >
-      <div className={styles.wrap}>
-        <h3>注册/登录</h3>
-        <Form form={form} name="normal_login" initialValues={{ remember: true }} onFinish={onFinish}>
-          <Form.Item
-            name="account"
-            rules={[
-              tab === LOGIN_TYPE.register
-                ? { required: true, type: 'string', min: 6, max: 20, message: '请输入账号，位数6-20位之间!' }
-                : {
-                    required: true,
-                    message: '请输入账号!',
-                  },
-            ]}
-          >
-            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="请输入账号" />
-          </Form.Item>
-          {tab === LOGIN_TYPE.register && (
-            <Form.Item name="email" rules={[{ required: true, message: '请输入邮箱!' }]}>
-              <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="请输入邮箱" />
-            </Form.Item>
-          )}
-          <Form.Item name="password" rules={[{ required: true, message: '请输入你的密码!' }]}>
-            <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="请输入密码" />
-          </Form.Item>
-          {tab === LOGIN_TYPE.register && (
-            <Form.Item name="repeatPassword" rules={[{ required: true, message: '请再次输入你的密码!' }]}>
-              <Input
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                type="password"
-                placeholder="请再次输入你的密码"
-              />
-            </Form.Item>
-          )}
-          <Form.Item name="captcha" rules={[{ required: true, message: '请输入验证码!' }]}>
-            <Space>
-              <Input prefix={<CaptchaSvg />} placeholder="请输入验证码" />
-              <Image
-                src="/api/v1/auth/captcha"
-                alt=""
-                preview={false}
-                onClick={(e: any) => {
-                  if (e.target?.nodeName?.toLocaleLowerCase() === 'img') {
-                    e.target?.setAttribute('src', '/api/v1/auth/captcha?' + new Date().getTime());
-                  }
-                }}
-              ></Image>
-            </Space>
-          </Form.Item>
-          <Form.Item>
-            <div className={styles.loginDescription}>
-              <Space align="end" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div>积下论笔社区</div>
-                {tab === LOGIN_TYPE.register && (
-                  <Button
-                    size="small"
-                    type="default"
-                    className={styles.switchRegisterButton}
-                    onClick={() => setTab(LOGIN_TYPE.login)}
-                  >
-                    登录
-                  </Button>
-                )}
-                {tab === LOGIN_TYPE.login && (
-                  <Button
-                    size="small"
-                    type="default"
-                    className={styles.switchRegisterButton}
-                    onClick={() => setTab(LOGIN_TYPE.register)}
-                  >
-                    注册
-                  </Button>
-                )}
-              </Space>
-              <div>
-                <Space className={styles.desc}>
-                  <Form.Item valuePropName="checked" noStyle>
-                    <Checkbox checked={true}></Checkbox>
-                  </Form.Item>
-                  <div className={styles.agreementBox}>
-                    注册登录即表示同意
-                    <a href="/terms" target="_blank">
-                      用户协议
-                    </a>
-                    、
-                    <a href="/privacy" target="_blank">
-                      隐私政策
-                    </a>
-                  </div>
-                </Space>
-              </div>
-            </div>
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" className={styles.loginButton}>
-              {tab === LOGIN_TYPE.register ? '注册' : '登录'}
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
+      {tab === LOGIN_TYPE.login && <Login jumpRegister={() => setTab(LOGIN_TYPE.register)}></Login>}
+      {tab === LOGIN_TYPE.register && <Register jumpLogin={() => setTab(LOGIN_TYPE.login)}></Register>}
     </Modal>
   ) : (
     <div></div>

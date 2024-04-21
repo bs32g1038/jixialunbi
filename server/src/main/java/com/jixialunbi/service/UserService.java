@@ -39,8 +39,8 @@ public class UserService {
             roles.add(new Role(2L, RoleType.ROLE_ADMIN));
 
         final User user = new User();
-        log.info(request.getAccount());
-        user.setAccount(request.getAccount());
+        log.info(request.getEmail());
+        user.setEmail(request.getEmail());
         user.setPassword(encoder.encode(request.getPassword()));
         user.setRoles(roles);
         userRepository.save(user);

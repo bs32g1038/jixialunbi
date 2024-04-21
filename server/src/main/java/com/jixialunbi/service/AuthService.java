@@ -25,6 +25,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+import static cn.hutool.core.util.IdUtil.getSnowflakeNextId;
+import static cn.hutool.core.util.IdUtil.getSnowflakeNextIdStr;
 import static com.jixialunbi.common.Constants.ALREADY_EXISTS_USER;
 import static com.jixialunbi.common.Constants.CREATED_USER;
 
@@ -48,9 +50,9 @@ public class AuthService {
      * @return JwtResponse
      */
     public JwtResponse login(LoginRequest request) {
-        System.out.println(request.getAccount());
         final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getAccount(), request.getPassword()));
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
 
@@ -58,7 +60,7 @@ public class AuthService {
         final List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .toList();
-        return JwtResponse.builder().token(jwt).id(userDetails.getId()).username(userDetails.getUsername()).roles(roles).build();
+        return JwtResponse.builder().token(jwt).id(userDetails.getId()).username(userDetails.getUsername()).email(userDetails.getEmail()).roles(roles).build();
     }
 
     /**
@@ -68,11 +70,14 @@ public class AuthService {
      * @return id of the registered user
      */
     public CommandResponse signup(@Valid UserRequest request) {
-        if (userRepository.existsByUsernameIgnoreCase(request.getAccount().trim()))
+        if (userRepository.existsByEmailIgnoreCase(request.getEmail().trim()))
             throw new ElementAlreadyExistsException(ALREADY_EXISTS_USER);
 
         final User user = new User();
-        user.setAccount(request.getAccount());
+        user.setId(getSnowflakeNextId());
+        user.setImage("/static/images/avatar.jpg");
+        user.setUsername("jx" + getSnowflakeNextIdStr());
+        user.setEmail(request.getEmail());
         user.setPassword(encoder.encode(request.getPassword().trim()));
         // add default role to the user
         user.setRoles(new HashSet<>(Arrays.asList(new Role(1L, RoleType.ROLE_USER))));

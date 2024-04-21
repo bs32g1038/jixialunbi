@@ -4,6 +4,7 @@ import com.jixialunbi.security.AuthEntryPointJwt;
 import com.jixialunbi.security.AuthTokenFilter;
 import com.jixialunbi.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,7 +38,9 @@ public class SecurityConfig {
             "/swagger-ui.html"
     };
     private final UserDetailsServiceImpl userDetailsService;
-    private final AuthEntryPointJwt authEntryPointJwt;
+
+    @Autowired
+    private AuthEntryPointJwt unauthorizedHandler;
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -49,6 +52,7 @@ public class SecurityConfig {
         final DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
+        authProvider.setHideUserNotFoundExceptions(false);
         return authProvider;
     }
 
@@ -67,11 +71,11 @@ public class SecurityConfig {
         httpSecurity
                 .cors().and()
                 .csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(authEntryPointJwt).and()
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeHttpRequests()
-                .requestMatchers(AUTH_WHITELIST).permitAll()
-                .anyRequest().authenticated();
+                .authorizeHttpRequests(auth ->
+                        auth.requestMatchers(AUTH_WHITELIST).permitAll().anyRequest().authenticated()
+                );
 
         httpSecurity.authenticationProvider(authenticationProvider());
         httpSecurity.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

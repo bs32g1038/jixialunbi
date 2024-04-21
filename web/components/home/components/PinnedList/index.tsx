@@ -14,7 +14,7 @@ export default function PinnedList() {
           return (
             <div className={styles.topItem} key={item.id}>
               <div className={styles.topLabel}>置顶</div>
-              <Link href={'/profile/' + item?.author?.account} className={styles.link}>
+              <Link href={'/profile/' + item?.author?.id} className={styles.link}>
                 <Avatar size="small" src={item?.author?.image} style={{ cursor: 'pointer' }} alt="" />
                 <div style={{ fontSize: 12, color: 'rgba(0,0,0,0.45)', whiteSpace: 'nowrap' }}>
                   {item?.author?.username}

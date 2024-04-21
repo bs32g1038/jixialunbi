@@ -11,8 +11,7 @@ import lombok.Data;
 public class LoginRequest {
 
     @NotBlank
-    @Size(min = 3, max = 20)
-    private String account;
+    private String email;
 
     @NotBlank
     @Size(min = 6, max = 100)
