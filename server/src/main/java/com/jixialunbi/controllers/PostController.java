@@ -26,7 +26,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,8 +65,8 @@ public class PostController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/posts")
     @Transactional
-    public ResponseEntity<Post> createPost(@Valid @RequestBody PostRequest postRequest, Principal principal) {
-        User user = userService.getByAccount(principal.getName());
+    public ResponseEntity<Post> createPost(@Valid @RequestBody PostRequest postRequest, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        User user = userService.getById(userDetails.getId());
         var post = new Post();
         post.setTitle(postRequest.getTitle());
         post.setContent(postRequest.getContent());
@@ -211,8 +210,8 @@ public class PostController {
     @Transactional
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/collect-post/{postId}")
-    public R collectPost(@PathVariable long postId, Principal principal) {
-        var user = userService.getByAccount(principal.getName());
+    public R collectPost(@PathVariable long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        var user = userService.getById(userDetails.getId());
         var res = postCollectionRepository.findOneByPostIdAndAuthorId(postId, user.getId());
         if (res != null) {
             if (res.getDeleted() == null) {
@@ -237,8 +236,8 @@ public class PostController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/delete-post")
     @Transactional
-    public R deletePosts(@Valid @RequestBody IdRequest idRequest, Principal principal) {
-        User user = userService.getByAccount(principal.getName());
+    public R deletePosts(@Valid @RequestBody IdRequest idRequest, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        User user = userService.getById(userDetails.getId());
         var test = postRepository.findByIdAndAuthorId(idRequest.getId(), user.getId());
         test.setDeleted(LocalDateTime.now());
         user.setPostCount(user.getPostCount() - 1);
