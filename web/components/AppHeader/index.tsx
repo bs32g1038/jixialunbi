@@ -40,7 +40,6 @@ const NotificationIcon = () => {
 export default function AppHeader() {
   const router = useRouter();
   const { showLoginModal, user } = useAppStore();
-  const [open, setOpen] = useState(false);
   return (
     <header className={styles.header}>
       <div className={styles.headerleft}>

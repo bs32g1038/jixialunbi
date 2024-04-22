@@ -5,7 +5,7 @@ import { useSWRMutation } from '@/hooks';
 import { useAppStore } from '@/store';
 
 interface Props {
-  authorId: number;
+  authorId: string;
   pinned: boolean;
   postId: number;
   id: number;

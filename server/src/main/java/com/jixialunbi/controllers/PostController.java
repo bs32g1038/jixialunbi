@@ -90,7 +90,7 @@ public class PostController {
             @RequestParam(required = false) Long userId,
             @RequestParam(required = false, defaultValue = "false") boolean isHot,
             @AuthenticationPrincipal UserDetailsImpl userDetails
-            ) {
+    ) {
         Long authorId = null;
         if (userId != null) {
             authorId = userService.getById(userId.longValue()).getId();
@@ -164,19 +164,14 @@ public class PostController {
 
     @GetMapping("/posts/{postId}")
     @Transactional
-    public R getPost(@PathVariable long postId, Principal principal) {
+    public R getPost(@PathVariable long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         var post = postRepository.findById(postId);
         if (!post.get().equals(null)) {
             post.get().setVisitCount(post.get().getVisitCount() + 1);
         }
-        User user;
-        if (principal == null) {
-            user = null;
-        } else {
-            user = userService.getByAccount(principal.getName());
-        }
-        // 点赞数据
-        if (user != null) {
+        if(userDetails != null){
+            User user = userService.getById(userDetails.getId());
+            // 点赞数据
             var res = postLikeRepository.findOneByPostIdAndAuthorId(postId, user.getId());
             post.get().setLiked(res != null && res.getDeleted() == null);
             var cn = postCollectionRepository.findOneByPostIdAndAuthorId(postId, user.getId());
@@ -188,9 +183,10 @@ public class PostController {
     }
 
     @Transactional
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/like-post/{postId}")
-    public R likePost(@PathVariable long postId, Principal principal) {
-        var user = userService.getByAccount(principal.getName());
+    public R likePost(@PathVariable long postId,  @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        var user = userService.getById(userDetails.getId());
         var res = postLikeRepository.findOneByPostIdAndAuthorId(postId, user.getId());
         if (res != null) {
             if (res.getDeleted() == null) {
@@ -213,6 +209,7 @@ public class PostController {
     }
 
     @Transactional
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/collect-post/{postId}")
     public R collectPost(@PathVariable long postId, Principal principal) {
         var user = userService.getByAccount(principal.getName());

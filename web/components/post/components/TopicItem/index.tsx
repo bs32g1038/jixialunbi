@@ -1,9 +1,10 @@
+'use client';
 import React from 'react';
 import Link from 'next/link';
 import { parseTime } from '../../../../libs/time';
 import styles from './index.module.scss';
 import { Avatar, Button, Space, Tag, Popover, Image } from 'antd';
-import { CommentOutlined, EyeOutlined, FlagOutlined, TagOutlined } from '@ant-design/icons';
+import { CommentOutlined, TagOutlined } from '@ant-design/icons';
 import LikeButton from '../../../LikeButton';
 import { unionBy } from 'lodash';
 import dynamic from 'next/dynamic';
@@ -16,7 +17,6 @@ const CImage: any = dynamic(() => import('./components/CImage') as any, {
 
 export default function TopicItem(props: { item: any }) {
   const item = props.item;
-  console.log(item);
   const participants = unionBy(item?.participants, 'id');
   return (
     <div key={item.title} className={styles.item}>
@@ -68,7 +68,7 @@ export default function TopicItem(props: { item: any }) {
                 {item?.author?.username}
               </Link>
               <span>·</span>
-              <p className={styles.lastEditTime}>{parseTime(item.updatedAt)}</p>
+              <p className={styles.lastEditTime}>{parseTime(item?.createdAt)}</p>
             </Space>
             {item.content && (
               <p
