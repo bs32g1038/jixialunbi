@@ -24,6 +24,9 @@ public class Tag {
     @Column(name = "description")
     private String description;
 
+//    @Column(name = "order")
+//    private Long order;
+
     @ManyToMany(mappedBy = "tags")
     private List<Post> posts = new ArrayList<>();
 

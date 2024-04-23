@@ -1,0 +1,23 @@
+.wrap {
+  padding-top: 15px;
+}
+
+.title {
+  margin-bottom: 15px;
+}
+
+.labels {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  button {
+    padding: 0;
+  }
+}
+
+.labelsItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: 20px;
+}
