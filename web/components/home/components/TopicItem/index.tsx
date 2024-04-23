@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import styles from './index.module.scss';
 import { Avatar, Button, Space, Tag, Popover, Image } from 'antd';
-import { CommentOutlined, TagOutlined } from '@ant-design/icons';
+import { CommentOutlined, NumberOutlined, TagOutlined } from '@ant-design/icons';
 import LikeButton from '../../../LikeButton';
 import { unionBy } from 'lodash';
 import dynamic from 'next/dynamic';
@@ -51,13 +51,22 @@ export default function TopicItem(props: { item: any }) {
               </Image.PreviewGroup>
             )}
             <Space style={{ display: 'flex' }}>
-              <Space className={styles.footer} size={3}>
-                <TagOutlined />
+              <Space size={6}>
                 {item.tags.map((item) => {
                   return (
-                    <span style={{ paddingRight: 2 }} key={item.id}>
+                    <Tag
+                      bordered={false}
+                      style={{
+                        borderRadius: '2px',
+                        backgroundColor: '#f5f5f5',
+                        color: 'rgba(0, 0, 0, 0.45)',
+                        margin: 0,
+                      }}
+                      key={item.id}
+                    >
+                      <NumberOutlined />
                       {item.name}
-                    </span>
+                    </Tag>
                   );
                 })}
               </Space>
