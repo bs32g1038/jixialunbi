@@ -2,6 +2,7 @@ package com.jixialunbi.config;
 
 import com.jixialunbi.security.AuthEntryPointJwt;
 import com.jixialunbi.security.AuthTokenFilter;
+import com.jixialunbi.security.CustomAccessDeniedHandler;
 import com.jixialunbi.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,9 @@ public class SecurityConfig {
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
 
+    @Autowired
+    private CustomAccessDeniedHandler customAccessDeniedHandler;
+
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
         return new AuthTokenFilter();
@@ -81,7 +85,10 @@ public class SecurityConfig {
         httpSecurity
                 .cors(cors -> cors.configurationSource(request -> corsConfiguration))
                 .csrf(e -> e.disable())
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+                .exceptionHandling(exception -> {
+                    exception.accessDeniedHandler(customAccessDeniedHandler);
+                    exception.authenticationEntryPoint(unauthorizedHandler);
+                })
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers(AUTH_WHITELIST).permitAll().anyRequest().authenticated()
