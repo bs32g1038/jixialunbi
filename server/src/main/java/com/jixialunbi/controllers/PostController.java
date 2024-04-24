@@ -168,7 +168,7 @@ public class PostController {
         if (!post.get().equals(null)) {
             post.get().setVisitCount(post.get().getVisitCount() + 1);
         }
-        if(userDetails != null){
+        if (userDetails != null) {
             User user = userService.getById(userDetails.getId());
             // 点赞数据
             var res = postLikeRepository.findOneByPostIdAndAuthorId(postId, user.getId());
@@ -184,7 +184,7 @@ public class PostController {
     @Transactional
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/like-post/{postId}")
-    public R likePost(@PathVariable long postId,  @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public R likePost(@PathVariable long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         var user = userService.getById(userDetails.getId());
         var res = postLikeRepository.findOneByPostIdAndAuthorId(postId, user.getId());
         if (res != null) {

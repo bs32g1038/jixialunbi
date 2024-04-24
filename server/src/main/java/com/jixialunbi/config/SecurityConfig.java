@@ -2,7 +2,7 @@ package com.jixialunbi.config;
 
 import com.jixialunbi.security.AuthEntryPointJwt;
 import com.jixialunbi.security.AuthTokenFilter;
-import com.jixialunbi.security.CustomAccessDeniedHandler;
+import com.jixialunbi.security.CAccessDeniedHandler;
 import com.jixialunbi.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +40,9 @@ public class SecurityConfig {
             "/swagger-ui.html"
     };
     private final UserDetailsServiceImpl userDetailsService;
-
+    private final CAccessDeniedHandler accessDeniedHandler;
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
-
-    @Autowired
-    private CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -80,14 +77,15 @@ public class SecurityConfig {
         return corsConfiguration;
     }
 
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity, CorsConfiguration corsConfiguration) throws Exception {
         httpSecurity
                 .cors(cors -> cors.configurationSource(request -> corsConfiguration))
                 .csrf(e -> e.disable())
                 .exceptionHandling(exception -> {
-                    exception.accessDeniedHandler(customAccessDeniedHandler);
-                    exception.authenticationEntryPoint(unauthorizedHandler);
+                    exception.authenticationEntryPoint(unauthorizedHandler)
+                            .accessDeniedHandler(accessDeniedHandler);
                 })
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests(auth ->

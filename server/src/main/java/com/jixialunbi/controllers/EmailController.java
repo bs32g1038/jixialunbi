@@ -22,6 +22,7 @@ import java.security.Principal;
 @RequestMapping("/api/v1")
 public class EmailController {
 
+    final String EMAIL_ACTIVE_CODE_KEY = "email_active_code_key";
     String html = """
               <table
               border="0"
@@ -94,20 +95,14 @@ public class EmailController {
                 </tr>
               </tbody>
             </table>""";
-
     @Autowired
     HttpSession session;
-
     @Autowired
     UserService userService;
-
     @Autowired
     UserRepository userRepository;
-
     @Value("${EMAIL_PASS}")
     private String EMAIL_PASS;
-
-    final String EMAIL_ACTIVE_CODE_KEY = "email_active_code_key";
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/send-email")

@@ -2,6 +2,7 @@ package com.jixialunbi.controllers;
 
 import cn.hutool.crypto.digest.DigestUtil;
 import com.jixialunbi.common.R;
+import com.jixialunbi.common.result.ResultCode;
 import com.jixialunbi.service.FileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ public class UploadController {
             fileService.saveFile(file.getBytes(), nginxPath, fileName);
             return R.ok().data("/static/images/" + fileName);
         } catch (Exception e) {
-            return R.error().data(e);
+            return R.error(ResultCode.USER_UPLOAD_FILE_ERROR).data(e);
         }
     }
 

@@ -1,9 +1,9 @@
 package com.jixialunbi.controllers;
 
 import com.jixialunbi.common.R;
+import com.jixialunbi.common.result.ResultCode;
 import com.jixialunbi.dto.request.UserRequest;
 import com.jixialunbi.dto.request.UserUpdateRequest;
-import com.jixialunbi.enums.HttpReponseResultCodeEnum;
 import com.jixialunbi.model.User;
 import com.jixialunbi.repository.UserRepository;
 import com.jixialunbi.security.UserDetailsImpl;
@@ -17,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -33,16 +35,12 @@ public class UserController {
 
     @GetMapping("/users")
     public R fetchUsers(@RequestParam int page, @RequestParam int pageSize) {
-        try {
-            Pageable pageable = PageRequest.of(page, pageSize);
-            Page<User> data = userRepository.findAll(pageable);
-            if (data.getSize() <= 0) {
-                return R.ok().setResult(HttpReponseResultCodeEnum.NOT_CONTENT);
-            }
-            return R.ok().data(data);
-        } catch (Exception e) {
-            return R.error().message("系统异常");
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<User> data = userRepository.findAll(pageable);
+        if (data.getSize() <= 0) {
+            return R.ok().data(new ArrayList());
         }
+        return R.ok().data(data);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -54,7 +52,7 @@ public class UserController {
     @PostMapping("/user/create")
     public R create(@Valid @RequestBody UserRequest request) {
         if (userRepository.existsByEmailIgnoreCase(request.getEmail())) {
-            return R.error().message("用户已存在！");
+            return R.error(ResultCode.PARAM_ERROR).message("用户已存在！");
         }
         return R.ok().data(userService.create(request));
     }
@@ -99,16 +97,12 @@ public class UserController {
 
     @GetMapping("/recent-users")
     public R fetchRecentUsers() {
-        try {
-            Pageable pageable = PageRequest.of(0, 10);
-            Page<User> data = userRepository.findAll(pageable);
-            if (data.getSize() <= 0) {
-                return R.ok().setResult(HttpReponseResultCodeEnum.NOT_CONTENT);
-            }
-            return R.ok().data(data);
-        } catch (Exception e) {
-            return R.error().message("系统异常");
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<User> data = userRepository.findAll(pageable);
+        if (data.getSize() <= 0) {
+            return R.ok().data(new ArrayList());
         }
+        return R.ok().data(data);
     }
 
 }

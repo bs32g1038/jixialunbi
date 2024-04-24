@@ -18,11 +18,7 @@ public class CategoryController {
 
     @GetMapping("/categories")
     public R fetchCategories(@RequestParam(required = false, defaultValue = "1") int page, @RequestParam(required = false, defaultValue = "10") int pageSize) {
-        try {
-            return R.ok().data(categoryRepository.findAll());
-        } catch (Exception e) {
-            return R.error().message("系统异常");
-        }
+        return R.ok().data(categoryRepository.findAll());
     }
 
 }

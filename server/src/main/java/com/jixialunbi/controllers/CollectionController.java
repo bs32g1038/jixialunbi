@@ -52,11 +52,7 @@ public class CollectionController {
                 post.setCollected(cn != null && cn.getDeleted() == null);
             }
         });
-        try {
-            return R.ok().data(PageUtil.of(list));
-        } catch (Exception e) {
-            return R.error().message("系统异常");
-        }
+        return R.ok().data(PageUtil.of(list));
     }
 
 }

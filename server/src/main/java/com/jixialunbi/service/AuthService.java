@@ -21,7 +21,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -80,7 +79,7 @@ public class AuthService {
         user.setEmail(request.getEmail());
         user.setPassword(encoder.encode(request.getPassword().trim()));
         // add default role to the user
-        user.setRoles(new HashSet<>(Arrays.asList(new Role(1L, RoleType.ROLE_USER))));
+        user.setRoles(new HashSet<>(List.of(new Role(1L, RoleType.ROLE_USER))));
         userRepository.save(user);
         log.info(CREATED_USER);
         return CommandResponse.builder().id(user.getId()).build();

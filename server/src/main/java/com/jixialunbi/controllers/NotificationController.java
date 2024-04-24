@@ -28,11 +28,8 @@ public class NotificationController {
     @GetMapping("/notifications")
     public R fetchNotifications(Principal principal, @RequestParam(required = false, defaultValue = "1") int page, @RequestParam(required = false, defaultValue = "10") int pageSize) {
         User author = userService.getByAccount(principal.getName());
-        try {
-            return R.ok().data(notificationRepository.findAllByReceiverId(author.getId()));
-        } catch (Exception e) {
-            return R.error().message("系统异常");
-        }
+        return R.ok().data(notificationRepository.findAllByReceiverId(author.getId()));
+
     }
 
 }

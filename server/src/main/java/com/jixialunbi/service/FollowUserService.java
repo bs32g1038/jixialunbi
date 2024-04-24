@@ -25,10 +25,7 @@ public class FollowUserService {
 
     public Boolean isFollow(long userId, long followUserId) {
         var frs = followUserRepository.findOneByUserIdAndFollowUserId(userId, followUserId);
-        if (frs == null || frs.getDeleted() != null) {
-            return false;
-        }
-        return true;
+        return frs != null && frs.getDeleted() == null;
     }
 
     @Transactional

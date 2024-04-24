@@ -36,11 +36,8 @@ public class CommentController {
     public R fetchComments(
             @RequestParam(required = false, defaultValue = "1") int page,
             @RequestParam(required = false, defaultValue = "10") int pageSize) {
-        try {
-            return R.ok().data(commentRepository.findAll());
-        } catch (Exception e) {
-            return R.error().message("系统异常");
-        }
+        return R.ok().data(commentRepository.findAll());
+
     }
 
     @GetMapping("/post-comments")
@@ -52,11 +49,8 @@ public class CommentController {
             map.put("childrens", list.stream().filter(d -> ObjectUtil.equals(d.getParentId(), v.getId())));
             return map;
         }).toList();
-        try {
-            return R.ok().data(result);
-        } catch (Exception e) {
-            return R.error().message("系统异常");
-        }
+        return R.ok().data(result);
+
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")

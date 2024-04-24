@@ -32,11 +32,8 @@ public class StatisticController {
         map.put("userCount", userRepository.count());
         map.put("postCount", postRepository.countByDeleted(null));
         map.put("commentCount", commentRepository.count());
-        try {
-            return R.ok().data(map);
-        } catch (Exception e) {
-            return R.error().message("系统异常");
-        }
+        return R.ok().data(map);
+
     }
 
 }

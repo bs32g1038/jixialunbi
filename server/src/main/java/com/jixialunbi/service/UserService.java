@@ -11,8 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static com.jixialunbi.common.Constants.CREATED_USER;
@@ -32,7 +32,7 @@ public class UserService {
 
     public User create(UserRequest request) {
         // add default role (ROLE_USER) to the user
-        final Set<Role> roles = new HashSet<>(Arrays.asList(new Role(1L, RoleType.ROLE_USER)));
+        final Set<Role> roles = new HashSet<>(List.of(new Role(1L, RoleType.ROLE_USER)));
 
         // add ROLE_ADMIN role if requested by admin
         if (request.getRoles() != null && request.getRoles().contains(RoleType.ROLE_ADMIN.name()))
