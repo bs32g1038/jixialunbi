@@ -9,10 +9,12 @@ import com.jixialunbi.model.Post;
 import com.jixialunbi.model.User;
 import com.jixialunbi.repository.CommentRepository;
 import com.jixialunbi.repository.PostRepository;
+import com.jixialunbi.security.UserDetailsImpl;
 import com.jixialunbi.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -55,13 +57,13 @@ public class CommentController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/comments")
-    public R createComment(@Valid @RequestBody CommentRequest commentRequest, Principal principal) {
+    public R createComment(@Valid @RequestBody CommentRequest commentRequest, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         var comment = new Comment();
         comment.setContent(commentRequest.getContent());
         comment.setReplyId(commentRequest.getReplyId());
         comment.setParentId(commentRequest.getParentId());
         comment.setPostId(commentRequest.getPostId());
-        User author = userService.getByAccount(principal.getName());
+        User author = userService.getById(userDetails.getId());
         author.setCommentCount(author.getCommentCount() + 1);
         Post post = postRepository.findOneById(commentRequest.getPostId());
         post.setCommentCount(post.getCommentCount() + 1);

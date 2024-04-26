@@ -91,7 +91,7 @@ export default function AppHeader() {
                         >
                           <Space size={4}>
                             <LogoutOutlined />
-                            <span>注销</span>
+                            <span>退出登录</span>
                           </Space>
                         </div>
                       ),
