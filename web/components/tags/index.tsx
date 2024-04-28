@@ -7,10 +7,7 @@ import TopTip from '../home/components/TopTip';
 import CategoryList from '../home/components/CategoryList';
 import Labels from './components/Labels';
 
-export default function Articles({ data, searchParams }) {
-  const { page } = searchParams;
-  const router = useRouter();
-  const { items = [], count = 0 } = data?.data ?? [];
+export default function Tags() {
   return (
     <Layout>
       <TopTip></TopTip>

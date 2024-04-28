@@ -7,7 +7,7 @@ import { useState } from 'react';
 import EditModal from '@/components/setting/components/EditModal';
 
 export default function Labels() {
-  const { data, isLoading, mutate } = useSWR({ url: '/api/v1/tags' });
+  const { data, mutate } = useSWR({ url: '/api/v1/tags' });
   const tags = data?.data ?? [];
   const { trigger: deleteTag, isMutating: delIsMutating } = useSWRMutation({ url: '/api/v1/delete-tag' });
   const [editData, setEditData] = useState({ visible: false, data: {} });
