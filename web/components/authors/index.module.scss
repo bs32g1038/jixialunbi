@@ -21,6 +21,8 @@
 .item {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f1f1f1;
 }
 
 .itemA {
@@ -28,38 +30,6 @@
   gap: 10px;
   padding: 6px 10px;
   align-items: center;
-  border-bottom: 1px solid #f1f1f1;
-  text-decoration: none;
-  &:hover {
-    filter: opacity(0.8);
-  }
-  .avatar {
-    width: 32px;
-    height: 32px;
-    flex: 1 0 auto;
-    max-width: 32px;
-  }
-  p {
-    margin-bottom: 0;
-    color: rgba(0, 0, 0, 0.65);
-  }
-}
-.list {
-  padding: 6px 10px;
-}
-
-.item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.itemA {
-  display: flex;
-  gap: 10px;
-  padding: 6px 10px;
-  align-items: center;
-  border-bottom: 1px solid #f1f1f1;
   text-decoration: none;
   &:hover {
     filter: opacity(0.8);
