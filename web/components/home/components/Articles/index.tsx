@@ -7,8 +7,6 @@ import { useRouter } from 'next/navigation';
 import Layout from '@/components/Layout';
 import TopTip from '../TopTip';
 import CategoryList from '../CategoryList';
-import Labels from '../Labels';
-import { Router } from 'next/router';
 
 export default function Articles({ data, searchParams }) {
   const { page } = searchParams;
