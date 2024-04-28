@@ -26,7 +26,7 @@ let baseUrl = '';
 if (typeof window !== 'undefined') {
   baseUrl = '';
 } else {
-  baseUrl = 'http://localhost:3000';
+  baseUrl = 'https://bbs.lizc.net/';
 }
 
 export const commonSplitApi = createApi({

@@ -1,7 +1,7 @@
 .inputSearch {
   color: #333;
   width: 250px;
-  border-radius: 20px;
+  border-radius: 4px;
   padding: 5px 10px 5px 5px;
   background: #f6f6f6;
   box-sizing: border-box;
@@ -22,6 +22,10 @@
     &:focus {
       box-shadow: none;
       outline: none;
+      background-color: transparent;
+    }
+    &:hover {
+      background-color: transparent;
     }
   }
 }

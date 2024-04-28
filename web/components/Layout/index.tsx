@@ -33,7 +33,7 @@ export default function Layout(props: any) {
     }
   }, [data, setUser]);
   return (
-    <div style={{ display: 'flex', gap: 10, maxWidth: 645 + 280, margin: '0 auto', paddingLeft: 30 }}>
+    <div style={{ display: 'flex', gap: 10, maxWidth: 660, margin: '0 auto' }}>
       <div className={styles.wrap}>
         <AppHeader></AppHeader>
         {/* <ActiveAlert></ActiveAlert> */}
@@ -48,7 +48,7 @@ export default function Layout(props: any) {
         </FloatButton.BackTop>
         {/* </div> */}
       </div>
-      <RightSide />
+      {/* <RightSide /> */}
     </div>
   );
 }

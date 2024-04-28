@@ -1,0 +1,29 @@
+.wrap {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.item {
+  margin-bottom: 10px;
+  a {
+    text-decoration: none;
+  }
+  button{
+    padding: 0 10px;
+  }
+}
+
+.name {
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 16px;
+}
+
+.desc {
+  color: rgba(0, 0, 0, 0.45);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  margin-bottom: 0;
+}

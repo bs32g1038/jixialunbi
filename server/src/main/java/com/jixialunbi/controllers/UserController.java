@@ -105,4 +105,21 @@ public class UserController {
         return R.ok().data(data);
     }
 
+    @GetMapping("/hot-users")
+    public R fetchHotUsers(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Pageable pageable = PageRequest.of(0, 50);
+        Page<User> data = userRepository.findAll(pageable);
+        if (data.getSize() <= 0) {
+            return R.ok().data(new ArrayList());
+        }
+        if(userDetails != null){
+            data.map(v->{
+                boolean followed = followUserService.isFollow(userDetails.getId(), v.getId());
+                v.setFollowed(followed);
+                return v;
+            });
+        }
+        return R.ok().data(data);
+    }
+
 }

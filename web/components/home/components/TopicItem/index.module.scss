@@ -293,12 +293,12 @@ ol.stories li:first-child div.story_liner {
   flex-wrap: wrap;
 
   .pic {
-    padding: 2px 4px;
     display: inline-block;
     width: 120px;
     height: 80px;
     overflow: hidden;
-
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
     :global {
       .ant-image {
         height: 100%;

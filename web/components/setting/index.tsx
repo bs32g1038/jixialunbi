@@ -1,12 +1,14 @@
 'use client';
 
-import { Button, Spin, Space, Popconfirm } from 'antd';
+import { Button, Spin, Space, Popconfirm, Tag } from 'antd';
 import Layout from '../Layout';
 import styles from './index.module.scss';
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { useSWR, useSWRMutation } from '@/hooks';
 import EditModal from './components/EditModal';
 import { useState } from 'react';
+import Link from 'next/link';
+// import UserList from './components/UserList';
 
 export default function Setting() {
   const { data, isLoading, mutate } = useSWR({ url: '/api/v1/tags' });
@@ -22,8 +24,10 @@ export default function Setting() {
             {tags.map((item) => {
               return (
                 <div className={styles.labelsItem} key={item.id}>
-                  <div>{item.name}</div>
-                  <Space>
+                  {/* <Link> */}
+                  <Tag>{item.name}</Tag>
+                  {/* </Link> */}
+                  {/* <Space>
                     <Button
                       type="link"
                       onClick={() => {
@@ -49,7 +53,7 @@ export default function Setting() {
                         删除
                       </Button>
                     </Popconfirm>
-                  </Space>
+                  </Space> */}
                 </div>
               );
             })}
@@ -86,6 +90,7 @@ export default function Setting() {
             )}
           </div>
         </Spin>
+        {/* <UserList></UserList> */}
       </div>
     </Layout>
   );

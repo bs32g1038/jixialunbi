@@ -137,7 +137,7 @@ export default function AppHeader() {
             </Button>
           )}
         </span>
-        <span>
+        {/* <span>
           <Button
             size="small"
             type="text"
@@ -147,7 +147,7 @@ export default function AppHeader() {
           >
             <SettingOutlined></SettingOutlined>
           </Button>
-        </span>
+        </span> */}
       </div>
     </header>
   );
