@@ -1,6 +1,7 @@
 package com.jixialunbi.service;
 
 import com.jixialunbi.model.FollowUser;
+import com.jixialunbi.model.User;
 import com.jixialunbi.repository.FollowUserRepository;
 import com.jixialunbi.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 /**
@@ -54,5 +56,10 @@ public class FollowUserService {
         return false;
     }
 
+    public List<User> fetchFollowUsers(long userId){
+        return followUserRepository.findAllByUserIdAndDeleted(userId, null).stream().map(v->{
+            return v.getFollowUser();
+        }).toList();
+    }
 
 }

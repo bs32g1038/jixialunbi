@@ -9,6 +9,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useSWR } from '@/hooks';
 import Posts from './components/Posts';
 import CollectionPosts from './components/CollectionPosts';
+import Attendtion from './components/Attendtion';
 import AuthButton from '../AuthButton';
 import FollowButton from '../FollowButton';
 import { useAppStore } from '@/store';
@@ -16,7 +17,7 @@ import { useAppStore } from '@/store';
 const TABS = {
   post: '帖子',
   collection: '收藏',
-  // attendtion: '关注',
+  attendtion: '关注',
 };
 
 export default function Profile() {
@@ -25,7 +26,6 @@ export default function Profile() {
   const { user: currentUser } = useAppStore();
   const [tab, setTab] = useState(TABS.post);
   const { data: _data } = useSWR({ url: '/api/v1/user-info/' + id });
-  // console.log("data", data)
   const user = _data?.data ?? {};
   const data = _data?.data ?? {};
   return (
@@ -74,6 +74,10 @@ export default function Profile() {
               <div>{data?.commentCount ?? 0}</div>
               <div className={styles.metaItemDesc}>回答</div>
             </div>
+            <div className={styles.metaItem}>
+              <div>{data?.collectionCount ?? 0}</div>
+              <div className={styles.metaItemDesc}>收藏</div>
+            </div>
           </div>
         </div>
       </div>
@@ -92,6 +96,7 @@ export default function Profile() {
       ></Tabs>
       {tab == TABS.post && <Posts></Posts>}
       {tab == TABS.collection && <CollectionPosts></CollectionPosts>}
+      {tab == TABS.attendtion && <Attendtion></Attendtion>}
     </Layout>
   );
 }

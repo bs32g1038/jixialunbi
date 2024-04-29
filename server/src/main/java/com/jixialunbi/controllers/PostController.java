@@ -54,6 +54,9 @@ public class PostController {
     TagRepository tagRepository;
 
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     UserService userService;
 
     @Autowired
@@ -144,10 +147,9 @@ public class PostController {
             }).toList());
             // 点赞数据，收藏数据
             if (userDetails != null) {
-                User user = userService.getById(userDetails.getId());
-                var like = postLikeRepository.findOneByPostIdAndAuthorId(postId, user.getId());
+                var like = postLikeRepository.findOneByPostIdAndAuthorId(postId, userDetails.getId());
                 a.setLiked(like != null && like.getDeleted() == null);
-                var cn = postCollectionRepository.findOneByPostIdAndAuthorId(postId, user.getId());
+                var cn = postCollectionRepository.findOneByPostIdAndAuthorId(postId, userDetails.getId());
                 a.setCollected(cn != null && cn.getDeleted() == null);
             }
             i[0]++;
@@ -217,9 +219,11 @@ public class PostController {
             if (res.getDeleted() == null) {
                 res.setDeleted(LocalDateTime.now());
                 postRepository.increaseCollectionCount(postId, -1);
+                userRepository.increaseCollectionCount(userDetails.getId(), -1);
             } else {
                 res.setDeleted(null);
                 postRepository.increaseCollectionCount(postId, 1);
+                userRepository.increaseCollectionCount(userDetails.getId(), 1);
             }
             postCollectionRepository.save(res);
             return R.ok().data(true);
@@ -229,6 +233,7 @@ public class PostController {
         postCollection.setPost(postRepository.findById(postId).get());
         postCollection.setDeleted(null);
         postRepository.increaseCollectionCount(postId, 1);
+        userRepository.increaseCollectionCount(userDetails.getId(), 1);
         postCollectionRepository.save(postCollection);
         return R.ok().data(true);
     }

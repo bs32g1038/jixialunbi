@@ -122,4 +122,13 @@ public class UserController {
         return R.ok().data(data);
     }
 
+    @GetMapping("/follow-users")
+    public R fetchFollowUsers(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        if(userDetails!=null){
+            var data = followUserService.fetchFollowUsers(userDetails.getId());
+            return R.ok().data(data);
+        }
+        return R.ok().data(new ArrayList());
+    }
+
 }

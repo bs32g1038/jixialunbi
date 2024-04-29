@@ -5,6 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 @Repository
 public interface FollowUserRepository extends JpaRepository<FollowUser, Long> {
 
@@ -23,5 +26,6 @@ public interface FollowUserRepository extends JpaRepository<FollowUser, Long> {
             """, nativeQuery = true)
     FollowUser findOneByUserIdAndFollowUserId(long userId, long followUserId);
 
+    ArrayList<FollowUser> findAllByUserIdAndDeleted(long userId, LocalDateTime deleted);
 
 }

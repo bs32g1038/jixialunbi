@@ -33,5 +33,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("update User p set p.fanCount = p.fanCount + :fanCount where p.id = :id")
     void increaseFanCount(@Param("id") Long id, @Param("fanCount") Integer fanCount);
 
+    @Transactional
+    @Modifying
+    @Query("update User p set p.collectionCount = p.collectionCount + :collectionCount where p.id = :id")
+    void increaseCollectionCount(@Param("id") Long id, @Param("collectionCount") Integer collectionCount);
 
 }
