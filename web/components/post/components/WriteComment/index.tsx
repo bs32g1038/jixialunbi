@@ -38,7 +38,7 @@ export default function WriteComment(props: Props) {
           <Input.TextArea
             className={styles.input}
             size="small"
-            placeholder="发布你的评论！"
+            placeholder="欢迎参与讨论，回车可换行。"
             autoSize={{ minRows: 1, maxRows: 5 }}
           ></Input.TextArea>
         </Form.Item>

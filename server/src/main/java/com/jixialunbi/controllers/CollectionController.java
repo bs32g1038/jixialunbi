@@ -3,7 +3,6 @@ package com.jixialunbi.controllers;
 import com.jixialunbi.common.R;
 import com.jixialunbi.common.utils.PageUtil;
 import com.jixialunbi.model.PostCollection;
-import com.jixialunbi.model.User;
 import com.jixialunbi.repository.PostCollectionRepository;
 import com.jixialunbi.repository.PostLikeRepository;
 import com.jixialunbi.security.UserDetailsImpl;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.security.Principal;
 
 
 @RestController
@@ -36,12 +33,12 @@ public class CollectionController {
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int pageSize,
             @AuthenticationPrincipal UserDetailsImpl userDetails
-            ) {
+    ) {
         String regex = "<.*?>";
         var aimuser = userService.getById(id);
         Page<PostCollection> list = postCollectionRepository.findByAuthorId(aimuser.getId(), PageRequest.of(page, pageSize));
         list.toList().forEach(item -> {
-            if(item.getPost().getContent() != null){
+            if (item.getPost().getContent() != null) {
                 item.getPost().setContent(item.getPost().getContent().replaceAll(regex, ""));
             }
             var post = item.getPost();

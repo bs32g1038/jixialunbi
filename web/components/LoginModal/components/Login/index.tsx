@@ -46,7 +46,7 @@ export default function CLogin(props: Props) {
           setUser(res.data?.data);
           router.refresh();
           showLoginModal(false);
-          window.location.reload();
+          // window.location.reload();
         })
         .catch((err) => {
           message.error('账号或密码输入错误');

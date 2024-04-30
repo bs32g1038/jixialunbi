@@ -22,7 +22,7 @@ export const wrapper = createWrapper<AppStore>(makeStore, { debug: process.env.N
 interface State {
   isShowLoginModal?: boolean;
   user: {
-    role: string;
+    roles: { id: string; type: string }[];
     banned: boolean;
     id: string;
     email: string;

@@ -13,7 +13,7 @@ const CImage: any = dynamic(() => import('./components/CImage') as any, {
   ssr: false,
 });
 
-export default function TopicItem(props: { item: any }) {
+export default function TopicItem(props: { item: any; isHtml?: boolean }) {
   const item = props.item;
   const participants = unionBy(item?.participants, 'id');
   return (
@@ -36,7 +36,16 @@ export default function TopicItem(props: { item: any }) {
               <span>·</span>
               <p className={styles.lastEditTime}>{item.updatedAt}</p>
             </Space>
-            {item.content && <p className={styles.summary}>{item.content}</p>}
+            {item.content && props.isHtml ? (
+              <p
+                className={styles.summary}
+                dangerouslySetInnerHTML={{
+                  __html: item.content,
+                }}
+              ></p>
+            ) : (
+              <p className={styles.summary}>{item.content}</p>
+            )}
             {item?.pics && (
               <Image.PreviewGroup>
                 <div className={styles.pics}>

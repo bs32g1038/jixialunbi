@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import Layout from '@/components/Layout';
 import TopTip from '../TopTip';
 import CategoryList from '../CategoryList';
+import PinnedList from '../PinnedList';
 
 export default function Articles({ data, searchParams }) {
   const { page } = searchParams;
@@ -15,6 +16,7 @@ export default function Articles({ data, searchParams }) {
   return (
     <Layout>
       <TopTip></TopTip>
+      <PinnedList></PinnedList>
       <CategoryList></CategoryList>
       <div className={styles.content}>
         <div className={styles.inner}>

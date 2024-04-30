@@ -14,6 +14,7 @@ interface Props {
 export default function EllipsisDropdown(props: Props) {
   const user = useAppStore((state) => state.user);
   const { trigger: deletePost } = useSWRMutation({ url: '/api/v1/delete-post' });
+  const { trigger: pinPost } = useSWRMutation({ url: '/api/v1/posts/pin' });
   return (
     <React.Fragment>
       <Dropdown
@@ -21,7 +22,10 @@ export default function EllipsisDropdown(props: Props) {
           onClick: ({ key }) => {
             if (key === '举报' && !user) {
             }
-            if (key == '编辑') {
+            if (key === '置顶') {
+              pinPost({ id: props.postId, pinned: !props.pinned } as any).then(() => {
+                message.success(props.pinned ? '已取消置顶!' : '置顶成功！');
+              });
             }
             if (key === '删除') {
               deletePost({ id: props.postId } as any).then(() => {
@@ -42,7 +46,7 @@ export default function EllipsisDropdown(props: Props) {
                   },
                 ]
               : []),
-            ...(user && user.role === 'SuperAdmin'
+            ...(user && user.roles.find((item) => item.type === 'ROLE_ADMIN')
               ? [
                   {
                     label: (
@@ -57,14 +61,6 @@ export default function EllipsisDropdown(props: Props) {
               : []),
             ...(user?.id === props.authorId
               ? [
-                  {
-                    label: (
-                      <Space>
-                        <EditOutlined></EditOutlined>编辑
-                      </Space>
-                    ),
-                    key: '编辑',
-                  },
                   {
                     label: (
                       <Space style={{ color: '#ff7875' }}>

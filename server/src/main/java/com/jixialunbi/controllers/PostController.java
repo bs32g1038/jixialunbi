@@ -3,6 +3,7 @@ package com.jixialunbi.controllers;
 import com.jixialunbi.common.R;
 import com.jixialunbi.common.utils.PageUtil;
 import com.jixialunbi.dto.request.IdRequest;
+import com.jixialunbi.dto.request.PostPinRequest;
 import com.jixialunbi.dto.request.PostRequest;
 import com.jixialunbi.model.*;
 import com.jixialunbi.repository.*;
@@ -249,4 +250,14 @@ public class PostController {
         return R.ok().data(test);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PostMapping("/posts/pin")
+    @Transactional
+    public R pinPost(@Valid @RequestBody PostPinRequest pinRequest) {
+        var test = postRepository.findOneById(pinRequest.getId());
+        if(test != null){
+            test.setPinned(pinRequest.getPinned());
+        }
+        return R.ok().data(true);
+    }
 }

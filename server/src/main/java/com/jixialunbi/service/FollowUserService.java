@@ -56,8 +56,8 @@ public class FollowUserService {
         return false;
     }
 
-    public List<User> fetchFollowUsers(long userId){
-        return followUserRepository.findAllByUserIdAndDeleted(userId, null).stream().map(v->{
+    public List<User> fetchFollowUsers(long userId) {
+        return followUserRepository.findAllByUserIdAndDeleted(userId, null).stream().map(v -> {
             return v.getFollowUser();
         }).toList();
     }

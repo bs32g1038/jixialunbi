@@ -112,8 +112,8 @@ public class UserController {
         if (data.getSize() <= 0) {
             return R.ok().data(new ArrayList());
         }
-        if(userDetails != null){
-            data.map(v->{
+        if (userDetails != null) {
+            data.map(v -> {
                 boolean followed = followUserService.isFollow(userDetails.getId(), v.getId());
                 v.setFollowed(followed);
                 return v;
@@ -124,7 +124,7 @@ public class UserController {
 
     @GetMapping("/follow-users")
     public R fetchFollowUsers(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        if(userDetails!=null){
+        if (userDetails != null) {
             var data = followUserService.fetchFollowUsers(userDetails.getId());
             return R.ok().data(data);
         }
