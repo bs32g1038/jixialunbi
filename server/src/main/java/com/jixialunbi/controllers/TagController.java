@@ -49,7 +49,7 @@ public class TagController {
         return R.ok().data(tagRepository.save(tag));
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/delete-tag")
     @Transactional
     public R deleteTags(@Valid @RequestBody IdRequest idRequest) {
