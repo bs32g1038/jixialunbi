@@ -19,8 +19,21 @@ html,
 body,
 #__next {
   font-size: 14px;
-  font-family: -apple-system, system-ui, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont,
-    Helvetica Neue, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial !important;
+  font-family:
+    -apple-system,
+    system-ui,
+    Segoe UI,
+    Roboto,
+    Ubuntu,
+    Cantarell,
+    Noto Sans,
+    sans-serif,
+    BlinkMacSystemFont,
+    Helvetica Neue,
+    PingFang SC,
+    Hiragino Sans GB,
+    Microsoft YaHei,
+    Arial !important;
   color: rgba(0, 0, 0, 0.85);
 }
 
@@ -185,7 +198,14 @@ table.ProseMirror-selectednode {
 
 .rich-text pre,
 .rich-text code {
-  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    SF Mono,
+    Menlo,
+    Consolas,
+    Liberation Mono,
+    monospace;
   font-size: 12px;
   border: 0;
   border-radius: 0;
@@ -213,12 +233,11 @@ table.ProseMirror-selectednode {
 }
 
 .rich-text img {
-  width: 84.44%;
-  min-width: 556px;
-  height: 100%;
-  margin: 20px auto;
+  width: 100%;
+  height: auto;
   display: block;
   border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .rich-text table {

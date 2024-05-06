@@ -8,6 +8,7 @@ import { unionBy } from 'lodash';
 import dynamic from 'next/dynamic';
 import CollectButton from '@/components/CollectButton';
 import EllipsisDropdown from './components/EllipsisDropdown';
+import classnames from 'classnames';
 
 const CImage: any = dynamic(() => import('./components/CImage') as any, {
   ssr: false,
@@ -37,12 +38,12 @@ export default function TopicItem(props: { item: any; isHtml?: boolean }) {
               <p className={styles.lastEditTime}>{item.updatedAt}</p>
             </Space>
             {item.content && props.isHtml ? (
-              <p
-                className={styles.summary}
+              <div
+                className={classnames('rich-text')}
                 dangerouslySetInnerHTML={{
                   __html: item.content,
                 }}
-              ></p>
+              ></div>
             ) : (
               <p className={styles.summary}>{item.content}</p>
             )}
