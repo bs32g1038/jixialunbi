@@ -79,14 +79,11 @@ table.ProseMirror-selectednode {
   margin: 0;
   padding: 0;
   z-index: 20;
-  color: rgba(0, 0, 0, 0.85);
+  color: rgba(0, 0, 0, 0.8);
   // font-family: PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,Helvetica Neue,Arial,sans-serif;
   color: #222;
   line-height: 1.65;
-  font-size: 15px;
-  a {
-    color: rgba(0, 0, 0, 0.85);
-  }
+  font-size: 14px;
 }
 
 .rich-text *:not(table) {
@@ -108,8 +105,10 @@ table.ProseMirror-selectednode {
 
 .rich-text p {
   margin: 10px 0;
-  color: #333;
   font-weight: normal;
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
 .rich-text > h1:first-of-type,
