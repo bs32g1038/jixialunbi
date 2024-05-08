@@ -106,6 +106,7 @@ table.ProseMirror-selectednode {
 .rich-text p {
   margin: 10px 0;
   font-weight: normal;
+  word-break: break-all;
   &:first-child {
     margin-top: 0;
   }
@@ -235,7 +236,7 @@ table.ProseMirror-selectednode {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 2px;
+  border-radius: 4px;
   border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
